@@ -7,6 +7,6 @@ package utilisateurs;
  * @author lyameina
  *
  */
-public class Eleve extends Empreinteur{
+public class Eleve extends Emprunteur{
 
 }

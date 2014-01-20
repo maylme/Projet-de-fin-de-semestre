@@ -10,6 +10,6 @@ package utilisateurs;
  * @author lyameina
  *
  */
-public class Professeur extends Empreinteur{
+public class Professeur extends Emprunteur{
 
 }
