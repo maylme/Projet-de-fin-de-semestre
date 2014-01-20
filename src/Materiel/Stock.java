@@ -16,11 +16,11 @@ import utilisateurs.Personne;
 */
 public class Stock
 {
-	private ArrayList<TypeDeMateriel> disponible ;
-	private ArrayList<TypeDeMateriel> reparations ;
+	private ArrayList<Materiel> disponible ;
+	private ArrayList<Materiel> reparations ;
 	private ArrayList<MaterielEmprunte> emprunts ;
-	private ArrayList<TypeDeMateriel> statistiquesReparations ;
-	private ArrayList<TypeDeMateriel> statistiquesEmprunts ;
+	private ArrayList<Materiel> statistiquesReparations ;
+	private ArrayList<Materiel> statistiquesEmprunts ;
 
 /** 
 * Constructeur de la classe Stock
@@ -46,24 +46,24 @@ public class Stock
 * @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 * @return Retourne la liste obtenue.
 */
-	private ArrayList<TypeDeMateriel> deserialisationListeTypeDeMateriel(String nomListe)
+	private ArrayList<Materiel> deserialisationListeTypeDeMateriel(String nomListe)
 	{
 		try
 		{
 			File file = new File("data/" + nomListe + ".dat");
 		    if (!file.exists())
 		    {
-        		return new ArrayList<TypeDeMateriel>();
+        		return new ArrayList<Materiel>();
     		} 
     		else if (file.length() <= 4) // un fichier vide cree par le programme fait 4 octets.
     		{
-        		return new ArrayList<TypeDeMateriel>();
+        		return new ArrayList<Materiel>();
         	}
         	else
         	{
         		FileInputStream fichierData = new FileInputStream("data/" + nomListe + ".dat");
 				ObjectInputStream ois = new ObjectInputStream(fichierData);
-				return (ArrayList<TypeDeMateriel>) ois.readObject();
+				return (ArrayList<Materiel>) ois.readObject();
         	}	
 		}
 		catch (java.io.IOException e)
@@ -74,7 +74,7 @@ public class Stock
 		{
 			e.printStackTrace();
 		}
-		return new ArrayList<TypeDeMateriel>();
+		return new ArrayList<Materiel>();
 	}
 
 /** 
@@ -128,7 +128,7 @@ public class Stock
 * @param listeASerialiser La liste a serialiser dans un fichier.
 * @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
 */
-	private void serialisationListe(ArrayList<TypeDeMateriel> listeASerialiser, String nomListe)
+	private void serialisationListe(ArrayList<Materiel> listeASerialiser, String nomListe)
 	{
 		try
 		{ 
@@ -223,7 +223,7 @@ public class Stock
 
 		else
 		{
-			disponible.add(new TypeDeMateriel(name,nombre)) ;
+			disponible.add(new Materiel(name,nombre)) ;
 		}
 		serialisationListe(disponible, "disponible");
 	}
@@ -235,7 +235,7 @@ public class Stock
 * @return Retourne un TypeDeMateriel correspondant au plus grand nombre
 * d'exemplaire du type disponible.
 */
-	public TypeDeMateriel typeDeMaterielenPlusGrandNombre()
+	public Materiel typeDeMaterielenPlusGrandNombre()
 	{
 		int index = 0;
 
@@ -367,7 +367,7 @@ public class Stock
 * @param liste Liste de type TypeDeMateriel dans laquelle il faut
 * ajouter le nombre d'exemplaire
 */
-	private void ajouterExemplairesTypeDeMateriel(String type, int exemplairesAAjouter, ArrayList<TypeDeMateriel> liste)
+	private void ajouterExemplairesTypeDeMateriel(String type, int exemplairesAAjouter, ArrayList<Materiel> liste)
 	{
 		if(rechercheIndexTypeDeMateriel(type,liste)>=0)
 		{
@@ -376,7 +376,7 @@ public class Stock
 
 		else if(rechercheIndexTypeDeMateriel(type,disponible)>=0)
 		{
-			liste.add(new TypeDeMateriel(type,exemplairesAAjouter,disponible.get(rechercheIndexTypeDeMateriel(type,disponible)).getIdent())) ;
+			liste.add(new Materiel(type,exemplairesAAjouter,disponible.get(rechercheIndexTypeDeMateriel(type,disponible)).getId())) ;
 		}		
 	}
 
@@ -391,7 +391,7 @@ public class Stock
 * @return Retourne -1 si les exemplaires ont bien ete retires,
 * sinon retourne le nombre max d'exemplaires pouvant etre retires ou -2 si erreur
 */
-	private int retirerExemplairesTypeDeMateriel(String type, int exemplairesARetirer, ArrayList<TypeDeMateriel> liste)
+	private int retirerExemplairesTypeDeMateriel(String type, int exemplairesARetirer, ArrayList<Materiel> liste)
 	{
 		if(rechercheIndexTypeDeMateriel(type,liste)>=0)
 		{
@@ -427,7 +427,7 @@ public class Stock
 		if(nombreDisponibles==-1)
 		{
 			ajouterExemplairesTypeDeMateriel(type, nombreExemplaires, statistiquesEmprunts);
-			emprunts.add(new MaterielEmprunte(new TypeDeMateriel(type, nombreExemplaires, disponible.get(rechercheIndexTypeDeMateriel(type,disponible)).getIdent()), emprunteur, date, duree));
+			emprunts.add(new MaterielEmprunte(new Materiel(type, nombreExemplaires, disponible.get(rechercheIndexTypeDeMateriel(type,disponible)).getIdent()), emprunteur, date, duree));
 		}
 		serialisationListe(disponible, "disponible");
 		serialisationListe(statistiquesEmprunts, "statistiquesEmprunts");
@@ -482,7 +482,7 @@ public class Stock
 * @return Retourne l'index si le type existe
 * Retourne -1 sinon
 */
-	private int rechercheIndexTypeDeMateriel(String type, ArrayList<TypeDeMateriel> liste)
+	private int rechercheIndexTypeDeMateriel(String type, ArrayList<Materiel> liste)
 	{
 		boolean trouve = false;
 		int index = 0;
@@ -553,7 +553,7 @@ public class Stock
 * @return Retourne le TypeDeMateriel le plus emprunte
 * sinon retourne null.
 */
-	public TypeDeMateriel materielPlusEmprunte()
+	public Materiel materielPlusEmprunte()
 	{
 		int index = 0;
 
@@ -587,7 +587,7 @@ public class Stock
 * @return Retourne le TypeDeMateriel le plus repare
 * sinon retourne null
 */
-	public TypeDeMateriel materielPlusRepare()
+	public Materiel materielPlusRepare()
 	{
 		int index = 0;
 
@@ -740,7 +740,7 @@ public class Stock
 * 
 * @return Retourne la liste de type TypeDeMateriel disponible
 */
-	public ArrayList<TypeDeMateriel> getListeDisponible()
+	public ArrayList<Materiel> getListeDisponible()
 	{
 		return disponible;
 	}
@@ -751,7 +751,7 @@ public class Stock
 * 
 * @return Retourne la liste de type TypeDeMateriel reparations
 */
-	public ArrayList<TypeDeMateriel> getListeReparations()
+	public ArrayList<Materiel> getListeReparations()
 	{
 		return reparations;
 	}
