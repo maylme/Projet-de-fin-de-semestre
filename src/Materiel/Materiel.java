@@ -17,8 +17,7 @@ public class Materiel implements java.io.Serializable
 	protected int nombreExemplaires ;
 	protected String id = UUID.randomUUID().toString();
 	public static final int DUREE_EMPRUNT_MAX_CLASSIQUE = 15;
-	public static final int DUREE_EMPRUNT_MAX_SPEC = 30;
-	protected int dateEmprunt;
+	protected int dureeMaxEmprunt;
 	/** 
 	* Constructeur par défaut de la classe.
 	* Il crée l'objet Tablette Android avec 20
@@ -27,6 +26,7 @@ public class Materiel implements java.io.Serializable
 	public Materiel()
 	{
 		this("Tablette Android", 20) ;
+		this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
 	}
 
 	/** 
@@ -42,7 +42,7 @@ public class Materiel implements java.io.Serializable
 	{
 		this.nomType = nomType ;
 		this.nombreExemplaires = nombreExemplaires ;
-		this.dateEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
+		this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
 	}
 
 	/** 
