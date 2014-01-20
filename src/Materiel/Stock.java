@@ -2,7 +2,6 @@ package Materiel;
 import java.util.ArrayList;
 import java.io.*;
 
-import base.MaterielEmprunte;
 
 
 import utilisateurs.Personne;

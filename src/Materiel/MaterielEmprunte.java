@@ -1,4 +1,4 @@
-package base;
+package Materiel;
 
 import Materiel.TypeDeMateriel;
 import utilisateurs.Personne;
