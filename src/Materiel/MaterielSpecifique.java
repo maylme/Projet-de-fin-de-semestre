@@ -9,12 +9,15 @@ package Materiel;
  *
  */
 public class MaterielSpecifique extends Materiel{
-    
+	
+	private static final int DUREE_EMPRUNT_MAX_SPEC = 30;
+	
     public MaterielSpecifique() {
         super("Telescope dernier cri", 5);
+        this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_SPEC;
     }
     public MaterielSpecifique(String nomType, int nombreExemplaires) {
         super(nomType, nombreExemplaires);
-        this.dateEmprunt=DUREE_EMPRUNT_MAX_SPEC;
+        this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_SPEC;
     }
 }

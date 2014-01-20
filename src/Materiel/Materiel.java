@@ -16,8 +16,7 @@ public class Materiel implements java.io.Serializable
 	protected String nomType;
 	protected int nombreExemplaires ;
 	public static final int DUREE_EMPRUNT_MAX_CLASSIQUE = 15;
-	public static final int DUREE_EMPRUNT_MAX_SPEC = 30;
-	protected int dateEmprunt;
+	protected int dureeMaxEmprunt;
 	/** 
 	* Constructeur par défaut de la classe.
 	* Il crée l'objet Tablette Android avec 20
@@ -26,6 +25,7 @@ public class Materiel implements java.io.Serializable
 	public Materiel()
 	{
 		this("Tablette Android", 20) ;
+		this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
 	}
 
 	/** 
@@ -41,7 +41,7 @@ public class Materiel implements java.io.Serializable
 	{
 		this.nomType = nomType ;
 		this.nombreExemplaires = nombreExemplaires ;
-		this.dateEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
+		this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
 	}
 
 	/** 
@@ -68,6 +68,18 @@ public class Materiel implements java.io.Serializable
 		return nomType;
 	}
 
+	/** 
+	* Méthode publique utilisée pour accéder à la 
+	* valeur dureeMaxEmprunt de la classe à partir d'une autre classe.
+	* 
+	* @return int contenant la duree max d'emprunt du type de matériel.
+	*/ 
+	public int getDureeMaxEmprunt()
+	{
+		return dureeMaxEmprunt;
+	}
+
+	
 	/** 
 	* Méthode publique utilisée pour accéder à la 
 	* valeur nombreExemplaire de la classe à partir d'une autre classe.
