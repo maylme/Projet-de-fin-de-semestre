@@ -71,6 +71,18 @@ public class Materiel implements java.io.Serializable
 
 	/** 
 	* Méthode publique utilisée pour accéder à la 
+	* valeur dureeMaxEmprunt de la classe à partir d'une autre classe.
+	* 
+	* @return int contenant la duree max d'emprunt du type de matériel.
+	*/ 
+	public int getDureeMaxEmprunt()
+	{
+		return dureeMaxEmprunt;
+	}
+
+	
+	/** 
+	* Méthode publique utilisée pour accéder à la 
 	* valeur nombreExemplaire de la classe à partir d'une autre classe.
 	* 
 	* @return Entier contenant le nombre d'exemplaire du matériel.
