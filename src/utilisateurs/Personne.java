@@ -1,4 +1,4 @@
-package base;
+package utilisateurs;
 
 /** 
 * La classe Personne represente une personne avec

@@ -21,7 +21,11 @@ Serialisation:
 --------------
 * serialisation pas lisible. 
 * fichier de sauvegarde des listes visible (xml riana?)
-* faire un fichier par liste? 
+* faire un fichier par liste?
+* faire une classe pour les sauvegarde avec des methodes du style on lui donne une liste, il fait le fichier et inverssement. (comme ca on allège MaterielEmprunte et surement d'autre)
 
+nouveau type de materiel
+------------------------
+* Il faut rendre facile le fait d'ajouter un nouveau type de materiel.
 
 

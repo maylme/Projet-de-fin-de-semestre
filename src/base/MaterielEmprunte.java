@@ -1,5 +1,8 @@
 package base;
 
+import Materiel.TypeDeMateriel;
+import utilisateurs.Personne;
+
 /** 
 * La classe MaterielEmprunte represente une materiel avec
 * un emprunteur, la date d'emprunt et la duree d'emprunt.

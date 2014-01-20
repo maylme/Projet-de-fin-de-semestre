@@ -3,6 +3,11 @@ package base;
 import java.util.ArrayList;
 import java.io.*;
 
+import Materiel.Stock;
+import Materiel.TypeDeMateriel;
+
+import utilisateurs.Personne;
+
 /** 
 * Cette classe fait le lien entre un utilisateur
 * et le stock sur lequel il travaille. Elle contient
