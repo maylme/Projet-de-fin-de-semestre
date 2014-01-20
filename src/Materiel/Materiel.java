@@ -15,7 +15,6 @@ public class Materiel implements java.io.Serializable
 {
 	protected String nomType;
 	protected int nombreExemplaires ;
-	protected String id = UUID.randomUUID().toString();
 	public static final int DUREE_EMPRUNT_MAX_CLASSIQUE = 15;
 	public static final int DUREE_EMPRUNT_MAX_SPEC = 30;
 	protected int dateEmprunt;
@@ -86,10 +85,7 @@ public class Materiel implements java.io.Serializable
 	* 
 	* @return Chaine de caractère contenant l'identifiant du matériel.
 	*/ 
-	public String getId()
-	{
-		return id;
-	}
+
 
 	/** 
 	* Méthode publique utilisée pour modifier la 
