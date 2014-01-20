@@ -3,25 +3,25 @@ Trucs à faire...
 
 Découpage:
 ----------
-> héritages pour les utilisateurs
-> héritages pour les differents materiels
+* héritages pour les utilisateurs
+* héritages pour les differents materiels
 
 System de login/passwd:
 -----------------------
-> fichier de sauvegarde les login/passwd
-> mot de passe crypté
+* fichier de sauvegarde les login/passwd
+* mot de passe crypté
 	
 	
 Gestion des dates:
 ------------------
-> discuter comment gerer ça.
+* discuter comment gerer ça.
 
 
 Serialisation:
 --------------
-> serialisation pas lisible. 
-> fichier de sauvegarde des listes visible (xml riana?)
-> faire un fichier par liste? 
+* serialisation pas lisible. 
+* fichier de sauvegarde des listes visible (xml riana?)
+* faire un fichier par liste? 
 
 
 
