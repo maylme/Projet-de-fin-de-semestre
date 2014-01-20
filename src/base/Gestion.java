@@ -1,6 +1,6 @@
 package base;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.*;
 
 import Materiel.Stock;
@@ -23,7 +23,7 @@ import utilisateurs.Personne;
 public class Gestion
 {
 	private Stock stock;
-	private ArrayList<Personne> listeUtilisateurs;
+	private HashMap<Personne> listeUtilisateurs;
 	private Personne utilisateur;
 
 	/** 
@@ -59,27 +59,27 @@ public class Gestion
 	* GestionDeStock.
 	*
 	* @param nomListe Le nom du fichier dans lequel lire.
-	* @return Une ArrayList de Personne qui contient les differents
+	* @return Une HashMap de Personne qui contient les differents
 	* utilisateurs sauvegardes en memoire lors de precedentes utilisations.
 	*/ 
-	private ArrayList<Personne> deserialisationListePersonne(String nomListe)
+	private HashMap<Personne> deserialisationListePersonne(String nomListe)
 	{
 		try
 		{
 			File file = new File("data/" + nomListe + ".dat");
 		    if (!file.exists())
 		    {
-        		return new ArrayList<Personne>();
+        		return new HashMap<Personne>();
     		} 
     		else if (file.length() <= 4)
     		{
-        		return new ArrayList<Personne>();
+        		return new HashMap<Personne>();
         	}
         	else
         	{
         		FileInputStream fichierData = new FileInputStream("data/" + nomListe + ".dat");
 				ObjectInputStream ois = new ObjectInputStream(fichierData);
-				return (ArrayList<Personne>) ois.readObject();
+				return (HashMap<Personne>) ois.readObject();
         	}	
 		}
 		catch (java.io.IOException e)
@@ -90,7 +90,7 @@ public class Gestion
 		{
 			e.printStackTrace();
 		}
-		return new ArrayList<Personne>();
+		return new HashMap<Personne>();
 	}
 
 	/** 
@@ -98,10 +98,10 @@ public class Gestion
 	* Precondition : il faut compiler depuis le dossier
 	* GestionDeStock.
 	*
-	* @param listeASerialiser Le nom de l'ArrayList a sauvegarder.
+	* @param listeASerialiser Le nom de l'HashMap a sauvegarder.
 	* @param nomListe Le nom du fichier dans lequel sauvegarder la liste.
 	*/
-	private void serialisationListe(ArrayList<Personne> listeASerialiser, String nomListe)
+	private void serialisationListe(HashMap<Personne> listeASerialiser, String nomListe)
 	{
 		try
 		{ 
@@ -121,7 +121,7 @@ public class Gestion
 	* Methode de definition de l'utilisateur en cours. Regarde dans
 	* la liste des utilisateurs (historique) si l'utilisateur existe deja.
 	*
-	* @param listeASerialiser Le nom de l'ArrayList a sauvegarder.
+	* @param listeASerialiser Le nom de l'HashMap a sauvegarder.
 	* @param nomListe Le nom du fichier dans lequel sauvegarder la liste.
 	*/ 
 	public void definirUtilisateur(String nom, String prenom, boolean statut)
