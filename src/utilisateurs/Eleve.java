@@ -49,10 +49,10 @@ public class Eleve extends Emprunteur{
 	 * de nom : a et prenom : b
 	 *
 	 */
-	public Eleve()
+	public Eleve(int dureeMax)
 	{
 		super();
-		nombreEmprunts = 0;
+		dureeMaxDEmprunt = dureeMax;
 	}
 	
 	/**
