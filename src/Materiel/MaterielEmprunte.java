@@ -1,6 +1,7 @@
 package Materiel;
 
 import java.util.Date;
+import java.util.UUID;
 
 import Materiel.Materiel;
 import utilisateurs.Emprunteur;
@@ -19,8 +20,9 @@ public class MaterielEmprunte implements java.io.Serializable
 	private Emprunteur emprunteur ;
 	private Date dateEmprunt ;
 	private int dureeEmprunt ; //unité en jours
+	private String id = UUID.randomUUID().toString();
 
-	/** 
+    /** 
 	* Constructeur de la classe MaterielEmprunte
 	* Il recupere un Materiel, un emprunteur (Emprunteur), une Date
 	* pour la date d'emprunt et la duree de l'emprunt en jours.
@@ -103,7 +105,15 @@ public class MaterielEmprunte implements java.io.Serializable
 	{
 		dureeEmprunt=newDureeEmprunt;
 	}
-
+	
+	/**
+	 * Méthode d'accès à l'ID de l'emprunt.
+	 * 
+	 * @return l'ID de l'emprunt
+	 */
+	public String getId() {
+	    return id;
+	}
 	/** 
 	* Methode publique utilisee pour afficher un materiel emprunte.
 	* Le nom de l'emprunteur apparait en majuscule, puis le prenom de l'emprunteur,
