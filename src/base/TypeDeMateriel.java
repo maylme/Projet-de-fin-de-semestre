@@ -1,4 +1,4 @@
-package src;
+package base;
 
 /** 
 * La class TypeDeMateriel représente un objet matériel.

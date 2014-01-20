@@ -1,4 +1,4 @@
-package src;
+package base;
 
 /** 
 * La classe MaterielEmprunte represente une materiel avec

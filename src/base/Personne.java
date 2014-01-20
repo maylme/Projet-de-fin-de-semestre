@@ -1,4 +1,4 @@
-package src;
+package base;
 
 /** 
 * La classe Personne represente une personne avec
