@@ -1,7 +1,9 @@
 package Materiel;
 
-import Materiel.TypeDeMateriel;
-import utilisateurs.Personne;
+import java.util.Date;
+
+import Materiel.Materiel;
+import utilisateurs.Emprunteur;
 
 /** 
 * La classe MaterielEmprunte represente une materiel avec
@@ -13,22 +15,22 @@ import utilisateurs.Personne;
 
 public class MaterielEmprunte implements java.io.Serializable
 {
-	private TypeDeMateriel emprunt ;
-	private Personne emprunteur ;
-	private String dateEmprunt ; // format jour/mois/année   2 chiffres pour chaque
+	private Materiel emprunt ;
+	private Emprunteur emprunteur ;
+	private Date dateEmprunt ;
 	private int dureeEmprunt ; //unité en jours
 
 	/** 
 	* Constructeur de la classe MaterielEmprunte
-	* Il recupere un TypeDeMateriel, un emprunteur (Personne), une chaine de caractere
-	* pour la date d'emprunt sous le format JJ/MM/AA et la duree de l'emprunt en jours.
+	* Il recupere un Materiel, un emprunteur (Emprunteur), une Date
+	* pour la date d'emprunt et la duree de l'emprunt en jours.
 	*
-	* @param emprunt Un TypeDeMateriel represente le materiel emprunte
+	* @param emprunt Un Materiel represente le materiel emprunte
 	* @param emprunteur Une Personne
-	* @param dateEmprunt C'est une chaine de caractere representant la date d'emprunt du materiel.
+	* @param dateEmprunt une Date representant la date d'emprunt du materiel.
 	* @param dureeEmprunt C'est un entier representant la duree d'emprunt du materiel en jours.
 	*/
-	public MaterielEmprunte(TypeDeMateriel emprunt, Personne emprunteur, String dateEmprunt, int dureeEmprunt)
+	public MaterielEmprunte(Materiel emprunt, Emprunteur emprunteur, Date dateEmprunt, int dureeEmprunt)
 	{
 		this.emprunt = emprunt ;
 		this.emprunteur = emprunteur ;
@@ -38,21 +40,21 @@ public class MaterielEmprunte implements java.io.Serializable
 
 	/** 
 	* Constructeur par defaut de la classe MaterielEmprunte
-	* Par defaut, on construit un nouveau TypeDeMateriel, une nouvelle personne,
-	* la date est fixee au 1 janvier 2013 pour une duree de 10 jours.
+	* Par defaut, on construit un nouveau Materiel, un nouvel emprunteur,
+	* la date du jour pour une duree de 10 jours.
 	*/ 
 	public MaterielEmprunte()
 	{
-		this(new TypeDeMateriel(),new Personne(), "01/01/13", 10);
+		this(new Materiel(),new Emprunteur(), new Date(), 10);
 	}
 
 	/** 
 	* Methode publique utilisee pour acceder au
 	* materiel emprunte a partir d'une autre classe.
 	*
-	* @return Un TypeDeMateriel representant le materiel emprunte.
+	* @return Un Materiel representant le materiel emprunte.
 	*/ 
-	public TypeDeMateriel getMatEmprunt()
+	public Materiel getMatEmprunt()
 	{
 		return emprunt;
 	}
@@ -61,9 +63,9 @@ public class MaterielEmprunte implements java.io.Serializable
 	* Methode publique utilisee pour acceder a
 	* l'emprunteur a partir d'une autre classe.
 	* 
-	* @return Personne representant l'emprunteur du materiel.
+	* @return Emprunteur representant l'emprunteur du materiel.
 	*/ 
-	public Personne getEmprunteur()
+	public Emprunteur getEmprunteur()
 	{
 		return emprunteur;
 	}
@@ -72,9 +74,9 @@ public class MaterielEmprunte implements java.io.Serializable
 	* Methode publique utilisee pour acceder l'information
 	* date d'emprunt a partir d'une autre classe.
 	* 
-	* @return Chaine de caractere contenant la date de l'emprunt.
+	* @return Date contenant la date de l'emprunt.
 	*/ 
-	public String getDateEmprunt()
+	public Date getDateEmprunt()
 	{
 		return dateEmprunt;
 	}
@@ -112,6 +114,6 @@ public class MaterielEmprunte implements java.io.Serializable
 	*/ 
 	public String toString()
 	{
-		return emprunt + "\nEmprunteur : "+ emprunteur.getNom().toUpperCase() + " " + emprunteur.getPrenom() + "\nDate d'emprunt : " + dateEmprunt +"\nDurée d'emprunt : " + dureeEmprunt + " jour(s)\n";
+		return emprunt + "\nEmprunteur : "+ emprunteur.getNom().toUpperCase() + " " + emprunteur.getPrenom() + "\nDate d'emprunt : " + dateEmprunt.toString() +"\nDurée d'emprunt : " + dureeEmprunt + " jour(s)\n";
 	}
 }
