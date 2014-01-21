@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import Materiel.*;
 
 public class FichierData {
+	
+	public FichierData(){
+		
+	}
 
 	/** 
 	* Methode public serialiser les listes.
@@ -17,16 +21,16 @@ public class FichierData {
 	* TyperDeMateriel passee en parametre, parce que lors de la fermeture du programme
 	* il faut pouvoir recuperer les informations.
 	*
-	* @param listeASerialiser La liste a serialiser dans un fichier.
+	* @param s La liste a serialiser dans un fichier.
 	* @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
 	*/
-	public void serialisationListe(ArrayList<Object> listeASerialiser, String nomListe)
+	public void serialisationListe(ArrayList<String> s, String nomListe)
 	{
 		try
 		{ 
 			FileOutputStream fichierListe = new FileOutputStream("data/" + nomListe + ".dat");
 			ObjectOutputStream oos = new ObjectOutputStream(fichierListe);
-			oos.writeObject(listeASerialiser);
+			oos.writeObject(s);
 			oos.flush();
 			oos.close();
 		}
