@@ -19,7 +19,7 @@ public class MaterielEmprunte implements java.io.Serializable
 	private Materiel emprunt ;
 	private Emprunteur emprunteur ;
 	private Date dateEmprunt ;
-	private int dureeEmprunt ; //unité en jours
+	private Date dateFin ;
 	private String id = UUID.randomUUID().toString();
 
     /** 
@@ -32,22 +32,22 @@ public class MaterielEmprunte implements java.io.Serializable
 	* @param dateEmprunt une Date representant la date d'emprunt du materiel.
 	* @param dureeEmprunt C'est un entier representant la duree d'emprunt du materiel en jours.
 	*/
-	public MaterielEmprunte(Materiel emprunt, Emprunteur emprunteur, Date dateEmprunt, int dureeEmprunt)
+	public MaterielEmprunte(Materiel emprunt, Emprunteur emprunteur, Date dateEmprunt, Date dateFin)
 	{
 		this.emprunt = emprunt ;
 		this.emprunteur = emprunteur ;
 		this.dateEmprunt = dateEmprunt ;
-		this.dureeEmprunt = dureeEmprunt ;
+		this.dateFin = dateFin ;
 	}
 
 	/** 
 	* Constructeur par defaut de la classe MaterielEmprunte
 	* Par defaut, on construit un nouveau Materiel, un nouvel emprunteur,
-	* la date du jour pour une duree de 10 jours.
+	* la date du jour pour une fin d'emprunt à la date du jour.
 	*/ 
 	public MaterielEmprunte()
 	{
-		this(new Materiel(),new Emprunteur(), new Date(), 10);
+		this(new Materiel(new Caracteristiques()),new Emprunteur(), new Date(), new Date());
 	}
 
 	/** 
@@ -85,25 +85,25 @@ public class MaterielEmprunte implements java.io.Serializable
 
 	/** 
 	* Methode publique utilisee pour acceder a l'information
-	* duree d'emprunt a partir d'une autre classe.
+	* date de fin d'emprunt a partir d'une autre classe.
 	* 
-	* @return Entier representant la duree de l'emprunt.
+	* @return Date representant la fin de l'emprunt.
 	*/
-	public int getDureeEmprunt()
+	public Date getDateFin()
 	{
-		return dureeEmprunt;
+		return dateFin;
 	}
 
 	/** 
 	* Methode publique utilisee pour modifier la
-	* duree d'emprunt a partir d'une autre classe.
+	* date de fin d'emprunt a partir d'une autre classe.
 	*
-	* @param newDureeEmprunt Entier representant la nouvelle duree de l'emprunt
+	* @param newDateFin Entier representant la date de fin de l'emprunt
 	* que l'on veut modifier.
 	*/ 
-	public void setDureeEmprunt(int newDureeEmprunt)
+	public void setDateFin(Date newDateFin)
 	{
-		dureeEmprunt=newDureeEmprunt;
+		dateFin=newDateFin;
 	}
 	
 	/**
@@ -124,6 +124,6 @@ public class MaterielEmprunte implements java.io.Serializable
 	*/ 
 	public String toString()
 	{
-		return emprunt + "\nEmprunteur : "+ emprunteur.getNom().toUpperCase() + " " + emprunteur.getPrenom() + "\nDate d'emprunt : " + dateEmprunt.toString() +"\nDurée d'emprunt : " + dureeEmprunt + " jour(s)\n";
+		return emprunt + "\nEmprunteur : "+ emprunteur.getNom().toUpperCase() + " " + emprunteur.getPrenom() + "\nDate d'emprunt : " + dateEmprunt.toString() +"\nDate de fin d'emprunt : " + dateFin.toString() + " \n";
 	}
 }
