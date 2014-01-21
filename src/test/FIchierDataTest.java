@@ -19,7 +19,9 @@ public class FIchierDataTest {
 		FichierData f = new FichierData();
 		
 		f.serialisationListe(s, "liste");
-		
+		ArrayList<String> str = f.deserialisationListeString("liste");
+		if (!(s.equals(str)))
+			fail("pas bien");
 		
 	}
 
@@ -35,7 +37,16 @@ public class FIchierDataTest {
 
 	@Test
 	public void testDeserialisationListeString() {
-		fail("Not yet implemented");
+		ArrayList<String> s = new ArrayList<String>();
+		s.add("poney");
+		s.add("Derpy Hooves");
+		s.add("Fluttershy");
+		FichierData f = new FichierData();
+		
+		f.serialisationListe(s, "liste");
+		ArrayList<String> str = f.deserialisationListeString("liste");
+		if (!(s.equals(str)))
+			fail("pas bien");
 	}
 
 }
