@@ -166,8 +166,8 @@ public class Materiel implements java.io.Serializable
 	* @return MaterielEmprunte modelisant le materiel emprunte avec l'emprunteur
 	* la date et la duree de l'emprunt.
 	*/
-	public MaterielEmprunte matEmprunte(Date debut, int duree, Emprunteur emprunteur)
+	public MaterielEmprunte matEmprunte(Date debut, Date fin, Emprunteur emprunteur)
 	{
-		return new MaterielEmprunte(this, emprunteur, debut, duree);
+		return new MaterielEmprunte(this, emprunteur, debut, fin);
 	}
 }
