@@ -24,7 +24,7 @@ public class FichierData {
 	* @param s La liste a serialiser dans un fichier.
 	* @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
 	*/
-	public void serialisationListeString(ArrayList<String> s, String nomListe)
+	public static void serialisationListeString(ArrayList<String> s, String nomListe)
 	{
 		try
 		{ 
@@ -49,7 +49,7 @@ public class FichierData {
 	* @param s La liste a serialiser dans un fichier.
 	* @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
 	*/
-	public void serialisationListeMateriel(ArrayList<Materiel> s, String nomListe)
+	public static void serialisationListeMateriel(ArrayList<Materiel> s, String nomListe)
 	{
 		try
 		{ 
@@ -74,7 +74,7 @@ public class FichierData {
 	* @param s La liste a serialiser dans un fichier.
 	* @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
 	*/
-	public void serialisationListeMaterielEmprunte(ArrayList<MaterielEmprunte> s, String nomListe)
+	public static void serialisationListeMaterielEmprunte(ArrayList<MaterielEmprunte> s, String nomListe)
 	{
 		try
 		{ 
@@ -99,7 +99,7 @@ public class FichierData {
 	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 	* @return Retourne la liste obtenue.
 	*/
-	public ArrayList<MaterielEmprunte> deserialisationListeMaterielEmprunte(String nomListe)
+	public static ArrayList<MaterielEmprunte> deserialisationListeMaterielEmprunte(String nomListe)
 	{
 		try
 		{
@@ -139,7 +139,7 @@ public class FichierData {
 	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 	* @return Retourne la liste obtenue.
 	*/
-	public ArrayList<Materiel> deserialisationListeMateriel(String nomListe)
+	public static ArrayList<Materiel> deserialisationListeMateriel(String nomListe)
 	{
 		try
 		{
@@ -179,7 +179,7 @@ public class FichierData {
 	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 	* @return Retourne la liste obtenue.
 	*/
-	public ArrayList<String> deserialisationListeString(String nomListe)
+	public static ArrayList<String> deserialisationListeString(String nomListe)
 	{
 		try
 		{
