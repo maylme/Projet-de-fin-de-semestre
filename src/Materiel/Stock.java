@@ -383,12 +383,16 @@ public class Stock {
 
     
     private boolean verifierValidite(MaterielEmprunte emprunt) {
-        return true;
+        /*
+         * materiel existant et dispo qté dans le stock
+         * 
+         *
+         */
     }
     
     /**
      * Methode public permettant de rendre un materiel donc retirer de la liste
-     * de reparations et mettre dans disponible
+     * d'emprunts et mettre dans disponible
      * 
      * @return Retourne true si le rendu est valide, sinon false
      */
@@ -417,39 +421,6 @@ public class Stock {
             }
         }
         return false;
-    }
-
-    /**
-     * Methode privee permettant de chercher l'index dans la liste de
-     * MaterielEmprunte correspondant au type passe en parametre
-     * 
-     * @return Retourne l'index si le type existe Retourne -1 sinon
-     */
-    private int rechercheIndexMaterielEmprunte(String type,
-            int nombreExemplaires, Personne emprunteur) {
-        boolean trouve = false;
-        int index = 0;
-        int i = 0;
-
-        while (trouve == false && i < emprunts.size()) {
-            if (emprunts.get(i).getEmprunteur().equals(emprunteur)
-                    && emprunts.get(i).getMatEmprunt().getNom().toUpperCase()
-                            .equals(type.toUpperCase())
-                    && emprunts.get(i).getMatEmprunt().getNombre() >= nombreExemplaires) {
-                trouve = true;
-                index = i;
-            }
-
-            i++;
-        }
-
-        if (trouve) {
-            return index;
-        }
-
-        else {
-            return -1;
-        }
     }
 
     /**
