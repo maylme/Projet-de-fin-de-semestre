@@ -3,29 +3,33 @@ package Materiel;
 import java.util.UUID;
 
 /** 
-* La class TypeDeMateriel représente un objet matériel.
-* Il a un nom de type, le nombre d'exemplaire de ce matériel
-* et un identifiant.
-* 
+* La class Materiel représente un objet matériel.
+* Un Materiel est defini par :
+* des Caracteristiques
+* un nombre de Materiel
+* la duree maximum d'emprunt de ce materiel
+*  
 * @author Sonia Tual et Vincent Montalieu 
 * @version 2.0 (4.Dec.2013) 
 */
 
 public class Materiel implements java.io.Serializable
 {
-	protected int nombreExemplaires ;
-	
 	public static final int DUREE_EMPRUNT_MAX_CLASSIQUE = 15;
+
+	protected int nombreExemplaires ;
 	protected int dureeMaxEmprunt;
+	protected Caracteristiques caracteristiques;
+	
 	/** 
-	* Constructeur par défaut de la classe.
-	* Il crée l'objet Tablette Android avec 20
+	* Constructeur de la classe.
 	* exemplaires. 
 	*/
-	public Materiel()
+	public Materiel(Caracteristiques c, int dureeMax, int nbExemplaires)
 	{
-		this("Tablette Android", 20) ;
-		this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
+		caracteristiques = c;
+		nombreExemplaires = nbExemplaires;
+		dureeMaxEmprunt = dureeMax;
 	}
 
 	/** 
