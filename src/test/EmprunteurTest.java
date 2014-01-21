@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import utilisateurs.Emprunteur;
+import utilisateurs.Personne;
 
 public class EmprunteurTest {
 
@@ -58,27 +59,50 @@ public class EmprunteurTest {
 
 	@Test
 	public void testEmprunteurPersonneInt() {
-		fail("Not yet implemented");
+		String prenom = "Apple";
+		String nom = "Jack";
+		int duree = 1;
+		Personne p = new Personne (nom, prenom);
+		Emprunteur e = new Emprunteur(p, duree);
+		if (e.getDureeMaxDEmprunt() != duree)
+			fail("duree");
 	}
 
 	@Test
 	public void testEmprunteur() {
-		fail("Not yet implemented");
+		String expectedPrenom = "b";
+		String expectedNom = "a";
+		int expectedDuree = 15;
+		Emprunteur e  = new Emprunteur ();
+		if (!e.getNom().equals(expectedNom))
+			fail("nom");
+		if (!e.getPrenom().equals(expectedPrenom))
+			fail("prenom");
+		if (e.getDureeMaxDEmprunt() != expectedDuree)
+			fail("duree");
 	}
 
 	@Test
 	public void testGetDureeMaxDEmprunt() {
-		fail("Not yet implemented");
+		Emprunteur e  = new Emprunteur ();
+		if (e.getDureeMaxDEmprunt() != 15)
+			fail("duree");
 	}
 
 	@Test
 	public void testGetNbrEmprunt() {
-		fail("Not yet implemented");
+		Emprunteur e  = new Emprunteur ();
+		if (e.getNbrEmprunt() != 15)
+			fail("nb emprunt");
 	}
 
 	@Test
 	public void testSetNbrEmprunt() {
-		fail("Not yet implemented");
+		Emprunteur e  = new Emprunteur ();
+		int expectedResult = 17;
+		e.setNbrEmprunt(17);
+		if ( 17 != e.getNbrEmprunt())
+			fail("nb emprunt");
 	}
 
 	@Test
