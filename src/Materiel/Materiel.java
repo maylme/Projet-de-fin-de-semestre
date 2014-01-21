@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Materiel implements java.io.Serializable
 {
 	protected int nombreExemplaires ;
-	
+	protected Caracteristiques caracs;
 	public static final int DUREE_EMPRUNT_MAX_CLASSIQUE = 15;
 	protected int dureeMaxEmprunt;
 	/** 
