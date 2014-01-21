@@ -11,7 +11,7 @@ import java.util.HashMap;
  * @author lyameina
  *
  */
-public class Caracteristiques {
+public class Caracteristiques implements java.io.Serializable{
 	private ArrayList<String> clePossible;
 	private HashMap<String, String> resultat;
 	
