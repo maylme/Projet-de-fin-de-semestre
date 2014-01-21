@@ -5,7 +5,7 @@ import java.util.UUID;
 /** 
 * La class TypeDeMateriel représente un objet matériel.
 * Il a un nom de type, le nombre d'exemplaire de ce matériel
-* et un identifiant. 
+* et un identifiant.
 * 
 * @author Sonia Tual et Vincent Montalieu 
 * @version 2.0 (4.Dec.2013) 
@@ -13,8 +13,8 @@ import java.util.UUID;
 
 public class Materiel implements java.io.Serializable
 {
-	protected String nomType;
 	protected int nombreExemplaires ;
+	
 	public static final int DUREE_EMPRUNT_MAX_CLASSIQUE = 15;
 	protected int dureeMaxEmprunt;
 	/** 
@@ -39,7 +39,6 @@ public class Materiel implements java.io.Serializable
 	*/
 	public Materiel(String nomType, int nombreExemplaires)
 	{
-		this.nomType = nomType ;
 		this.nombreExemplaires = nombreExemplaires ;
 		this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
 	}
