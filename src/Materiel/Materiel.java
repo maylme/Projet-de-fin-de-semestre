@@ -2,7 +2,7 @@ package Materiel;
 
 import java.util.Date;
 
-import utilisateurs.Personne;
+import utilisateurs.Emprunteur;
 
 /** 
 * La class Materiel représente un objet matériel.
@@ -140,6 +140,7 @@ public class Materiel implements java.io.Serializable
 	* durée max d'emprunt.
 	* 
 	* @param mat Materiel.
+	* @return boolean representant le résultat de l'égalité entre deux Materiel.
 	*/
 	public boolean equals(Materiel mat)
 	{
@@ -154,8 +155,19 @@ public class Materiel implements java.io.Serializable
 			return false;
 	}
 	
-	public MaterielEmprunte matEmprunte(Date debut, int duree, Personne emprunteur)
+	/** 
+	* Méthode publique utilisée pour renvoyer le materiel
+	* emprunte ou null si cela ne satisfait pas les conditions
+	* d'emprunt du materiel
+	* 
+	* @param debut Date de début de l'emprunt.
+	* @param duree Entier representant la duree de l'emprunt.
+	* @param emprunteur Emprunteur représente la personne demandant un emprunt.
+	* @return MaterielEmprunte modelisant le materiel emprunte avec l'emprunteur
+	* la date et la duree de l'emprunt.
+	*/
+	public MaterielEmprunte matEmprunte(Date debut, int duree, Emprunteur emprunteur)
 	{
-	
+		return new MaterielEmprunte(this, emprunteur, debut, duree);
 	}
 }
