@@ -170,4 +170,15 @@ public class Materiel implements java.io.Serializable
 	{
 		return new MaterielEmprunte(this, emprunteur, debut, fin);
 	}
+	
+	/** 
+	* Méthode publique permettant de créé un clone du materiel
+	* 
+	* @param mat Materiel a cloner.
+	* @return Materiel qui a été cloné.
+	*/
+	public Materiel clone(Materiel mat)
+	{
+		return new Materiel(caracteristiques, dureeMaxEmprunt, nombreExemplaires);
+	}
 }
