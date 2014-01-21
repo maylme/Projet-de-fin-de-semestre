@@ -1,6 +1,8 @@
 package Materiel;
 
-import java.util.UUID;
+import java.util.Date;
+
+import utilisateurs.Personne;
 
 /** 
 * La class Materiel représente un objet matériel.
@@ -15,7 +17,7 @@ import java.util.UUID;
 
 public class Materiel implements java.io.Serializable
 {
-	public static final int DUREE_EMPRUNT_MAX_CLASSIQUE = 15;
+	public static final int DUREE_EMPRUNT_MAX = 15;
 
 	protected int nombreExemplaires ;
 	protected int dureeMaxEmprunt;
@@ -33,18 +35,16 @@ public class Materiel implements java.io.Serializable
 	}
 
 	/** 
-	* Constructeur de la classe TypeDeMateriel
-	* Il construit le matériel avec son nom passé en paramètre
-	* et le nombre d'exemplaire. Il crée l'identifiant correspondant
-	* à ce matériel.
+	* Constructeur de la classe Materiel
+	* Il construit le matériel avec ses caracterisque en paramètre
 	*
-	* @param nomType Une chaine de caractère représentant le nom du type de matériel. 
-	* @param nombreExemplaires Entier représentant le nombre d'exemplaire du matériel.
+	* @param c Caractéristiques du materiel.
 	*/
-	public Materiel(String nomType, int nombreExemplaires)
+	public Materiel(Caracteristiques c)
 	{
-		this.nombreExemplaires = nombreExemplaires ;
-		this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX_CLASSIQUE;
+		this.nombreExemplaires = 1 ;
+		this.dureeMaxEmprunt=DUREE_EMPRUNT_MAX;
+		caracteristiques = c;
 	}
 
 	/** 
@@ -57,18 +57,18 @@ public class Materiel implements java.io.Serializable
 	*/
 	public String toString()
 	{
-		return "\nType de matériel : " + nomType + "\nNombre de matériel de ce type : " +  nombreExemplaires ;
+		return "\nCaractéristiques du matériel : " + caracteristiques + "\nNombre de matériel de ce type : " +  nombreExemplaires + "/nDuree max d'emprunt : " + dureeMaxEmprunt ;
 	}
 
 	/** 
-	* Méthode publique utilisée pour accéder à la 
-	* valeur nomType de la classe à partir d'une autre classe.
+	* Méthode publique utilisée pour accéder aux 
+	* caractéristiques du matériel à partir d'une autre classe.
 	* 
-	* @return Chaine de caractère contenant le nom du type de matériel.
+	* @return Caracteristiques contenant les caractéristiques du matériel.
 	*/ 
-	public String getNom()
+	public Caracteristiques getCaracteristiques()
 	{
-		return nomType;
+		return caracteristiques;
 	}
 
 	/** 
@@ -94,14 +94,6 @@ public class Materiel implements java.io.Serializable
 		return nombreExemplaires;
 	}
 	
-	/** 
-	* Méthode publique utilisée pour accéder à la 
-	* valeur indentifiant de la classe à partir d'une autre classe.
-	* 
-	* @return Chaine de caractère contenant l'identifiant du matériel.
-	*/ 
-
-
 	/** 
 	* Méthode publique utilisée pour modifier la 
 	* valeur du nombre d'exemplaire du matériel à partir d'une autre classe.
@@ -140,5 +132,30 @@ public class Materiel implements java.io.Serializable
 	public void decrNombre(int nombre)
 	{
 		nombreExemplaires -= nombre ;
-	}	
+	}
+	
+	/** 
+	* Méthode publique utilisée pour vérifier si deux types 
+	* Materiel ont les mêmes caractéristiques et la même
+	* durée max d'emprunt.
+	* 
+	* @param mat Materiel.
+	*/
+	public boolean equals(Materiel mat)
+	{
+		if (this.dureeMaxEmprunt == mat.getDureeMaxEmprunt()){
+			if (this.caracteristiques.equals(mat.getCaracteristiques())){
+				return true;
+			}
+			else
+				return false;
+		}
+		else
+			return false;
+	}
+	
+	public MaterielEmprunte matEmprunte(Date debut, int duree, Personne emprunteur)
+	{
+	
+	}
 }

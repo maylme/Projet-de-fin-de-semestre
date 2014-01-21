@@ -24,7 +24,57 @@ public class FichierData {
 	* @param s La liste a serialiser dans un fichier.
 	* @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
 	*/
-	public void serialisationListe(ArrayList<String> s, String nomListe)
+	public void serialisationListeString(ArrayList<String> s, String nomListe)
+	{
+		try
+		{ 
+			FileOutputStream fichierListe = new FileOutputStream("data/" + nomListe + ".dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fichierListe);
+			oos.writeObject(s);
+			oos.flush();
+			oos.close();
+		}
+		catch (java.io.IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/** 
+	* Methode public serialiser les listes.
+	* C'est a dire qui enregistrer dans un fichier (ici un .dat) la liste de type
+	* TyperDeMateriel passee en parametre, parce que lors de la fermeture du programme
+	* il faut pouvoir recuperer les informations.
+	*
+	* @param s La liste a serialiser dans un fichier.
+	* @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
+	*/
+	public void serialisationListeMateriel(ArrayList<Materiel> s, String nomListe)
+	{
+		try
+		{ 
+			FileOutputStream fichierListe = new FileOutputStream("data/" + nomListe + ".dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fichierListe);
+			oos.writeObject(s);
+			oos.flush();
+			oos.close();
+		}
+		catch (java.io.IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/** 
+	* Methode public serialiser les listes.
+	* C'est a dire qui enregistrer dans un fichier (ici un .dat) la liste de type
+	* TyperDeMateriel passee en parametre, parce que lors de la fermeture du programme
+	* il faut pouvoir recuperer les informations.
+	*
+	* @param s La liste a serialiser dans un fichier.
+	* @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
+	*/
+	public void serialisationListeMaterielEmprunte(ArrayList<MaterielEmprunte> s, String nomListe)
 	{
 		try
 		{ 
