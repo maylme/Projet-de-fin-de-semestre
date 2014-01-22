@@ -44,6 +44,9 @@ public class Caracteristiques implements java.io.Serializable{
 	public HashMap<String, String> getResultat(){
 		return resultat;
 	}
+	public boolean equals(Caracteristiques caracs) {
+	    return (this.resultat).equals(caracs.getResultat());
+	}
 	
 }
 /**

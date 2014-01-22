@@ -1,6 +1,7 @@
 package Materiel;
 
 import java.util.ArrayList;
+import Outils.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.io.*;
@@ -9,9 +10,10 @@ import utilisateurs.Emprunteur;
 import utilisateurs.Personne;
 
 /**
- * La class Stock represente un stock qui contient plusieurs HashMap.
+ * La classe Stock est une representation par listes de type ArrayList d'un stock
+ * de materiel ainsi que d'un referencement des emprunts et reservations.
  * 
- * @author Sonia Tual et Vincent Montalieu
+ * @author RABEHASY Riana, TUAL Sonia, MESNIER Maylanie
  * @version 2.1 (4.Dec.2013)
  */
 
@@ -19,9 +21,12 @@ public class Stock {
 
     private ArrayList<Materiel> stockTotal;
     private ArrayList<Materiel> reparations;
-    private ArrayList<MaterielEmprunte> emprunts;
-    private ArrayList<Materiel> statistiquesReparations;
-    private ArrayList<Materiel> statistiquesEmprunts;
+    private ArrayList<MaterielEmprunte> empruntsEtReservs;
+
+    /*
+     * private ArrayList<Materiel> statistiquesReparations; private
+     * ArrayList<Materiel> statistiquesEmprunts;
+     */
 
     /**
      * Constructeur de la classe Stock Il construit le stock avec les 5 listes
@@ -29,149 +34,53 @@ public class Stock {
      * statistiquesEmprunts).
      */
     public Stock() {
-        /*
-        stockTotal = deserialisationListeTypeDeMateriel("stockTotal");
-        reparations = deserialisationListeTypeDeMateriel("reparations");
-        emprunts = deserialisationListeMaterielEmprunte("emprunts");
-        statistiquesReparations = deserialisationListeTypeDeMateriel("statistiquesReparations");
-        statistiquesEmprunts = deserialisationListeTypeDeMateriel("statistiquesEmprunts");
-        */
+
+        stockTotal = FichierData.deserialisationListeMateriel("stockTotal");
+        reparations = FichierData.deserialisationListeMateriel("reparations");
+        empruntsEtReservs = FichierData.deserialisationListeMaterielEmprunte("empruntsEtReservs");
+        /*statistiquesReparations =
+                deserialisationListeTypeDeMateriel("statistiquesReparations");
+        statistiquesEmprunts =
+                deserialisationListeTypeDeMateriel("statistiquesEmprunts");
+                */
+
     }
     
+    /**
+     * Methode permettant d'obtenir l'emplacement d'un certain type de materiel
+     * dans une liste de materiel.
+     * 
+     * @param mat
+     *          Le matériel recherché
+     * @param liste
+     *          La liste a parcourir
+     * @return
+     *          Un entier correspondant a l'index de l'element dans la liste, ou -1 si le materiel n'est
+     *          pas present
+     */
+    public int rechercheIndexMateriel(Materiel mat, ArrayList<Materiel> liste) {
+        for (int i=0; i<liste.size(); ++i) {
+            if (liste.get(i).equals((mat))) return i;
+        }
+        return -1;
+    }
     
-     
     /**
-     * Methode privee de deserialiser les listes du type TypeDeMateriel C'est a
-     * dire qui a partir d'un fichier (ici un .dat) recupere les listes qui ont
-     * ete prealablement enregistre. Ou si le fichier est vide ou non present on
-     * cree un nouvelle liste. La methode est privee, car elle est utilisee que
-     * dans cette classe.
+     * Methode permettant d'obtenir l'emplacement dans une liste d'emprunts d'un 
+     * certain type d'emprunts. 
      * 
-     * @param nomListe
-     *            Une chaine de caractere representant le nom de la liste a
-     *            deserialiser.
-     * @return Retourne la liste obtenue.
-     */
-    
-    /*
-    private ArrayList<Materiel> deserialisationListeTypeDeMateriel(
-            String nomListe) {
-        try {
-            File file = new File("data/" + nomListe + ".dat");
-            if (!file.exists()) {
-                return new ArrayList<Materiel>();
-            } else if (file.length() <= 4) // un fichier vide cree par le
-            // programme fait 4 octets.
-            {
-                return new ArrayList<Materiel>();
-            } else {
-                FileInputStream fichierData = new FileInputStream("data/"
-                        + nomListe + ".dat");
-                ObjectInputStream ois = new ObjectInputStream(fichierData);
-                return (ArrayList<Materiel>) ois.readObject();
-            }
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        } catch (java.lang.ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<Materiel>();
+     * @param matEmp 
+     *          le type d'emprunt recherche
+     * @param liste 
+     *          la liste a parcourir
+     * @return
+     *          Un entier correspondant a l'index de l'element dans la liste, ou
+     *          -1 s'il n'est pas present.
+     */         
+    public int rechercheIndexMaterielEmprunte(MaterielEmprunte matEmp, ArrayList<MaterielEmprunte> liste) {
+        return 1;
+        //TODO
     }
-    */
-
-    /**
-     * Methode privee de deserialiser les listes du type MaterielEmprunte C'est
-     * a dire qui a partir d'un fichier (ici un .dat) recupere la liste qui a
-     * ete prealablement enregistre. Ou si le fichier est vide ou non present on
-     * cree un nouvelle liste. La methode est privee, car elle est utilisee que
-     * dans cette classe.
-     * 
-     * @param nomListe
-     *            Une chaine de caractere representant le nom de la liste a
-     *            deserialiser.
-     * @return Retourne la liste obtenue.
-     */
-    /*
-    private ArrayList<MaterielEmprunte> deserialisationListeMaterielEmprunte(
-            String nomListe) {
-        try {
-            File file = new File("data/" + nomListe + ".dat");
-            if (!file.exists()) {
-                return new ArrayList<MaterielEmprunte>();
-            } else if (file.length() <= 4) {
-                return new ArrayList<MaterielEmprunte>();
-            } else {
-                FileInputStream fichierData = new FileInputStream("data/"
-                        + nomListe + ".dat");
-                ObjectInputStream ois = new ObjectInputStream(fichierData);
-                return (ArrayList<MaterielEmprunte>) ois.readObject();
-            }
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        } catch (java.lang.ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<MaterielEmprunte>();
-    }
-    */
-
-    /**
-     * Methode privee de serialiser les listes. C'est a dire qui enregistrer
-     * dans un fichier (ici un .dat) la liste de type TyperDeMateriel passee en
-     * parametre, parce que lors de la fermeture du programme il faut pouvoir
-     * recuperer les informations. La methode est privee, car elle est utilisee
-     * que dans cette classe.
-     * 
-     * @param listeASerialiser
-     *            La liste a serialiser dans un fichier.
-     * @param nomListe
-     *            Une chaine de caractere representant le nom de la liste a
-     *            serialiser.
-     */
-    /*
-    private void serialisationListe(ArrayList<Materiel> listeASerialiser,
-            String nomListe) {
-        try {
-            FileOutputStream fichierListe = new FileOutputStream("data/"
-                    + nomListe + ".dat");
-            ObjectOutputStream oos = new ObjectOutputStream(fichierListe);
-            oos.writeObject(listeASerialiser);
-            oos.flush();
-            oos.close();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-    /**
-     * Methode privee de serialiser les listes. C'est a dire qui enregistrer
-     * dans un fichier (ici un .dat) la liste de type MaterielEmprunte passee en
-     * parametre, parce que lors de la fermeture du programme il faut pouvoir
-     * recuperer les informations. La methode est privee, car elle est utilisee
-     * que dans cette classe.
-     * 
-     * @param listeASerialiser
-     *            La liste a serialiser dans un fichier.
-     * @param nomListe
-     *            Une chaine de caractere representant le nom de la liste a
-     *            serialiser.
-     */
-    /*
-    private void serialisationListeEmprunts(
-            ArrayList<MaterielEmprunte> listeASerialiser, String nomListe) {
-        try {
-            FileOutputStream fichierListe = new FileOutputStream("data/"
-                    + nomListe + ".dat");
-            ObjectOutputStream oos = new ObjectOutputStream(fichierListe);
-            oos.writeObject(listeASerialiser);
-            oos.flush();
-            oos.close();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-
     /**
      * Methode public permettant d'ajouter un nouveau materiel a la liste
      * disponible, ou s'il est deja present ajoute seulement le nombre
@@ -182,22 +91,36 @@ public class Stock {
      * @param nombre
      *            Le nombre d'exemplaire de materiel a ajouter.
      */
-    public void ajouterNouveauMateriel(String name, int nombre) {
+    public void ajouterNouveauMateriel(Caracteristiques caracs, int nombre) {
+        Materiel mat = new Materiel(caracs, Materiel.DUREE_EMPRUNT_MAX, nombre);
+        int index=rechercheIndexMateriel(mat, stockTotal);
+        if (index>=0) stockTotal.get(index).incrNombre(nombre);
+        else stockTotal.add(mat);
+        FichierData.serialisationListeMateriel(stockTotal, "stockTotal");
+    }
 
-        Materiel nouveauMat = new Materiel(name, nombre);
-        if (stockTotal.contains(name)){
-            
-        }
-            /*
-            (stockTotal.get(name).incrNombre(nombre);
-        else
-            (stockTotal.put(name, nouveauMat);
-        serialisationListe((stockTotal, "disponible");
-        */
-    }
+    public void ajouterExemplairesTypeD
+    /**
+     * Méthode retournant une liste de matériel réservable ayant des
+     * caractéristiques spécifiques, entre la date début et la date fin.
+     * 
+     * @param debut 
+     *          la date de début de réservation
+     * @param 
+     *          fin la date de fin de réservation
+     * @param 
+     *          caracs les caractéristiques
+     * @return
+     *          Une liste d'objets disponibles selon les critères spécifiés
+     */         
     
-    public HashMap<String,String> materielDispo(Date debut, Date fin, Caracteristiques caracs) {
+    
+    
+    public HashMap<String, String> materielDispo(Date debut, Date fin,
+            Caracteristiques caracs) {
+        
     }
+
     /**
      * Methode public permettant de retourner le type de materiel possedant le
      * plus d'exemplaires disponibles
@@ -243,10 +166,13 @@ public class Stock {
      * @param exemplairesAReparer
      *            Nombre d'exemplaires a reparer
      * @return Retourne -1 si les exemplaires ont bien ete mis en reparation,
-     *         sinon retourne le nombre d'exemplaires disponibles (nombre max que
-     *         l'on peut mettre en reparation) ou -2 si erreur
+     *         sinon retourne le nombre d'exemplaires disponibles (nombre max
+     *         que l'on peut mettre en reparation) ou -2 si erreur
      */
     public int aReparer(String type, int exemplairesAReparer) {
+        
+        
+        /*
         int nombreDisponibles = retirerExemplairesTypeDeMateriel(type,
                 exemplairesAReparer, disponible);
 
@@ -261,6 +187,7 @@ public class Stock {
         serialisationListe(statistiquesReparations, "statistiquesReparations");
 
         return nombreDisponibles;
+        */
     }
 
     /**
@@ -274,7 +201,7 @@ public class Stock {
      * @return Retourne 1 si le retour c'est bien passe, sinon retourne 0
      */
     public int retourReparation(String type, int exemplairesARetirer) {
-        
+
         if (reparations.containsKey(type)) {
             int nombreRetour = reparations.get(type).getNombre();
 
@@ -304,7 +231,7 @@ public class Stock {
         else {
             return 0;
         }
-        
+
     }
 
     /**
@@ -344,16 +271,19 @@ public class Stock {
      *         retourne le nombre max d'exemplaires pouvant etre retires ou -2
      *         si erreur
      */
-    private int retirerExemplairesTypeDeMateriel(String type,
-            int exemplairesARetirer, ArrayList<Materiel> liste) {
+    private int retirerExemplairesTypeDeMateriel(Materiel aReparer) {
+        
+        if (li)
+        /*
         if (!(liste.containsKey(type)))
             return -2;
         else {
-            if (liste.get(type).getNombre()<exemplairesARetirer) 
+            if (liste.get(type).getNombre() < exemplairesARetirer)
                 return liste.get(type).getNombre();
             liste.get(type).decrNombre(exemplairesARetirer);
             return -1;
         }
+        */
 
     }
 
@@ -384,15 +314,12 @@ public class Stock {
         return nombreDisponibles;
     }
 
-    
     private boolean verifierValidite(MaterielEmprunte emprunt) {
         /*
          * materiel existant et dispo qté dans le stock
-         * 
-         *
          */
     }
-    
+
     /**
      * Methode public permettant de rendre un materiel donc retirer de la liste
      * d'emprunts et mettre dans disponible
@@ -402,15 +329,16 @@ public class Stock {
     public boolean rendre(String type, int nombreExemplaires,
             Personne emprunteur) {
         for (String id : emprunts.keySet()) {
-            if (emprunts.get(id).getMatEmprunt().equals(type) 
-                    && emprunts.get(id).getMatEmprunt().getNombre()>=nombreExemplaires) {
+            if (emprunts.get(id).getMatEmprunt().equals(type)
+                    && emprunts.get(id).getMatEmprunt().getNombre() >= nombreExemplaires) {
                 int nombreRetour = emprunts.get(id).getMatEmprunt().getNombre();
-    
+
                 if (nombreRetour == nombreExemplaires) {
                     emprunts.remove(id);
-                    ajouterExemplairesTypeDeMateriel(type, nombreRetour, disponible);
+                    ajouterExemplairesTypeDeMateriel(type, nombreRetour,
+                            disponible);
                 }
-    
+
                 else if (nombreRetour > nombreExemplaires) {
                     emprunts.get(id).getMatEmprunt()
                             .decrNombre(nombreExemplaires);
@@ -419,7 +347,7 @@ public class Stock {
                 }
                 serialisationListeEmprunts(emprunts, "emprunts");
                 serialisationListe(disponible, "disponible");
-    
+
                 return true;
             }
         }
