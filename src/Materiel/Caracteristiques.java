@@ -13,6 +13,7 @@ import Outils.FichierData;
  * @author lyameina
  *
  */
+@SuppressWarnings("serial")
 public class Caracteristiques implements java.io.Serializable{
 	public ArrayList<String> clePossible;
 	private final String NOMFICHIER = "listeCaracteristiques";
