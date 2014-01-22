@@ -203,7 +203,7 @@ public class Stock {
      *           - Le nombre de materiel HS parmi le materiel rendu
      * @return Un entier positif si l'id est correct, -1 sinon
      */
-    public int renduEmprunt(String idEmprunt, int nombreRendus, int hs) {
+    public boolean renduEmprunt(String idEmprunt, int nombreRendus, int hs) {
         int indexEmprunt = rechercheIndexMaterielEmprunte(idEmprunt, empruntsEtReservs);
         if (indexEmprunt>=0) {
             Materiel mat = empruntsEtReservs.get(indexEmprunt).getMatEmprunt();
@@ -215,12 +215,15 @@ public class Stock {
                 matRepar.setNombre(hs);
                 ajouterMateriel(matRepar, reparations);
                 retirerMateriel(matRepar, stockTotal);
+                
             }
+            return true;
+            
         }
         f.serialisationListeMateriel(reparations, "reparations");
         f.serialisationListeMateriel(stockTotal, "stockTotal");
         f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
-        return indexEmprunt;
+        return false;
     }
     
     /**
