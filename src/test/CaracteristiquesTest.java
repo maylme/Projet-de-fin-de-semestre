@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import Materiel.Caracteristiques;
@@ -13,15 +15,30 @@ import Materiel.CleInexistanteException;
  */
 public class CaracteristiquesTest {
 
-
+	/**
+	 * Marche.
+	 * A tester en mettant la varialble clePossible en public
+	 * 
+	@Test
+	public void testCaracteristiques(){
+		Caracteristiques c = new Caracteristiques();
+		ArrayList<String> expected = new ArrayList<String>();
+		expected.add("Type");
+		expected.add("Nom");
+		expected.add("Marque");
+		expected.add("Taille de l'écran");
+		if (!(expected.equals(c.clePossible)))
+			fail (c.clePossible.toString() + "\n"+ expected.toString());
+	}
+	**/
 
 	@Test
 	public void testAddSpecification() {
 		Caracteristiques c = new Caracteristiques();
 		try{
-			c.addSpecification("type", "ordi");
+			c.addSpecification("Type", "ordi");
 			
-			if (!(c.getResultat().containsKey("type")))
+			if (!(c.getResultat().containsKey("Type")))
 				fail("n'a pas ajouter la cle");
 			if (!(c.getResultat().containsValue("ordi")))
 				fail("n'a pas ajouter la valeur");
@@ -31,7 +48,7 @@ public class CaracteristiquesTest {
 			fail("ne reconnais pas la cle");
 		}
 		try{
-			c.addSpecification("poney", "rose");
+			c.addSpecification("Poney", "rose");
 			fail("n'a pas vu que la cle n'existait pas");
 		}catch(CleInexistanteException e){
 			
@@ -48,6 +65,27 @@ public class CaracteristiquesTest {
 		}catch(CleInexistanteException e){
 			fail("n'ajoute pas la cle");
 		}
+	}
+	
+	@Test
+	public void testEquals(){
+		Caracteristiques c1 = new Caracteristiques();
+		Caracteristiques c2 = new Caracteristiques();
+
+		try{
+			c1.addSpecification("Type", "voiture");
+			c2.addSpecification("Type", "voiture");
+		}catch (CleInexistanteException e){}
+		
+		if (!c1.equals(c2))
+			fail("identique");
+		Caracteristiques c3 =  new Caracteristiques();
+		try{
+			c1.addSpecification("Type", "twingo");
+		}catch (CleInexistanteException e){}
+		if (c1.equals(c2))
+			fail("different");
+		
 	}
 
 }

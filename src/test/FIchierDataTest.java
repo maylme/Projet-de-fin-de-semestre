@@ -11,14 +11,14 @@ import Outils.FichierData;
 public class FIchierDataTest {
 
 	@Test
-	public void testSerialisationListe() {
+	public void testSerialisationListeString() {
 		ArrayList<String> s = new ArrayList<String>();
 		s.add("poney");
 		s.add("Derpy Hooves");
 		s.add("Fluttershy");
 		FichierData f = new FichierData();
 		
-		f.serialisationListe(s, "liste");
+		f.serialisationListeString(s, "liste");
 		ArrayList<String> str = f.deserialisationListeString("liste");
 		if (!(s.equals(str)))
 			fail("pas bien");
@@ -43,7 +43,7 @@ public class FIchierDataTest {
 		s.add("Fluttershy");
 		FichierData f = new FichierData();
 		
-		f.serialisationListe(s, "liste");
+		f.serialisationListeString(s, "liste");
 		ArrayList<String> str = f.deserialisationListeString("liste");
 		if (!(s.equals(str)))
 			fail("pas bien");
