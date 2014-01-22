@@ -40,7 +40,14 @@ public class InterfaceUtilisateur
 
 			if(!premierPassage)
 			{
-				gestion = new Gestion(nom, prenom, statut) ;
+				gestion = new Gestion() ;
+				if (gestion.existe(nom, prenom, statut))
+				{
+					if (demandeMotDePasse(statut, false))
+					{
+						
+					}
+				}
 			}
 
 			else
@@ -213,6 +220,40 @@ public class InterfaceUtilisateur
 		}
 	}
 
+	/** 
+	* Permet de demander un mot de passe et de vérifier s'il est
+	* le même que celui passer en parametre. Il y a trois essais.
+	* 
+	* @param gestionnaire booleen permettant de savoir si l'utilisateur courant est
+	* gestionnaire
+	* @param etapeCreation booleen permettant de savoir si on est a la creation
+	* d'un gestionnaire ou a son mdp personnel
+	* @return Un booleen pour savoir si le mot de passe est le bon
+	*/
+	private boolean demandeMotDePasse(boolean gestionnaire, boolean etapeCreation)
+	{
+		int essais = 3 ;
+
+		do
+		{				
+			System.out.printf("\nSaisissez le mot de passe : ") ;
+			String password = new String(console.readPassword()) ;
+
+			if(gestion.password(password, gestionnaire, etapeCreation))
+			{
+				System.out.println("\nMot de passe correct !\n") ;//Redirection vers le mode Gestion
+				return true ;
+			}
+
+			else
+			{
+				essais -- ;
+				System.out.println("\nMot de passe erroné !\nEssai(s) restant(s) : " + essais) ;
+			}
+		}
+		while(essais>0);
+		return false;
+	}
 	/** 
 	* Permet a l'utilisateur de saisir son nom. 
 	* 
