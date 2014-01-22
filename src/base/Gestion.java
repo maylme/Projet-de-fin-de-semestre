@@ -9,6 +9,8 @@ import Materiel.Stock;
 import Materiel.TypeDeMateriel;
 import Outils.FichierData;
 
+import utilisateurs.Emprunteur;
+import utilisateurs.Gestionnaire;
 import utilisateurs.Personne;
 
 /** 
@@ -26,93 +28,78 @@ public class Gestion
 
 	private Stock stock;
 	private ArrayList<MaterielEmprunte> refus ;
-	private HashMap<Personne, String> motDePasse;
+	private HashMap<Emprunteur, String> motDePasseEmprunteur;
+	private HashMap<Gestionnaire, String> motDePasseGestionnaire;
 	private Personne utilisateurCourant;
 	
-	
-	/** 
-	* Constructeur par defaut qui cree un nouvel objet Gestion
-	* ayant comme stock un nouveau stock, comme utilisateur 
-	* "INCONNU Inconnu" avec comme statut celui d'emprunteur.
-	*/ 
-	public Gestion()
-	{
-		this("inconnu", "inconnu", false) ;
-	}
-
 
 	/** 
 	* Constructeur avec paramètres qui cree un nouvel objet Gestion
 	* avec un utilisateur et qui lit la sauvegarde utilisateurs
-	* afin de voir si l'utilisateur existe deja.
 	*
-	* @param nom Le nom de l'utilisateur en cours.
-	* @param prenom Le prenom de l'utilisateur en cours.
-	* @param statut Le statut de l'utilisateur en cours
-	* (false = emprunteur ; true = gestionnaire).
 	*/ 
-	public Gestion(String nom, String prenom)
+	public Gestion()
 	{
 		//recuperation du HashMap motDePasse:
 		FichierData f  = new FichierData();
-		motDePasse = f.deserialisationHashMap("motDePasse");
+		motDePasseEmprunteur = f.deserialisationHashMap("motDePasse");
 		
 		//création de l'utilisateur courant:
-		utilisateurCourant = new Personne(nom, prenom);
-		
+		utilisateurCourant = new Personne();
+				
+		//création du stock;
 		stock = new Stock();
-		listeUtilisateurs = deserialisationListePersonne("listeUtilisateurs");
-		definirUtilisateur(nom, prenom,statut);
 	}
 	
-
-
 	/** 
-	* Methode de definition de l'utilisateur en cours. Regarde dans
-	* la liste des utilisateurs (historique) si l'utilisateur existe deja.
+	* Regarde dans le HashMap si l'utilisateur existe .
 	*
-	* @param listeASerialiser Le nom de l'HashMap a sauvegarder.
-	* @param nomListe Le nom du fichier dans lequel sauvegarder la liste.
+	* @param nom Le nom de l'utilisateur
+	* @param prenom Le prenom de l'utilisateur
+	* @param statut Le satut de l'utilisateur (false = emprunteur ; true = gestionnaire). 
 	*/ 
-	public void definirUtilisateur(String nom, String prenom, boolean statut)
-	{
-		int index = rechercheIndexPersonne(nom, prenom, statut) ;
 
-		if(index>=0)
-		{
-			utilisateur = listeUtilisateurs.get(index) ;
+	public boolean existe(String nom, String prenom, boolean gestionnaire ){
+		if (gestionnaire){
+			Gestionnaire aTester = new Gestionnaire (nom, prenom);
+			if (motDePasseGestionnaire.containsKey(aTester))
+				return true;
+			else
+				return false;
 		}
-
-		else
-		{
-			utilisateur = new Personne(nom, prenom, statut);
-			listeUtilisateurs.add(utilisateur) ;
-			serialisationListe(listeUtilisateurs, "listeUtilisateurs");
+		else{
+			Emprunteur aTester = new Emprunteur (nom, prenom);
+			if (motDePasseEmprunteur.containsKey(aTester))
+				return true;
+			else
+				return false;
 		}
 	}
-
-	/** 
-	* Methode de retour du statut de l'utilisateur.
-	*
-	* @return Un booleen qui correspond au statut de l'utilisateur :
-	* false pour un emprunteur et true pour un gestionnaire.
-	*/ 
-	public boolean statut()
-	{
-		return utilisateur.getStatut();
+	
+	
+	/**
+	 * Renvoie true si l'utilisateur est correctement loggé.
+	 * Set definitivement l'utlisateur courant
+	 * @param nom
+	 * @param Prenom
+	 * @param motDePasse
+	 * @param gestionnaire
+	 * @return true su l'utilisateur est loggé
+	 */
+	public boolean isLogged(String nom, String Prenom, String motDePasse, boolean gestionnaire){
+		if (gestionnaire){
+			Gestionnaire aTester = 
+		}
 	}
-
 	/** 
 	* Methode de recherche d'utilisateur dans la liste des utilisateurs.
 	*
 	* @param nom Le nom de l'utilisateur a rechercher.
 	* @param prenom Le prenom de l'utilisateur a rechercher.
 	* @param statut Le statut de l'utilisateur a rechercher.
-	* @return Un entier representant l'indice dans la liste de Personne
-	* correspondant a l'utilisateur recherche ou -1 si l'utilisateur
 	* n'a pas ete trouve.
 	*/
-	private int rechercheIndexPersonne(String nom, String prenom, boolean statut)
+	private void rechercheIndexPersonne(String nom, String prenom, boolean statut)
 	{
 		boolean trouve = false;
 		int indice = 0;

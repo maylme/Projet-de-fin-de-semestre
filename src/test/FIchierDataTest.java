@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.junit.Test;
 
 import utilisateurs.Eleve;
+import utilisateurs.Emprunteur;
 import utilisateurs.Personne;
 import utilisateurs.Professeur;
 
@@ -18,7 +19,7 @@ public class FIchierDataTest {
 	@Test
 	public void testSerialisationHashMap(){
 		HashMap<Personne, String> motDePasse = new HashMap<Personne, String>();
-		Personne hadock = new Professeur("Capitaine","Hadock");
+		Emprunteur hadock = new Professeur("Capitaine","Hadock");
 		String m2p = "tonnerre de brest";
 		motDePasse.put(hadock, m2p);
 		
@@ -26,6 +27,11 @@ public class FIchierDataTest {
 		f.serialisationHashMap(motDePasse, "motDePasse");
 		
 		HashMap<Personne, String> recuperation = f.deserialisationHashMap("motDePasse");
+		/**for (Personne p : recuperation.keySet()){
+			if (p.equals(hadock))
+				fail("")
+		}
+		**/
 		
 		if (!recuperation.containsKey(hadock))
 			fail(recuperation.toString()+ "\n" + motDePasse.toString());

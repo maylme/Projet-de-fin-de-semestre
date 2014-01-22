@@ -7,9 +7,15 @@ package utilisateurs;
  */
 public class Emprunteur extends Personne{
 	
+	private static final int DUREE_MAX_DEMPRUNT = 15;
 	protected int nombreEmprunts ;
 	protected int dureeMaxDEmprunt;
 	
+	
+	public Emprunteur (String nom, String prenom){
+		super(nom, prenom);
+		dureeMaxDEmprunt = DUREE_MAX_DEMPRUNT;
+	}
 	/** 
 	* Constructeur de la classe Emprunteur
 	* Il construit un Emprunteur avec son nom passe en parametre,
@@ -54,7 +60,7 @@ public class Emprunteur extends Personne{
 	{
 		super();
 		nombreEmprunts = 0;
-		dureeMaxDEmprunt = 15;
+		dureeMaxDEmprunt = DUREE_MAX_DEMPRUNT;
 	}
 	
 	/**
@@ -102,4 +108,15 @@ public class Emprunteur extends Personne{
 	{
 		nombreEmprunts+=nbrEmprunt;
 	}
+	
+	
+	@Override
+   public int hashCode(){
+       int result = 0;
+       result = 31*result+ dureeMaxDEmprunt;
+       result = 31*result + (nom !=null ? nom.hashCode() : 0);
+       result = 31*result + (prenom  !=null ? prenom.hashCode() : 0);
+      
+       return result;
+   }
 }
