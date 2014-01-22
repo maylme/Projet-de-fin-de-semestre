@@ -15,7 +15,7 @@ import Outils.FichierData;
  */
 @SuppressWarnings("serial")
 public class Caracteristiques implements java.io.Serializable{
-	public ArrayList<String> clePossible;
+	private ArrayList<String> clePossible;
 	private final String NOMFICHIER = "listeCaracteristiques";
 	private HashMap<String, String> resultat;
 	
@@ -54,6 +54,14 @@ public class Caracteristiques implements java.io.Serializable{
 		}
 		return false;
 	}
+	
+	@Override
+	public int hashCode(){
+		int result = 0;
+		result = 31*result + (resultat !=null ? resultat.hashCode() : 0);
+		result = 31*result + (clePossible !=null ? clePossible.hashCode() : 0);
+		return result;
+   }
 }
 /**
 GEstion ou dans l'interface

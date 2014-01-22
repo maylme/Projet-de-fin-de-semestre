@@ -153,4 +153,6 @@ public class Gestion
 		utilisateurCourant = new Eleve(nom, prenom);
 		hashMapEmprunteur.put((Emprunteur)utilisateurCourant, passwd);
 	}
+	
+	
 }
