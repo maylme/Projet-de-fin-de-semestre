@@ -84,7 +84,11 @@ public class Stock {
         }
         return -1;
     }
-
+    
+    public void ajouterNouveauMateriel(Materiel mat) {
+        ajouterMateriel(mat, stockTotal);
+    }
+    
     /**
      * Methode qui ajoute intelligement du materiel dans une liste de materiel donnee, 
      * 
