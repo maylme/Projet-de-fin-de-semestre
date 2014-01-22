@@ -20,6 +20,11 @@ public class Materiel implements java.io.Serializable
 	public static final int DUREE_EMPRUNT_MAX = 15;
 
 	protected int nombreExemplaires ;
+<<<<<<< HEAD
+	protected Caracteristiques caracs;
+	public static final int DUREE_EMPRUNT_MAX_CLASSIQUE = 15;
+=======
+>>>>>>> 87f969d68dae98621f81f70e76e84d9e21e342ab
 	protected int dureeMaxEmprunt;
 	protected Caracteristiques caracteristiques;
 	

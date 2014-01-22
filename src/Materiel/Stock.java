@@ -17,11 +17,11 @@ import utilisateurs.Personne;
 
 public class Stock {
 
-    private HashMap<String, Materiel> disponible;
-    private HashMap<String, Materiel> reparations;
-    private HashMap<String, MaterielEmprunte> emprunts;
-    private HashMap<String, Materiel> statistiquesReparations;
-    private HashMap<String, Materiel> statistiquesEmprunts;
+    private ArrayList<Materiel> stockTotal;
+    private ArrayList<Materiel> reparations;
+    private ArrayList<MaterielEmprunte> emprunts;
+    private ArrayList<Materiel> statistiquesReparations;
+    private ArrayList<Materiel> statistiquesEmprunts;
 
     /**
      * Constructeur de la classe Stock Il construit le stock avec les 5 listes
@@ -29,13 +29,17 @@ public class Stock {
      * statistiquesEmprunts).
      */
     public Stock() {
-        disponible = deserialisationListeTypeDeMateriel("disponible");
+        /*
+        stockTotal = deserialisationListeTypeDeMateriel("stockTotal");
         reparations = deserialisationListeTypeDeMateriel("reparations");
         emprunts = deserialisationListeMaterielEmprunte("emprunts");
         statistiquesReparations = deserialisationListeTypeDeMateriel("statistiquesReparations");
         statistiquesEmprunts = deserialisationListeTypeDeMateriel("statistiquesEmprunts");
+        */
     }
-
+    
+    
+     
     /**
      * Methode privee de deserialiser les listes du type TypeDeMateriel C'est a
      * dire qui a partir d'un fichier (ici un .dat) recupere les listes qui ont
@@ -48,29 +52,32 @@ public class Stock {
      *            deserialiser.
      * @return Retourne la liste obtenue.
      */
-    private HashMap<String, Materiel> deserialisationListeTypeDeMateriel(
+    
+    /*
+    private ArrayList<Materiel> deserialisationListeTypeDeMateriel(
             String nomListe) {
         try {
             File file = new File("data/" + nomListe + ".dat");
             if (!file.exists()) {
-                return new HashMap<String, Materiel>();
+                return new ArrayList<Materiel>();
             } else if (file.length() <= 4) // un fichier vide cree par le
             // programme fait 4 octets.
             {
-                return new HashMap<String, Materiel>();
+                return new ArrayList<Materiel>();
             } else {
                 FileInputStream fichierData = new FileInputStream("data/"
                         + nomListe + ".dat");
                 ObjectInputStream ois = new ObjectInputStream(fichierData);
-                return (HashMap<String, Materiel>) ois.readObject();
+                return (ArrayList<Materiel>) ois.readObject();
             }
         } catch (java.io.IOException e) {
             e.printStackTrace();
         } catch (java.lang.ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return new HashMap<String, Materiel>();
+        return new ArrayList<Materiel>();
     }
+    */
 
     /**
      * Methode privee de deserialiser les listes du type MaterielEmprunte C'est
@@ -84,27 +91,29 @@ public class Stock {
      *            deserialiser.
      * @return Retourne la liste obtenue.
      */
-    private HashMap<String, MaterielEmprunte> deserialisationListeMaterielEmprunte(
+    /*
+    private ArrayList<MaterielEmprunte> deserialisationListeMaterielEmprunte(
             String nomListe) {
         try {
             File file = new File("data/" + nomListe + ".dat");
             if (!file.exists()) {
-                return new HashMap<String, MaterielEmprunte>();
+                return new ArrayList<MaterielEmprunte>();
             } else if (file.length() <= 4) {
-                return new HashMap<String, MaterielEmprunte>();
+                return new ArrayList<MaterielEmprunte>();
             } else {
                 FileInputStream fichierData = new FileInputStream("data/"
                         + nomListe + ".dat");
                 ObjectInputStream ois = new ObjectInputStream(fichierData);
-                return (HashMap<String, MaterielEmprunte>) ois.readObject();
+                return (ArrayList<MaterielEmprunte>) ois.readObject();
             }
         } catch (java.io.IOException e) {
             e.printStackTrace();
         } catch (java.lang.ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return new HashMap<String, MaterielEmprunte>();
+        return new ArrayList<MaterielEmprunte>();
     }
+    */
 
     /**
      * Methode privee de serialiser les listes. C'est a dire qui enregistrer
@@ -119,7 +128,8 @@ public class Stock {
      *            Une chaine de caractere representant le nom de la liste a
      *            serialiser.
      */
-    private void serialisationListe(HashMap<String, Materiel> listeASerialiser,
+    /*
+    private void serialisationListe(ArrayList<Materiel> listeASerialiser,
             String nomListe) {
         try {
             FileOutputStream fichierListe = new FileOutputStream("data/"
@@ -132,7 +142,7 @@ public class Stock {
             e.printStackTrace();
         }
     }
-
+    */
     /**
      * Methode privee de serialiser les listes. C'est a dire qui enregistrer
      * dans un fichier (ici un .dat) la liste de type MaterielEmprunte passee en
@@ -146,8 +156,9 @@ public class Stock {
      *            Une chaine de caractere representant le nom de la liste a
      *            serialiser.
      */
+    /*
     private void serialisationListeEmprunts(
-            HashMap<String, MaterielEmprunte> listeASerialiser, String nomListe) {
+            ArrayList<MaterielEmprunte> listeASerialiser, String nomListe) {
         try {
             FileOutputStream fichierListe = new FileOutputStream("data/"
                     + nomListe + ".dat");
@@ -159,21 +170,7 @@ public class Stock {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Methode public permettant de recuperer le nombre d'exemplaire de ce qu'il
-     * y a en stock, tous types confondus.
-     * 
-     * @return Entier representant le nombre de materiel en stock.
-     */
-    public int exemplairesEnStock() {
-        int stockTotal = 0;
-        for (String id : disponible.keySet()) {
-            stockTotal += disponible.get(id).getNombre();
-        }
-
-        return stockTotal;
-    }
+    */
 
     /**
      * Methode public permettant d'ajouter un nouveau materiel a la liste
@@ -188,13 +185,19 @@ public class Stock {
     public void ajouterNouveauMateriel(String name, int nombre) {
 
         Materiel nouveauMat = new Materiel(name, nombre);
-        if (disponible.containsKey(name))
-            disponible.get(name).incrNombre(nombre);
+        if (stockTotal.contains(name)){
+            
+        }
+            /*
+            (stockTotal.get(name).incrNombre(nombre);
         else
-            disponible.put(name, nouveauMat);
-        serialisationListe(disponible, "disponible");
+            (stockTotal.put(name, nouveauMat);
+        serialisationListe((stockTotal, "disponible");
+        */
     }
-
+    
+    public HashMap<String,String> materielDispo(Date debut, Date fin, Caracteristiques caracs) {
+    }
     /**
      * Methode public permettant de retourner le type de materiel possedant le
      * plus d'exemplaires disponibles
@@ -317,7 +320,7 @@ public class Stock {
      *            nombre d'exemplaire
      */
     private void ajouterExemplairesTypeDeMateriel(String type,
-            int exemplairesAAjouter, HashMap<String, Materiel> liste) {
+            int exemplairesAAjouter, ArrayList<Materiel> liste) {
 
         if (liste.containsKey(type)) {
             liste.get(type).incrNombre(exemplairesAAjouter);
@@ -342,7 +345,7 @@ public class Stock {
      *         si erreur
      */
     private int retirerExemplairesTypeDeMateriel(String type,
-            int exemplairesARetirer, HashMap<String, Materiel> liste) {
+            int exemplairesARetirer, ArrayList<Materiel> liste) {
         if (!(liste.containsKey(type)))
             return -2;
         else {
@@ -585,7 +588,7 @@ public class Stock {
      * 
      * @return Retourne la liste de type TypeDeMateriel disponible
      */
-    public HashMap<String, Materiel> getListeDisponible() {
+    public ArrayList<Materiel> getListeDisponible() {
         return disponible;
     }
 
@@ -595,7 +598,7 @@ public class Stock {
      * 
      * @return Retourne la liste de type TypeDeMateriel reparations
      */
-    public HashMap<String, Materiel> getListeReparations() {
+    public ArrayList<Materiel> getListeReparations() {
         return reparations;
     }
 
@@ -605,7 +608,7 @@ public class Stock {
      * 
      * @return Retourne la liste de type MaterielEmprunte emprunts
      */
-    public HashMap<String, MaterielEmprunte> getListeEmprunts() {
+    public ArrayList<MaterielEmprunte> getListeEmprunts() {
         return emprunts;
     }
 }
