@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import utilisateurs.Personne;
 
 import Materiel.*;
 
@@ -89,9 +92,73 @@ public class FichierData {
 			e.printStackTrace();
 		}
 	}
+	
+	/** 
+	* Methode public serialiser une HashMap.
+	* C'est a dire qui enregistrer dans un fichier (ici un .dat) la hashmap de type
+	* Personne et String passee en parametre, parce que lors de la fermeture du programme
+	* il faut pouvoir recuperer les informations.
+	*
+	* @param s La liste a serialiser dans un fichier.
+	* @param nomListe Une chaine de caractere representant le nom de la liste a serialiser.
+	*/
+	public  void serialisationHashMap(HashMap<Personne, String> s, String nomListe)
+	{
+		try
+		{ 
+			FileOutputStream fichierListe = new FileOutputStream("data/" + nomListe + ".dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fichierListe);
+			oos.writeObject(s);
+			oos.flush();
+			oos.close();
+		}
+		catch (java.io.IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
 		
 	/** 
-	* Methode pulic de deserialiser les listes du type MaterielEmprunte
+	* Methode public de deserialiser un Hasmap Personne String
+	* C'est a dire qui a partir d'un fichier (ici un .dat) recupere le Hashmap
+	* qui a ete prealablement enregistre. Ou si le fichier est vide ou non present
+	* on cree un nouvelle liste.
+	*
+	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
+	* @return Retourne le hashmap obtenue.
+	*/
+	public  HashMap<Personne, String> deserialisationHashMap(String nomListe)
+	{
+		try
+		{
+			File file = new File("data/" + nomListe + ".dat");
+		    if (!file.exists())
+		    {
+        		return new HashMap<Personne, String>();
+    		} 
+    		else if (file.length() <= 4)
+    		{
+        		return new HashMap<Personne, String>();
+        	}
+        	else
+        	{
+        		FileInputStream fichierData = new FileInputStream("data/" + nomListe + ".dat");
+				ObjectInputStream ois = new ObjectInputStream(fichierData);
+				return (HashMap<Personne, String>) ois.readObject();
+        	}	
+		}
+		catch (java.io.IOException e)
+		{
+			e.printStackTrace();
+		}
+		catch (java.lang.ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		return new HashMap<Personne, String>();
+	}
+	/** 
+	* Methode public de deserialiser les listes du type MaterielEmprunte
 	* C'est a dire qui a partir d'un fichier (ici un .dat) recupere la liste
 	* qui a ete prealablement enregistre. Ou si le fichier est vide ou non present
 	* on cree un nouvelle liste.
