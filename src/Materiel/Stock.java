@@ -70,8 +70,8 @@ public class Stock {
      * Methode permettant d'obtenir l'emplacement dans une liste d'emprunts d'un 
      * certain type d'emprunts. 
      * 
-     * @param matEmp 
-     *          le type d'emprunt recherche
+     * @param idEmprunt 
+     *          l'id de l'emprunt recherche
      * @param liste 
      *          la liste a parcourir
      * @return
@@ -168,17 +168,6 @@ public class Stock {
         return listeCaracs;
     }
 
-    /*
-     * hash
-     * personneCherchee
-     * for (Personne p : hashmap.keySet()) {
-     *          if personneCherchee.equals(p) 
-     *                  
-     * }
-     *
-     */
-    
-    
     /**
      * Methode qui gere le retour de materiel emprunte : un certain nombre de materiel
      * est rendu et la liste des reparations est mise a jour si il y a du materiel
@@ -186,317 +175,73 @@ public class Stock {
      * Si il n'y a plus de materiel associe a l'emprunt, ce dernier est supprime de
      * la liste d'emprunts
      * 
-     * @param rendu
-     *          Le materiel rendu
+     * @param idEmprunt
+     *           - L'id de l'emprunt
+     * @param nombreRendus
+     *           - Le nombre de materiel rendu         
      * @param HS
-     *          Le nombre de materiel HS parmi le materiel rendu
+     *           - Le nombre de materiel HS parmi le materiel rendu
+     * @return Un entier positif si l'id est correct, -1 sinon
      */
-    public void renduEmprunt(String idEmprunt,int nombreRendus, int HS) {
+    public int renduEmprunt(String idEmprunt, int nombreRendus, int hs) {
         int indexEmprunt = rechercheIndexMaterielEmprunte(idEmprunt, empruntsEtReservs);
-        Materiel mat = (Materiel) empruntsEtReservs.get(indexEmprunt).getMatEmprunt().clone();
-        int indexRep = rechercheIndexMateriel(rendu.getMatEmprunt(), reparations);
         if (indexEmprunt>=0) {
-            
+            Materiel mat = empruntsEtReservs.get(indexEmprunt).getMatEmprunt();
+            mat.decrNombre(nombreRendus);
+            if (mat.getNombre() <= 0) 
+                empruntsEtReservs.remove(indexEmprunt);
+            if (hs!=0) {
+                Materiel matRepar = mat.clone();
+                matRepar.setNombre(hs);
+                ajouterMateriel(matRepar, reparations);
+                retirerMateriel(matRepar, stockTotal);
+            }
         }
+        f.serialisationListeMateriel(reparations, "reparations");
+        f.serialisationListeMateriel(stockTotal, "stockTotal");
+        f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
+        return indexEmprunt;
     }
     
     /**
-     * Methode public permettant de retourner le type de materiel possedant le
-     * plus d'exemplaires disponibles
+     * Méthode qui replace les éléments passés en paramètre dans le stock total.
      * 
-     * @return Retourne un TypeDeMateriel correspondant au plus grand nombre
-     *         d'exemplaire du type disponible.
+     * @param repaired
+     *          Le materiel réparé
      */
-    /*
-    public Materiel typeDeMaterielenPlusGrandNombre() {
-        Materiel matMax = new Materiel("", -1);
-        for (String id : disponible.keySet()) {
-            Materiel matCourant = disponible.get(id);
-            if (matMax.getNombre() < matCourant.getNombre())
-                matMax = matCourant;
-        }
-        return matMax;
-    }*/
+    public void retourReparation(Materiel repaired) {
+        retirerMateriel(repaired, reparations);
+        ajouterMateriel(repaired, stockTotal);
+        f.serialisationListeMateriel(reparations, "reparations");
+        f.serialisationListeMateriel(stockTotal, "stockTotal");
 
-    /**
-     * Methode public permettant de retourner le nombre d'exemplaires
-     * disponibles ayant un nom bien défini
-     * 
-     * @param type
-     *            Le nom du type de materiel a trouver dans la liste disponible.
-     * @return Le nombre d'exemplaire du type passe en parametre.
-     */
-    public int exemplairesEnStockType(String type) {
-        int nombreType = 0;
-
-        for (String id : disponible.keySet()) {
-            if (disponible.containsKey(id))
-                nombreType += disponible.get(id).getNombre();
-        }
-        return nombreType;
     }
-
+    
+    /**
+     * Méthode qui supprime du matériel HS de la liste de réparations
+     * 
+     * @param matSuppr
+     */
+    public void supprimerMaterielHS(Materiel matSuppr) {
+        retirerMateriel(matSuppr, reparations);
+        f.serialisationListeMateriel(reparations, "reparations");
+    }
+    
+    
+    /**
+     * Méthode qui met à jour la liste des emprunts avec son paramètre.
+     * 
+     * @param matEmprunte
+     *          L'emprunt à rajouter.
+     */
+    public void emprunter(MaterielEmprunte matEmprunte) {
+        empruntsEtReservs.add(matEmprunte);
+        f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
+    }
+    
     
 
-    /**
-     * Methode public permettant de retirer un nombre d'exemplaires de la liste
-     * de reparation et d'ajouter a la liste disponible
-     * 
-     * @param type
-     *            Le nom du type de materiel a rendre.
-     * @param exemplairesARetirer
-     *            Nombre d'exemplaire a rendre
-     * @return Retourne 1 si le retour c'est bien passe, sinon retourne 0
-     */
-    public int retourReparation(String type, int exemplairesARetirer) {
-
-        if (reparations.containsKey(type)) {
-            int nombreRetour = reparations.get(type).getNombre();
-
-            if (nombreRetour >= exemplairesARetirer) {
-                if (nombreRetour == exemplairesARetirer) {
-                    reparations.remove(type);
-                    ajouterExemplairesTypeDeMateriel(type, nombreRetour,
-                            disponible);
-                }
-
-                else if (nombreRetour > exemplairesARetirer) {
-                    reparations.get(type).decrNombre(exemplairesARetirer);
-                    ajouterExemplairesTypeDeMateriel(type, exemplairesARetirer,
-                            disponible);
-                }
-                serialisationListe(reparations, "reparations");
-                serialisationListe(disponible, "disponible");
-
-                return 1;
-            }
-
-            else {
-                return 0;
-            }
-        }
-
-        else {
-            return 0;
-        }
-
-    }
-
-    /**
-     * Methode privee permettant d'ajouter un nombre d'exemplaires a un type
-     * dans une liste de materiel de type Materiel.
-     * 
-     * @param type
-     *            Le nom du type de materiel.
-     * @param exemplairesAAjouter
-     *            Nombre d'exemplaire a ajouter
-     * @param liste
-     *            Liste de type TypeDeMateriel dans laquelle il faut ajouter le
-     *            nombre d'exemplaire
-     */
-    private void ajouterExemplairesTypeDeMateriel(String type,
-            int exemplairesAAjouter, ArrayList<Materiel> liste) {
-
-        if (liste.containsKey(type)) {
-            liste.get(type).incrNombre(exemplairesAAjouter);
-            return;
-        }
-        Materiel mtl = new Materiel(type, exemplairesAAjouter);
-        liste.put(type, mtl);
-    }
-
-    /**
-     * Methode privee permettant de retirer un nombre d'exemplaires d'un type de
-     * materiel Retourne -1 si tous les exemplaires passes ont ete retires
-     * Retourne le nombre max d'exemplaires pouvant etre retires sinon ou -2 si
-     * erreur
-     * 
-     * @param type
-     *            Le nom du type de materiel a retirer.
-     * @param exemplairesARetirer
-     *            Nombre d'exemplaire a retirer
-     * @return Retourne -1 si les exemplaires ont bien ete retires, sinon
-     *         retourne le nombre max d'exemplaires pouvant etre retires ou -2
-     *         si erreur
-     */
-    private int retirerExemplairesTypeDeMateriel(Materiel aReparer) {
-        
-        if (li)
-        /*
-        if (!(liste.containsKey(type)))
-            return -2;
-        else {
-            if (liste.get(type).getNombre() < exemplairesARetirer)
-                return liste.get(type).getNombre();
-            liste.get(type).decrNombre(exemplairesARetirer);
-            return -1;
-        }
-        */
-
-    }
-
-    /**
-     * Methode public permettant de creer un emprunt
-     * 
-     * @return Retourne -1 si l'emprunt est valide Retourne le nombre
-     *         d'exemplaires pouvant être empruntes sinon ou -2 si erreur.
-     */
-    public int emprunter(String type, int nombreExemplaires,
-            Emprunteur emprunteur, Date date, int duree) {
-        int nombreDisponibles = retirerExemplairesTypeDeMateriel(type,
-                nombreExemplaires, disponible);
-
-        if (nombreDisponibles == -1) {
-            ajouterExemplairesTypeDeMateriel(type, nombreExemplaires,
-                    statistiquesEmprunts);
-            MaterielEmprunte nouvelEmprunt = new MaterielEmprunte(new Materiel(
-                    type, nombreExemplaires), emprunteur, date, duree);
-            if (verifierValidite(nouvelEmprunt)) {
-                emprunts.put(nouvelEmprunt.getId(), nouvelEmprunt);
-            }
-        }
-        serialisationListe(disponible, "disponible");
-        serialisationListe(statistiquesEmprunts, "statistiquesEmprunts");
-        serialisationListeEmprunts(emprunts, "emprunts");
-
-        return nombreDisponibles;
-    }
-
-    private boolean verifierValidite(MaterielEmprunte emprunt) {
-        /*
-         * materiel existant et dispo qté dans le stock
-         */
-    }
-
-    /**
-     * Methode public permettant de rendre un materiel donc retirer de la liste
-     * d'emprunts et mettre dans disponible
-     * 
-     * @return Retourne true si le rendu est valide, sinon false
-     */
-    public boolean rendre(String type, int nombreExemplaires,
-            Personne emprunteur) {
-        for (String id : emprunts.keySet()) {
-            if (emprunts.get(id).getMatEmprunt().equals(type)
-                    && emprunts.get(id).getMatEmprunt().getNombre() >= nombreExemplaires) {
-                int nombreRetour = emprunts.get(id).getMatEmprunt().getNombre();
-
-                if (nombreRetour == nombreExemplaires) {
-                    emprunts.remove(id);
-                    ajouterExemplairesTypeDeMateriel(type, nombreRetour,
-                            disponible);
-                }
-
-                else if (nombreRetour > nombreExemplaires) {
-                    emprunts.get(id).getMatEmprunt()
-                            .decrNombre(nombreExemplaires);
-                    ajouterExemplairesTypeDeMateriel(type, nombreExemplaires,
-                            disponible);
-                }
-                serialisationListeEmprunts(emprunts, "emprunts");
-                serialisationListe(disponible, "disponible");
-
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Methode publique permettant de trouver le materiel le plus emprunte.
-     * 
-     * @return Retourne le TypeDeMateriel le plus emprunte sinon retourne null.
-     */
-    public Materiel materielPlusEmprunte() {
-        int index = 0;
-
-        if (statistiquesEmprunts.size() > 0) {
-            for (int i = 0; i < statistiquesEmprunts.size() - 1; i++) {
-                if (statistiquesEmprunts.get(index).getNombre() < statistiquesEmprunts
-                        .get(i + 1).getNombre()) {
-                    index = i + 1;
-                }
-
-                else {
-                    index = 0;
-                }
-            }
-            return statistiquesEmprunts.get(index);
-        }
-
-        else {
-            return null;
-        }
-    }
-
-    /**
-     * Methode publique permettant de trouver le materiel le plus repare.
-     * 
-     * @return Retourne le TypeDeMateriel le plus repare sinon retourne null
-     */
-    public Materiel materielPlusRepare() {
-        int index = 0;
-
-        if (statistiquesReparations.size() > 0) {
-            for (int i = 0; i < statistiquesReparations.size() - 1; i++) {
-                if (statistiquesReparations.get(index).getNombre() < statistiquesReparations
-                        .get(i + 1).getNombre()) {
-                    index = i + 1;
-                }
-
-                else {
-                    index = 0;
-                }
-            }
-            return statistiquesReparations.get(index);
-        }
-
-        else {
-            return null;
-        }
-    }
-
-    /**
-     * Methode publique permettant de retirer un materiel (un type) de la liste
-     * disponible.
-     * 
-     * @param type
-     *            Le type de materiel a retirer de la liste
-     * @return Retourne 1 si le type a bien ete retirer, sinon retourne 0.
-     */
-    public int retirerMaterielDisponible(String type) {
-
-        if (disponible.containsKey(type)) {
-            disponible.remove(type);
-            serialisationListe(disponible, "disponible");
-            return 1;
-        }
-
-        else {
-            return 0;
-        }
-    }
-
-    /**
-     * Methode publique permettant de retirer un materiel (un type) de la liste
-     * reparations.
-     * 
-     * @param type
-     *            Le type de materiel a retirer de la liste
-     * @return Retourne 1 si le type a bien ete retirer, sinon retourne 0.
-     */
-    public int retirerMaterielReparation(String type) {
-
-        if (reparations.containsKey(type)) {
-            reparations.remove(type);
-            serialisationListe(reparations, "reparations");
-            return 1;
-        }
-
-        else {
-            return 0;
-        }
-    }
+    
 
     /**
      * Methode publique permettant de faire un affichage par defaut de la
@@ -507,7 +252,7 @@ public class Stock {
      *         lors d'une demande d'affichage de stock.
      */
     public String toString() {
-        return "Affichage impossible : utilisez l'affichage spécifique (Matériel disponible, Matériel en réparation, Emprunts en cours";
+        return "Affichage impossible : utilisez l'affichage spécifique (Matériel présents en stock, Matériel en réparation, Emprunts en cours";
     }
 
     /**
@@ -519,8 +264,8 @@ public class Stock {
     public String afficherStock() {
         String retour = "\n     STOCK DISPONIBLE\n";
 
-        for (int i = 0; i < disponible.size(); i++) {
-            retour += disponible.get(i) + "\n";
+        for (int i = 0; i < stockTotal.size(); i++) {
+            retour += stockTotal.get(i) + "\n";
         }
 
         return retour;
@@ -550,22 +295,12 @@ public class Stock {
      */
     public String afficherEmprunts() {
         String retour = "\n     EMPRUNTS EN COURS\n";
-
+        /*
         for (int i = 0; i < emprunts.size(); i++) {
             retour += emprunts.get(i);
-        }
+        }*/
 
         return retour;
-    }
-
-    /**
-     * Methode publique utilisee pour acceder a la liste diponible a partir
-     * d'une autre classe.
-     * 
-     * @return Retourne la liste de type TypeDeMateriel disponible
-     */
-    public ArrayList<Materiel> getListeDisponible() {
-        return disponible;
     }
 
     /**
@@ -584,7 +319,7 @@ public class Stock {
      * 
      * @return Retourne la liste de type MaterielEmprunte emprunts
      */
-    public ArrayList<MaterielEmprunte> getListeEmprunts() {
-        return emprunts;
+    public ArrayList<MaterielEmprunte> getListeEmpruntsEtReservs() {
+        return empruntsEtReservs;
     }
 }
