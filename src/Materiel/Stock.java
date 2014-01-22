@@ -121,6 +121,7 @@ public class Stock {
      *          La liste a manipuler
      */
     public void retirerMateriel(Materiel mat, ArrayList<Materiel> liste) {
+        
         int index=rechercheIndexMateriel(mat, liste);
         if (index>=0) {
             liste.get(index).decrNombre(mat.getNombre());
@@ -138,7 +139,8 @@ public class Stock {
      */
     public void aReparer(Materiel aReparer) {
         retirerMateriel(aReparer, stockTotal);
-        ajouterMateriel(aReparer, reparations);
+        if (rechercheIndexMateriel(aReparer, stockTotal) == -1)
+            ajouterMateriel(aReparer, reparations);
         f.serialisationListeMateriel(stockTotal, "stockTotal");
         f.serialisationListeMateriel(reparations, "reparations");
     }
