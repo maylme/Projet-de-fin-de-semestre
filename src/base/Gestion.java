@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.*;
 
+import utilisateurs.Eleve;
 import utilisateurs.Emprunteur;
 import utilisateurs.Gestionnaire;
 import utilisateurs.Personne;
+import utilisateurs.Professeur;
 
 import Materiel.MaterielEmprunte;
 import Materiel.Stock;
@@ -134,8 +136,21 @@ public class Gestion
 		else{
 			return (this.isLogged(utilisateurCourant.getNom(), utilisateurCourant.getPrenom(), motdepasse, gestionnaire));
 		}
-			
-		}
-		
+	}
+	
+	
+	public void createNewGestionnaire(String nom, String prenom, String passwd){
+		utilisateurCourant = new Gestionnaire (nom, prenom);
+		hashMapGestionnaire.put((Gestionnaire)utilisateurCourant, passwd);
+	}
+	
+	public void createNewProf(String nom, String prenom, String passwd){
+		utilisateurCourant = new Professeur(nom, prenom);
+		hashMapEmprunteur.put((Emprunteur)utilisateurCourant, passwd);
+	}
+	
+	public void createNewEleve(String nom, String prenom, String passwd){
+		utilisateurCourant = new Eleve(nom, prenom);
+		hashMapEmprunteur.put((Emprunteur)utilisateurCourant, passwd);
 	}
 }
