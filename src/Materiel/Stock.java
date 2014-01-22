@@ -94,6 +94,7 @@ public class Stock {
      */
     public void ajouterNouveauMateriel(Materiel mat) {
         ajouterMateriel(mat, stockTotal);
+        f.serialisationListeMateriel(stockTotal, "stockTotal");
     }
     
     /**
@@ -285,6 +286,7 @@ public class Stock {
      */
     public void viderListeStock(){
         stockTotal.clear();
+        f.serialisationListeMateriel(stockTotal, "stockTotal");
     }
     
     /**
@@ -293,6 +295,7 @@ public class Stock {
      */
     public void viderListeReparations(){
         reparations.clear();
+        f.serialisationListeMateriel(reparations, "reparations");
     }
     
     /**
@@ -300,6 +303,7 @@ public class Stock {
      */
     public void viderListeEmprunts(){
         empruntsEtReservs.clear();
+        f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
     }
     /**
      * Methode publique permettant de faire un affichage par defaut de la
