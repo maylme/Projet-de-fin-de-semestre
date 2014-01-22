@@ -1,7 +1,10 @@
 package base ;
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import Materiel.MaterielEmprunte;
 
 /** 
 * Cette classe gere l'interface utilisateur du programme.
@@ -362,6 +365,57 @@ public class InterfaceUtilisateur
 	}
 
 	/** 
+	* Methode publique permettant de faire un affichage de
+	* la liste des emprunts de la personne.
+	* 
+	* @return La chaine de caractere contenant le contenu
+	* de la liste d'emprunt de la personne
+	*/
+	private String afficherEmpruntUtilisateur(ArrayList<MaterielEmprunte> matEmprunt)
+	{
+		String retour = "\n     EMPRUNTS\n" ;
+
+		for(int i = 0 ; i<matEmprunt.size() ; i++)
+		{
+			retour += i+". " + matEmprunt.get(i) + "\n" ;
+		}
+		return retour ;
+	}
+	
+	/** 
+	* Permet a l'utilisateur choisir un élément de la liste qui lui est presente.
+	* 
+	* @param tailleDeLaListe entier représentant la taille de la liste
+	* @return int representant le choix (position) dans la liste presentee
+	*/ 
+	private int choixDansListe(int tailleDeLaListe)
+	{
+		boolean wrong = false ;
+		String choix = "" ;
+
+		do
+		{
+			choix = console.readLine() ;
+
+			if (intTest(choix))
+			{
+				if(Integer.parseInt(choix)>=0 && Integer.parseInt(choix)< tailleDeLaListe)
+				{
+					wrong = true ;
+					return Integer.parseInt(choix);
+				}
+			}
+			else
+			{
+				System.out.printf("\nMerci de choisir entre 0 et " + (tailleDeLaListe - 1)  + " : ") ;
+			}
+		}
+		while(!wrong);
+		return -1;
+	}
+
+	
+	/**  
 	* Permet a l'utilisateur de rendre
 	* un materiel en saisissant le type de materiel
 	* souhaite et le nombre d'exemplaires a rendre.
@@ -369,8 +423,11 @@ public class InterfaceUtilisateur
 	*/ 
 	private void rendre()
 	{
+		
+		System.out.println(afficherEmpruntUtilisateur(gestion.listeEmpruntsParEmprunteur());
+		
 		System.out.printf("\nQue voulez-vous rendre ? : ") ;
-		String type = console.readLine() ;
+		MaterielEmprunte matARendre = gestion.listeEmpruntsParEmprunteur().get(choixDansListe(gestion.listeEmpruntsParEmprunteur().size()));
 		System.out.printf("Combien d'exemplaires désirez-vous rendre ? : ") ;
 		String test = console.readLine() ;
 		int nombre = 0 ;
@@ -378,7 +435,14 @@ public class InterfaceUtilisateur
 		if(intTest(test))
 			nombre = Integer.parseInt(test) ;
 
-		boolean retour = gestion.rendre(type,nombre);
+		System.out.printf("Combien d'exemplaires rendus sont hors service ? : ") ;
+		String nbHS = console.readLine() ;
+		int nombreHS = 0 ;
+		
+		if(intTest(nbHS))
+			nombreHS = Integer.parseInt(test) ;
+		
+		boolean retour = gestion.rendre(matARendre, nombre, nombreHS);
 
 		if(retour)
 		{
@@ -391,6 +455,12 @@ public class InterfaceUtilisateur
 		}
 	}
 
+	/** 
+	* Permet de répérer une date dans le format Date à partir d'un String
+	* 
+	* @param date Chaine de caractere contenant la date JJ/MM/AA
+	* @return Date retourne la date dans le bon format
+	*/ 
 	private Date formatDate (String date)
 	{
 		String [] elements = date.split("/");
