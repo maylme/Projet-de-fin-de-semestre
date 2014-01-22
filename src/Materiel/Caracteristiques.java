@@ -13,6 +13,7 @@ import Outils.FichierData;
  * @author lyameina
  *
  */
+@SuppressWarnings("serial")
 public class Caracteristiques implements java.io.Serializable{
 	public ArrayList<String> clePossible;
 	private final String NOMFICHIER = "listeCaracteristiques";
@@ -41,9 +42,6 @@ public class Caracteristiques implements java.io.Serializable{
 	
 	public HashMap<String, String> getResultat(){
 		return resultat;
-	}
-	public boolean equals(Caracteristiques caracs) {
-	    return (this.resultat).equals(caracs.getResultat());
 	}
 	
 	public boolean  equals(Caracteristiques c){
