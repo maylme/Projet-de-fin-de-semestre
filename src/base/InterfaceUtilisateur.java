@@ -30,6 +30,7 @@ public class InterfaceUtilisateur
 		console = System.console();
 		String menu = "Y" ;
 		boolean premierPassage = false ;
+		boolean mdpCorrect;
 		
 		do
 		{
@@ -41,110 +42,134 @@ public class InterfaceUtilisateur
 			if(!premierPassage)
 			{
 				gestion = new Gestion() ;
-				if (gestion.existe(nom, prenom, statut))
+			}
+			
+			if (gestion.existe(nom, prenom, statut))
+			{
+				mdpCorrect=demandeMotDePasse(statut, false);
+			}
+			else
+			{
+				if (statut)
 				{
-					if (demandeMotDePasse(statut, false))
+					System.out.printf("\nPour créer un compte gestionnaire, il faut le mot de passe administratif.") ;
+					if (demandeMotDePasse(statut, true))
 					{
+						mdpCorrect=true;
+						gestion.createNewGestionnaire(nom, prenom, newMotDePasse());
+					}
+					else
+						mdpCorrect=false;
+				}
+				else
+				{
+					System.out.println("\n Vous êtes un :\n\n1. Elève\n2. Professeur\n") ;
+					boolean prof = choixUtilisateur();
+					if(prof)
+					{
+						gestion.createNewProfesseur(nom,prenom, newMotDePasse());
+					}
+					else
+					{
+						gestion.createNewEleve(nom, prenom, newMotDePasse());
+					}
+					mdpCorrect=true;
+				}
+			}
+
+			if (mdpCorrect)
+			{
+				//partie gestion
+				if(statut)
+				{
+					do
+					{
+						String var = menuGestion();
 						
+						switch(var)
+						{
+							case "1":
+							{
+								ajouterStock();
+								break;
+							}
+
+							case "2":
+							{
+								supprimerStock();
+								break;
+							}
+
+							case "3":
+							{
+								ajouterReparations();
+								break;
+							}
+
+							case "4":
+							{
+								retirerReparations();
+								break;
+							}
+
+							case "5":
+							{
+								consulterStatistiques();
+								break;
+							}
+
+							case "6":
+							{
+								afficher();
+								break;
+							}
+
+							case "7":
+							{
+								gestion.serialisationFichierLisible();
+								break;
+							}
+
+							default:
+							{
+								break;
+							}
+						}
 					}
+					while(menu.equals(retourMenuGestion()));
 				}
-			}
 
-			else
-			{
-				gestion.definirUtilisateur(nom,prenom,statut) ;
-			}
-
-			//partie gestion
-			if(statut)
-			{
-				do
-				{
-					String var = menuGestion();
-					
-					switch(var)
+				//partie emprunt
+				else
+				{			
+					do
 					{
-						case "1":
-						{
-							ajouterStock();
-							break;
-						}
-
-						case "2":
-						{
-							supprimerStock();
-							break;
-						}
-
-						case "3":
-						{
-							ajouterReparations();
-							break;
-						}
-
-						case "4":
-						{
-							retirerReparations();
-							break;
-						}
-
-						case "5":
-						{
-							consulterStatistiques();
-							break;
-						}
-
-						case "6":
-						{
-							afficher();
-							break;
-						}
-
-						case "7":
-						{
-							gestion.serialisationFichierLisible();
-							break;
-						}
-
-						default:
-						{
-							break;
-						}
-					}
-				}
-				while(menu.equals(retourMenuGestion()));
-			}
-
-			//partie emprunt
-			else
-			{			
-				do
-				{
-					String var = menuEmprunt();
+						String var = menuEmprunt();
 					
-					switch(var)
-					{
-						case "1":
+						switch(var)
 						{
-							emprunter();
-							break;
-						}
+							case "1":
+							{
+								emprunter();
+								break;
+							}
 
-						case "2":
-						{
-							rendre();
-							break;
-						}
+							case "2":
+							{
+								rendre();
+								break;
+							}
 
-						default:
-						{
-							break;
+							default:
+							{
+								break;
+							}
 						}
 					}
+					while(menu.equals(retourMenuEmprunt()));
 				}
-				while(menu.equals(retourMenuEmprunt()));
+				premierPassage = true ;
 			}
-			premierPassage = true ;
 		}
 		while(menu.equals(retourMenuPrincipal()));
 	}
@@ -173,11 +198,13 @@ public class InterfaceUtilisateur
 			if(choix.equals("1"))
 			{
 				wrong = true ;
+				return false;
 			}
 
 			else if(choix.equals("2"))
 			{
 				wrong = true ;
+				return true;
 			}
 
 			else
@@ -186,38 +213,6 @@ public class InterfaceUtilisateur
 			}
 		}
 		while(!wrong);
-
-		if(choix.equals("2"))
-		{
-			int essais = 3 ;
-
-			do
-			{				
-				System.out.printf("\nSaisissez le mot de passe : ") ;
-				String password = new String(console.readPassword()) ;
-
-				if(password.equals(MOT_DE_PASSE))
-				{
-					System.out.println("\nMot de passe correct !\nRedirection vers le mode GESTION") ;
-					return true ;
-				}
-
-				else
-				{
-					essais -- ;
-					System.out.println("\nMot de passe erroné !\nEssai(s) restant(s) : " + essais) ;
-				}
-			}
-			while(essais>0);
-
-			System.out.println("\nRedirection vers le mode EMPRUNT") ;
-			return false ;			
-		}
-
-		else
-		{
-			return false ;
-		}
 	}
 
 	/** 
@@ -278,6 +273,18 @@ public class InterfaceUtilisateur
 		return retour ;
 	}
 
+	/** 
+	* Permet a l'utilisateur de saisir un mot de passe. 
+	* 
+	* @return Une chaine de caracteres representant le mot de passe saisi.
+	*/ 
+	private String newMotDePasse()
+	{
+		System.out.printf("\nEntrez un mot de passe : ") ;
+		String retour = console.readLine() ;
+		return retour ;
+	}
+	
 	/** 
 	* Affiche le menu principal du mode emprunt. 
 	* 
