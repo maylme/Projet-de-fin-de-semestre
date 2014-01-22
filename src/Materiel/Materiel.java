@@ -3,6 +3,7 @@ package Materiel;
 import java.util.Date;
 
 import utilisateurs.Emprunteur;
+import utilisateurs.Personne;
 
 /** 
 * La class Materiel représente un objet matériel.
@@ -181,4 +182,24 @@ public class Materiel implements java.io.Serializable
 	{
 		return new Materiel(caracteristiques, dureeMaxEmprunt, nombreExemplaires);
 	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof Materiel && ((Materiel) obj).getCaracteristiques().equals(caracteristiques) && ((Materiel)obj).getDureeMaxEmprunt()==dureeMaxEmprunt && ((Materiel)obj).getNombre()==nombreExemplaires )
+			return true;
+		
+		else
+			return false;
+	}
+	
+	@Override
+   public int hashCode(){
+       int result = 0;
+       result = 31*result + dureeMaxEmprunt;
+       result = 31*result + (caracteristiques !=null ? caracteristiques.hashCode() : 0);
+       result = 31*result + nombreExemplaires;
+      
+       return result;
+   }
 }
