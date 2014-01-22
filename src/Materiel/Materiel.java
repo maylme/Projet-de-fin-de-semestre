@@ -177,7 +177,7 @@ public class Materiel implements java.io.Serializable
 	* @param mat Materiel a cloner.
 	* @return Materiel qui a été cloné.
 	*/
-	public Materiel clone(Materiel mat)
+	public Materiel clone()
 	{
 		return new Materiel(caracteristiques, dureeMaxEmprunt, nombreExemplaires);
 	}
