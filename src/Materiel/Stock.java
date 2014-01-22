@@ -60,7 +60,7 @@ public class Stock {
      *          pas present
      */
     public int rechercheIndexMateriel(Materiel mat, ArrayList<Materiel> liste) {
-        for (int i=0; i<liste.size(); ++i) {
+        for (int i=0; i<liste.size(); i++) {
             if (liste.get(i).equals((mat))) return i;
         }
         return -1;
@@ -258,8 +258,18 @@ public class Stock {
         f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
     }
     
-    
-
+    /**
+     * Methode qui retire un certain emprunt s'il existe dans la liste.
+     * 
+     * return   -1 si l'emprunt n'est pas dans la liste, l'index de l'emprunt
+     *          dans la liste sinon.
+     * 
+     */
+    public int retirerEmprunt(String idEmprunt) {
+        int index = rechercheIndexMaterielEmprunte(idEmprunt, empruntsEtReservs);
+        if (index >= 0) empruntsEtReservs.remove(index);
+        return index;
+    }
     
 
     /**
@@ -272,22 +282,6 @@ public class Stock {
      */
     public String toString() {
         return "Affichage impossible : utilisez l'affichage spécifique (Matériel présents en stock, Matériel en réparation, Emprunts en cours";
-    }
-
-    /**
-     * Methode publique permettant de faire un affichage de la liste disponible.
-     * 
-     * @return La chaine de caractere contenant le contenu de la liste
-     *         disponible
-     */
-    public String afficherStock() {
-        String retour = "\n     STOCK DISPONIBLE\n";
-
-        for (int i = 0; i < stockTotal.size(); i++) {
-            retour += stockTotal.get(i) + "\n";
-        }
-
-        return retour;
     }
 
     /**
@@ -348,5 +342,21 @@ public class Stock {
      */
     public ArrayList<MaterielEmprunte> getListeEmpruntsEtReservs() {
         return empruntsEtReservs;
+    }
+
+    /**
+     * Methode publique permettant de faire un affichage de la liste disponible.
+     * 
+     * @return La chaine de caractere contenant le contenu de la liste
+     *         disponible
+     */
+    public String afficherStock() {
+        String retour = "\n     STOCK DISPONIBLE\n";
+    
+        for (int i = 0; i < stockTotal.size(); i++) {
+            retour += stockTotal.get(i) + "\n";
+        }
+    
+        return retour;
     }
 }
