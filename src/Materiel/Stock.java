@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import Outils.*;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.io.*;
 
 import utilisateurs.Emprunteur;
@@ -267,11 +268,36 @@ public class Stock {
      */
     public int retirerEmprunt(String idEmprunt) {
         int index = rechercheIndexMaterielEmprunte(idEmprunt, empruntsEtReservs);
-        if (index >= 0) empruntsEtReservs.remove(index);
+        if (index >= 0) {
+            empruntsEtReservs.remove(index);
+            f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
+        }
+        
         return index;
     }
     
-
+    /**
+     * Methode qui retire tous les elements du stock total.
+     * 
+     */
+    public void viderListeStock(){
+        stockTotal.clear();
+    }
+    
+    /**
+     * Methode qui retire tous les elements de la liste des reparations
+     * 
+     */
+    public void viderListeReparations(){
+        reparations.clear();
+    }
+    
+    /**
+     *Methode qui retire tous les elements de la liste d'emprunts
+     */
+    public void viderListeEmprunts(){
+        empruntsEtReservs.clear();
+    }
     /**
      * Methode publique permettant de faire un affichage par defaut de la
      * classe, ici c'est un message d'erreur car il n'est pas possible
