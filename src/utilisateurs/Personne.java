@@ -65,6 +65,18 @@ public class Personne implements java.io.Serializable
 
 	
 
+	/**
+	 * http://java67.blogspot.fr/2013/04/example-of-overriding-equals-hashcode-compareTo-java-method.html
+	 */
+	
+	@Override
+	   public int hashCode(){
+	       int result = 0;
+	       result = 31*result + (nom !=null ? nom.hashCode() : 0);
+	       result = 31*result + (prenom  !=null ? prenom.hashCode() : 0);
+	      
+	       return result;
+	   }
 	/** 
 	* Methode publique permettant de comparer deux personnes.
 	* Il compare si le nom et le prenom sont les memes.
@@ -72,11 +84,14 @@ public class Personne implements java.io.Serializable
 	* @param unePersonne Objet representant une personne
 	* @return retourne un boolean true si c'est la meme personne
 	* sinon retourne faux.
+	*  
 	*/
-	public boolean equals(Personne unePersonne)
+	@Override
+	public boolean equals(Object obj)
 	{
-		if (nom.toUpperCase().equals(unePersonne.getNom().toUpperCase()) && prenom.toUpperCase().equals(unePersonne.getPrenom().toUpperCase()))
+		if (obj instanceof Personne && nom.toUpperCase().equals(((Personne)obj).getNom().toUpperCase()) && prenom.toUpperCase().equals(((Personne)obj).getPrenom().toUpperCase()))
 			return true;
+		
 		else
 			return false;
 	}

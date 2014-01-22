@@ -69,15 +69,15 @@ public class PersonneTest {
 			fail ("exactement pareil nom et prenom");
 		
 		//cas avec des majuscule sur le prenom
-		prenom = "raInBow";
-		p2 = new Personne (nom, prenom);
+		String prenom2 = "raInBow";
+		p2 = new Personne (nom, prenom2);
 		if (!p1.equals(p2))
 			fail("prenom en majuscule");
 		
 		//cas nom majuscule
-		prenom = "Rainbow";
-		nom = "DASH";
-		p2 = new Personne (nom, prenom);
+		String prenom3 = "Rainbow";
+		String nom3 = "DASH";
+		p2 = new Personne (nom3, prenom3);
 		if (!p1.equals(p2))
 			fail("nom en majuscule");
 	}

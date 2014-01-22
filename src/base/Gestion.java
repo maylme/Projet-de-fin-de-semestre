@@ -1,10 +1,13 @@
 package base;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.*;
 
+import Materiel.MaterielEmprunte;
 import Materiel.Stock;
 import Materiel.TypeDeMateriel;
+import Outils.FichierData;
 
 import utilisateurs.Personne;
 
@@ -13,19 +16,20 @@ import utilisateurs.Personne;
 * et le stock sur lequel il travaille. Elle contient
 * un ensemble de fonctions qui permettent d'effectuer des actions
 * sur le stock. Certaines fonctions sont reservees aux gestionnaires.
-* Elle permet aussi d'etablir des statistiques sur les utilisateurs du
-* programme.
+
 * 
-* @author Vincent Montalieu et Sonia Tual 
-* @version 1.2 (3.Dec.2013)
+* @author lyameina
 */
 
 public class Gestion
 {
-	private Stock stock;
-	private HashMap<Personne> listeUtilisateurs;
-	private Personne utilisateur;
 
+	private Stock stock;
+	private ArrayList<MaterielEmprunte> refus ;
+	private HashMap<Personne, String> motDePasse;
+	private Personne utilisateurCourant;
+	
+	
 	/** 
 	* Constructeur par defaut qui cree un nouvel objet Gestion
 	* ayant comme stock un nouveau stock, comme utilisateur 
@@ -35,6 +39,7 @@ public class Gestion
 	{
 		this("inconnu", "inconnu", false) ;
 	}
+
 
 	/** 
 	* Constructeur avec paramètres qui cree un nouvel objet Gestion
@@ -46,76 +51,21 @@ public class Gestion
 	* @param statut Le statut de l'utilisateur en cours
 	* (false = emprunteur ; true = gestionnaire).
 	*/ 
-	public Gestion(String nom, String prenom, boolean statut)
+	public Gestion(String nom, String prenom)
 	{
+		//recuperation du HashMap motDePasse:
+		FichierData f  = new FichierData();
+		motDePasse = f.deserialisationHashMap("motDePasse");
+		
+		//création de l'utilisateur courant:
+		utilisateurCourant = new Personne(nom, prenom);
+		
 		stock = new Stock();
 		listeUtilisateurs = deserialisationListePersonne("listeUtilisateurs");
 		definirUtilisateur(nom, prenom,statut);
 	}
+	
 
-	/** 
-	* Methode de lecture de la sauvegarde utilisateurs.
-	* Precondition : il faut compiler depuis le dossier
-	* GestionDeStock.
-	*
-	* @param nomListe Le nom du fichier dans lequel lire.
-	* @return Une HashMap de Personne qui contient les differents
-	* utilisateurs sauvegardes en memoire lors de precedentes utilisations.
-	*/ 
-	private HashMap<Personne> deserialisationListePersonne(String nomListe)
-	{
-		try
-		{
-			File file = new File("data/" + nomListe + ".dat");
-		    if (!file.exists())
-		    {
-        		return new HashMap<Personne>();
-    		} 
-    		else if (file.length() <= 4)
-    		{
-        		return new HashMap<Personne>();
-        	}
-        	else
-        	{
-        		FileInputStream fichierData = new FileInputStream("data/" + nomListe + ".dat");
-				ObjectInputStream ois = new ObjectInputStream(fichierData);
-				return (HashMap<Personne>) ois.readObject();
-        	}	
-		}
-		catch (java.io.IOException e)
-		{
-			e.printStackTrace();
-		}
-		catch (java.lang.ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		return new HashMap<Personne>();
-	}
-
-	/** 
-	* Methode de sauvegarde des utilisateurs.
-	* Precondition : il faut compiler depuis le dossier
-	* GestionDeStock.
-	*
-	* @param listeASerialiser Le nom de l'HashMap a sauvegarder.
-	* @param nomListe Le nom du fichier dans lequel sauvegarder la liste.
-	*/
-	private void serialisationListe(HashMap<Personne> listeASerialiser, String nomListe)
-	{
-		try
-		{ 
-			FileOutputStream fichierListe = new FileOutputStream("data/" + nomListe + ".dat");
-			ObjectOutputStream oos = new ObjectOutputStream(fichierListe);
-			oos.writeObject(listeASerialiser);
-			oos.flush();
-			oos.close();
-		}
-		catch (java.io.IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
 
 	/** 
 	* Methode de definition de l'utilisateur en cours. Regarde dans
