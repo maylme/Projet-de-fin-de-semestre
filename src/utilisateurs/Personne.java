@@ -84,7 +84,6 @@ public class Personne implements java.io.Serializable
 	* @param unePersonne Objet representant une personne
 	* @return retourne un boolean true si c'est la meme personne
 	* sinon retourne faux.
-	*  
 	*/
 	@Override
 	public boolean equals(Object obj)

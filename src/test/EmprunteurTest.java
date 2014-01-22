@@ -10,6 +10,15 @@ import utilisateurs.Personne;
 public class EmprunteurTest {
 
 	@Test
+	
+	public void testCastage(){
+		Personne p;
+		p = new Emprunteur("paul","henri", 43 );
+		fail(((Emprunteur)p).getDureeMaxDEmprunt()+"");
+	}
+	
+	
+	@Test
 	public void testEmprunteurStringStringInt() {
 		//mode courant
 		String prenom = "Twilight";
