@@ -178,6 +178,15 @@ public class Stock {
         return listeCaracs;
     }
 
+    public ArrayList<MaterielEmprunte> empruntsParEmprunteur(Emprunteur emprunteur) {
+        ArrayList<MaterielEmprunte> liste = new ArrayList<MaterielEmprunte>();
+        for (MaterielEmprunte matEmp : empruntsEtReservs) {
+            if (matEmp.getEmprunteur().equals(emprunteur)) {
+                liste.add(matEmp);
+            }
+        }
+        return liste;
+    }
     /**
      * Methode qui gere le retour de materiel emprunte : un certain nombre de materiel
      * est rendu et la liste des reparations est mise a jour si il y a du materiel
