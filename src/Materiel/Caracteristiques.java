@@ -2,6 +2,8 @@ package Materiel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import Outils.FichierData;
 /**
  * Contient les caracteristiques pour construire un Materiel
  * Un objet Caracteristiques est representé par un hash map dont les 
@@ -12,21 +14,15 @@ import java.util.HashMap;
  *
  */
 public class Caracteristiques implements java.io.Serializable{
-	private ArrayList<String> clePossible;
+	public ArrayList<String> clePossible;
+	private final String NOMFICHIER = "listeCaracteristiques";
 	private HashMap<String, String> resultat;
 	
-	//TODO : serialisation à la place
 	public Caracteristiques(){
-		clePossible = new ArrayList<String>();
-		clePossible.add("type");
-		clePossible.add("nom");
-		clePossible.add("marque");
-		clePossible.add("écran");
-		clePossible.add("son");
-
+		FichierData f = new FichierData();
+		clePossible = f.deserialisationListeString(NOMFICHIER);
 		resultat = new HashMap<String, String>();
-		
-		}
+	}
 	
 	public void addSpecification (String cle, String valeur) throws CleInexistanteException {
 		if (!(clePossible.contains(cle))){
@@ -39,12 +35,22 @@ public class Caracteristiques implements java.io.Serializable{
 
 	public void  addCle(String cle){
 		clePossible.add(cle);
+		FichierData f = new FichierData();
+		f.serialisationListeString(clePossible, NOMFICHIER);
 	}
 	
 	public HashMap<String, String> getResultat(){
 		return resultat;
 	}
+	public boolean equals(Caracteristiques caracs) {
+	    return (this.resultat).equals(caracs.getResultat());
+	}
 	
+	public boolean  equals(Caracteristiques c){
+		if (c.getResultat().equals(resultat))
+			return true;
+		return false;
+	}
 }
 /**
 GEstion ou dans l'interface
