@@ -106,6 +106,18 @@ public class MaterielEmprunte implements java.io.Serializable
 		dateFin=newDateFin;
 	}
 	
+	/** 
+	* Methode publique utilisee pour modifier la
+	* date de debut d'emprunt a partir d'une autre classe.
+	*
+	* @param newDateDebut Entier representant la date de debut de l'emprunt
+	* que l'on veut modifier.
+	*/ 
+	public void setDateEmprunt(Date newDateDebut)
+	{
+		dateEmprunt=newDateDebut;
+	}
+	
 	/**
 	 * Méthode d'accès à l'ID de l'emprunt.
 	 * 
