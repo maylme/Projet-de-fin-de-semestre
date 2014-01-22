@@ -84,7 +84,17 @@ public class Stock {
         }
         return -1;
     }
-
+    
+    /**
+     * Methode qui ajoute du nouveau matériel au stock total.
+     * 
+     * @param mat
+     *          Le matériel à ajouter
+     */
+    public void ajouterNouveauMateriel(Materiel mat) {
+        ajouterMateriel(mat, stockTotal);
+    }
+    
     /**
      * Methode qui ajoute intelligement du materiel dans une liste de materiel donnee, 
      * 
@@ -302,7 +312,15 @@ public class Stock {
 
         return retour;
     }
-
+    
+    /**
+     * Méthode qui permet d'obtenir le stock total.
+     * @return  Le stock total
+     */
+    public ArrayList<Materiel> getStockTotal() {
+        return stockTotal;
+    }
+    
     /**
      * Methode publique utilisee pour acceder a la liste reparations a partir
      * d'une autre classe.
