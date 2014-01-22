@@ -1,5 +1,7 @@
 package base ;
 import java.io.Console;
+import java.util.Calendar;
+import java.util.Date;
 
 /** 
 * Cette classe gere l'interface utilisateur du programme.
@@ -389,6 +391,13 @@ public class InterfaceUtilisateur
 		}
 	}
 
+	private Date formatDate (String date)
+	{
+		String [] elements = date.split("/");
+		Calendar c = Calendar.getInstance();
+		c.set(Integer.parseInt(elements[2]), Integer.parseInt(elements[1]), Integer.parseInt(elements[0]));
+		return c.getTime();		
+	}
 	/** 
 	* Permet a l'utilisateur d'ajouter
 	* un materiel au stock en saisissant le type de materiel et
