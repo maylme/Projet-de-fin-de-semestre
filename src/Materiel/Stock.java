@@ -22,6 +22,7 @@ public class Stock {
     private ArrayList<Materiel> stockTotal;
     private ArrayList<Materiel> reparations;
     private ArrayList<MaterielEmprunte> empruntsEtReservs;
+    FichierData f;
 
     /*
      * private ArrayList<Materiel> statistiquesReparations; private
@@ -34,10 +35,10 @@ public class Stock {
      * statistiquesEmprunts).
      */
     public Stock() {
-
-        stockTotal = FichierData.deserialisationListeMateriel("stockTotal");
-        reparations = FichierData.deserialisationListeMateriel("reparations");
-        empruntsEtReservs = FichierData.deserialisationListeMaterielEmprunte("empruntsEtReservs");
+        f = new FichierData();
+        stockTotal = f.deserialisationListeMateriel("stockTotal");
+        reparations = f.deserialisationListeMateriel("reparations");
+        empruntsEtReservs = f.deserialisationListeMaterielEmprunte("empruntsEtReservs");
         /*statistiquesReparations =
                 deserialisationListeTypeDeMateriel("statistiquesReparations");
         statistiquesEmprunts =
@@ -77,50 +78,128 @@ public class Stock {
      *          Un entier correspondant a l'index de l'element dans la liste, ou
      *          -1 s'il n'est pas present.
      */         
-    public int rechercheIndexMaterielEmprunte(MaterielEmprunte matEmp, ArrayList<MaterielEmprunte> liste) {
-        return 1;
-        //TODO
+    public int rechercheIndexMaterielEmprunte(String idEmprunt, ArrayList<MaterielEmprunte> liste) {
+        for (int i=0; i<liste.size(); ++i) {
+            if (idEmprunt.equals(liste.get(i).getId())) return i;
+        }
+        return -1;
     }
+
     /**
-     * Methode public permettant d'ajouter un nouveau materiel a la liste
-     * disponible, ou s'il est deja present ajoute seulement le nombre
-     * d'exemplaire au materiel existant.
+     * Methode qui ajoute intelligement du materiel dans une liste de materiel donnee, 
      * 
-     * @param name
-     *            Le nom du type de materiel a ajouter.
-     * @param nombre
-     *            Le nombre d'exemplaire de materiel a ajouter.
+     * @param mat
+     *          le type de materiel a ajouter
+     * @param liste
+     *          la liste a modifier
      */
-    public void ajouterNouveauMateriel(Caracteristiques caracs, int nombre) {
-        Materiel mat = new Materiel(caracs, Materiel.DUREE_EMPRUNT_MAX, nombre);
-        int index=rechercheIndexMateriel(mat, stockTotal);
-        if (index>=0) stockTotal.get(index).incrNombre(nombre);
-        else stockTotal.add(mat);
-        FichierData.serialisationListeMateriel(stockTotal, "stockTotal");
+    public void ajouterMateriel(Materiel mat, ArrayList<Materiel> liste) {
+        int index=rechercheIndexMateriel(mat, liste);
+        if (index>=0) liste.get(index).incrNombre(mat.getNombre());
+        else liste.add(mat);
     }
-
-    public void ajouterExemplairesTypeD
     /**
-     * Méthode retournant une liste de matériel réservable ayant des
-     * caractéristiques spécifiques, entre la date début et la date fin.
+     * Methode permettant de retirer un certain nombre d'exemplaires de materiel
+     * d'une liste de materiel, et d'enlever de materiel de la liste si le nombre
+     * d'exemplaires est 0
      * 
-     * @param debut 
-     *          la date de début de réservation
-     * @param 
-     *          fin la date de fin de réservation
-     * @param 
-     *          caracs les caractéristiques
+     * @param mat
+     *          Le type de materiel a enlever
+     * @param liste
+     *          La liste a manipuler
+     */
+    public void retirerMateriel(Materiel mat, ArrayList<Materiel> liste) {
+        int index=rechercheIndexMateriel(mat, liste);
+        if (index>=0) {
+            liste.get(index).decrNombre(mat.getNombre());
+            if (liste.get(index).getNombre() <= 0) {
+                liste.remove(index);
+            }
+        }
+    }
+    
+    /**
+     * Methode qui enleve du materiel du stock total pour l'ajouter a la liste
+     * des reparations
+     * 
+     * @param aReparer
+     */
+    public void aReparer(Materiel aReparer) {
+        retirerMateriel(aReparer, stockTotal);
+        ajouterMateriel(aReparer, reparations);
+        f.serialisationListeMateriel(stockTotal, "stockTotal");
+        f.serialisationListeMateriel(reparations, "reparations");
+    }
+    
+    private boolean conflitDates(Date dateDebut, Date dateFin, MaterielEmprunte emprunt) {
+        Date dateDebutEmprunt = emprunt.getDateEmprunt();
+        Date dateFinEmprunt = emprunt.getDateFin();
+        return (((dateDebutEmprunt.compareTo(dateDebut) <= 0 && dateFinEmprunt
+                            .compareTo(dateDebut) > 0)
+                            || (dateDebutEmprunt.compareTo(dateFin) < 0 && dateFinEmprunt.compareTo(dateFin) >= 0) || (dateDebutEmprunt
+                            .compareTo(dateDebut) > 0 && dateFinEmprunt
+                            .compareTo(dateFin) < 0)));
+                
+    }
+    
+    /**
+     * Methode qui retourne la liste de tous les materiels qui sont disponibles
+     * en fonction des caracterstiques recherchees et des dates.
+     * 
+     * @param debut
+     * @param fin
+     * @param caracs
      * @return
-     *          Une liste d'objets disponibles selon les critères spécifiés
-     */         
+     */
     
-    
-    
-    public HashMap<String, String> materielDispo(Date debut, Date fin,
+    public ArrayList<Caracteristiques> materielDispo(Date debut, Date fin,
             Caracteristiques caracs) {
-        
+        ArrayList<Caracteristiques> listeCaracs = new ArrayList<Caracteristiques>();
+        int nombreMaterielDispo;
+        for (Materiel mat : stockTotal) {
+            nombreMaterielDispo=mat.getNombre();
+            for (MaterielEmprunte matEmprunt : empruntsEtReservs) {
+                if (mat.equals(matEmprunt.getMatEmprunt()) && (!(conflitDates(debut, fin, matEmprunt)))) {
+                    nombreMaterielDispo-=matEmprunt.getMatEmprunt().getNombre();
+                }
+            }
+            if (nombreMaterielDispo > 0) listeCaracs.add(mat.getCaracteristiques());
+        }
+        return listeCaracs;
     }
 
+    /*
+     * hash
+     * personneCherchee
+     * for (Personne p : hashmap.keySet()) {
+     *          if personneCherchee.equals(p) 
+     *                  
+     * }
+     *
+     */
+    
+    
+    /**
+     * Methode qui gere le retour de materiel emprunte : un certain nombre de materiel
+     * est rendu et la liste des reparations est mise a jour si il y a du materiel
+     * defectueux.
+     * Si il n'y a plus de materiel associe a l'emprunt, ce dernier est supprime de
+     * la liste d'emprunts
+     * 
+     * @param rendu
+     *          Le materiel rendu
+     * @param HS
+     *          Le nombre de materiel HS parmi le materiel rendu
+     */
+    public void renduEmprunt(String idEmprunt,int nombreRendus, int HS) {
+        int indexEmprunt = rechercheIndexMaterielEmprunte(idEmprunt, empruntsEtReservs);
+        Materiel mat = (Materiel) empruntsEtReservs.get(indexEmprunt).getMatEmprunt().clone();
+        int indexRep = rechercheIndexMateriel(rendu.getMatEmprunt(), reparations);
+        if (indexEmprunt>=0) {
+            
+        }
+    }
+    
     /**
      * Methode public permettant de retourner le type de materiel possedant le
      * plus d'exemplaires disponibles
@@ -128,6 +207,7 @@ public class Stock {
      * @return Retourne un TypeDeMateriel correspondant au plus grand nombre
      *         d'exemplaire du type disponible.
      */
+    /*
     public Materiel typeDeMaterielenPlusGrandNombre() {
         Materiel matMax = new Materiel("", -1);
         for (String id : disponible.keySet()) {
@@ -136,7 +216,7 @@ public class Stock {
                 matMax = matCourant;
         }
         return matMax;
-    }
+    }*/
 
     /**
      * Methode public permettant de retourner le nombre d'exemplaires
@@ -156,39 +236,7 @@ public class Stock {
         return nombreType;
     }
 
-    /**
-     * Methode public permettant d'ajouter un nombre d'exemplaires d'un type
-     * preexistant a la liste du materiel a reparer Met a jour la liste du
-     * materiel disponible
-     * 
-     * @param type
-     *            Le nom du type de materiel a reparer.
-     * @param exemplairesAReparer
-     *            Nombre d'exemplaires a reparer
-     * @return Retourne -1 si les exemplaires ont bien ete mis en reparation,
-     *         sinon retourne le nombre d'exemplaires disponibles (nombre max
-     *         que l'on peut mettre en reparation) ou -2 si erreur
-     */
-    public int aReparer(String type, int exemplairesAReparer) {
-        
-        
-        /*
-        int nombreDisponibles = retirerExemplairesTypeDeMateriel(type,
-                exemplairesAReparer, disponible);
-
-        if (nombreDisponibles == -1) {
-            ajouterExemplairesTypeDeMateriel(type, exemplairesAReparer,
-                    reparations);
-            ajouterExemplairesTypeDeMateriel(type, exemplairesAReparer,
-                    statistiquesReparations);
-        }
-        serialisationListe(disponible, "disponible");
-        serialisationListe(reparations, "reparations");
-        serialisationListe(statistiquesReparations, "statistiquesReparations");
-
-        return nombreDisponibles;
-        */
-    }
+    
 
     /**
      * Methode public permettant de retirer un nombre d'exemplaires de la liste
