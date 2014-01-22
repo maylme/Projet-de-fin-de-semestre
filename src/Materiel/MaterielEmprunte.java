@@ -138,4 +138,25 @@ public class MaterielEmprunte implements java.io.Serializable
 	{
 		return emprunt + "\nEmprunteur : "+ emprunteur.getNom().toUpperCase() + " " + emprunteur.getPrenom() + "\nDate d'emprunt : " + dateEmprunt.toString() +"\nDate de fin d'emprunt : " + dateFin.toString() + " \n";
 	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if (obj instanceof MaterielEmprunte && ((MaterielEmprunte) obj).getMatEmprunt().equals(emprunt) && ((MaterielEmprunte)obj).getDateEmprunt().equals(dateEmprunt) && ((MaterielEmprunte)obj).dateFin.equals(dateFin) && ((MaterielEmprunte)obj).getEmprunteur().equals(emprunteur) && ((MaterielEmprunte)obj).getId().equals(id))
+			return true;
+		
+		else
+			return false;
+	}
+	
+	@Override
+	   public int hashCode(){
+	       int result = 0;
+	       result = 31*result + (dateFin !=null ? dateFin.hashCode() : 0);
+	       result = 31*result + (dateEmprunt !=null ? dateEmprunt.hashCode() : 0);
+	       result = 31*result + (id !=null ? id.hashCode() : 0);
+	       result = 31*result + (emprunt !=null ? emprunt.hashCode() : 0);
+	       result = 31*result + (emprunteur !=null ? emprunteur.hashCode() : 0);
+
+	       return result;
+	   }
 }
