@@ -45,8 +45,13 @@ public class Caracteristiques implements java.io.Serializable{
 	}
 	
 	public boolean  equals(Caracteristiques c){
-		if (c.getResultat().equals(resultat))
-			return true;
+		if (c.getResultat().equals(resultat)) {
+		    for (String cle : resultat.keySet()) {
+		        if (!(c.getResultat().get(cle).equals(resultat.get(cle))))
+		            return false;
+		    }
+		    return true;
+		}
 		return false;
 	}
 }
