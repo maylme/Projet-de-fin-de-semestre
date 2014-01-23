@@ -16,11 +16,19 @@ import utilisateurs.Eleve;
 * @version 2.0 (4.Dec.2013) 
 */
 
-@SuppressWarnings("serial")
 public class Materiel implements java.io.Serializable
 {
-	public static final int DUREE_EMPRUNT_MAX = 15;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 6962479088154766600L;
 
+    /**
+     * 
+     */
+
+    public static final int DUREE_EMPRUNT_MAX = 15;
+	
 	protected int nombreExemplaires ;
 	protected int dureeMaxEmprunt;
 	protected Caracteristiques caracteristiques;
@@ -66,7 +74,7 @@ public class Materiel implements java.io.Serializable
 	*/
 	public String toString()
 	{
-		return "\nCaractéristiques du matériel : " + caracteristiques + "\nNombre de matériel de ce type : " +  nombreExemplaires + "/nDuree max d'emprunt : " + dureeMaxEmprunt ;
+		return "\nCaractéristiques du matériel : " + caracteristiques + "\nNombre de matériel de ce type : " +  nombreExemplaires + "\nDuree max d'emprunt : " + dureeMaxEmprunt ;
 	}
 
 	/** 
