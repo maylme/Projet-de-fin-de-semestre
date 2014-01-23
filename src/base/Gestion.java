@@ -253,8 +253,8 @@ public class Gestion
 	
 	//Fonctions associees au Gestionnaire:
 	/**
-	 * 
-	 * @return
+	 * Affiche le stock total
+	 * @return un string du stock total
 	 */
 	public String afficherStockTotal(){
 		return stock.afficherStock();
@@ -277,12 +277,19 @@ public class Gestion
 		existant.setNombre(nombre);
 		stock.ajouterNouveauMateriel(existant);
 	}
-	
+	/**
+	 * Renvoie la liste des cle possible pour les caracteristiques
+	 * @return la liste des cle possible pour les caracteristiques
+	 */
 	public ArrayList<String> getCleMat(){
 		Caracteristiques c = new Caracteristiques();
 		return c.getClePossible();
 	}
-	
+	/**
+	 * Regarde si la cle existe
+	 * @param cle la cle a tester
+	 * @return true si elle existe
+	 */
 	public boolean existeCleCaracteristique( String cle){
 		Caracteristiques c = new Caracteristiques();
 		
