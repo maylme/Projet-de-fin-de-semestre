@@ -33,6 +33,13 @@ public class Caracteristiques implements java.io.Serializable{
 			resultat.put(cle, valeur);
 		}
 	}
+	
+	public boolean existeCle(String cle){
+		if (!(clePossible.contains(cle))){
+			return false;
+		}
+		return true;
+	}
 
 	public void  addCle(String cle){
 		clePossible.add(cle);
@@ -42,6 +49,10 @@ public class Caracteristiques implements java.io.Serializable{
 	
 	public HashMap<String, String> getResultat(){
 		return resultat;
+	}
+	
+	public ArrayList<String> getClePossible(){
+		return clePossible;
 	}
 	
 	public boolean  equals(Caracteristiques c){
@@ -68,7 +79,7 @@ public class Caracteristiques implements java.io.Serializable{
 	}
 }
 /**
-GEstion ou dans l'interface
+GEstion
 ------------------------------
 Caracteristiques c = new Caracteristique() ;
 

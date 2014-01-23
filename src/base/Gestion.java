@@ -11,6 +11,7 @@ import utilisateurs.Gestionnaire;
 import utilisateurs.Personne;
 import utilisateurs.Professeur;
 
+import Materiel.Caracteristiques;
 import Materiel.Materiel;
 import Materiel.MaterielEmprunte;
 import Materiel.Stock;
@@ -87,6 +88,8 @@ public class Gestion
 		}
 	}
 	
+
+	
 	
 	/**
 	 * Renvoie true si l'utilisateur est correctement loggé.
@@ -157,32 +160,107 @@ public class Gestion
 		hashMapEmprunteur.put((Emprunteur)utilisateurCourant, passwd);
 	}
 	
+	
+	//Fonctions associees à l'Emprunteur:
+	
 	public ArrayList<MaterielEmprunte> listeEmpruntParEmprunteur(){
 		
 		return stock.empruntsParEmprunteur((Emprunteur)utilisateurCourant);
 	}
 	
+	
 	public ArrayList<Materiel> listeMaterielEmpruntable( String motAChercher , Date dateDebut, Date dateFin){
 		
 		return stock.materielDispo(dateDebut, dateFin, motAChercher);
 	}
+	/**
+	 * Rend le Materiel renseigné. et supprimme l'emprunt si tout a été rendu.
+	 * 
+	 * @param choix
+	 * @param nombreRendu 
+	 * @param nombreHS le nombre de Materiel HS
+	 * @return true si le rendu s'est bien passé
+	 */
+	
+	public boolean rendre (MaterielEmprunte choix, int nombreRendu, int nombreHS){
+		if (nombreRendu <= choix.getMatEmprunt().getNombre()){
+			String idEmprunt = choix.getId();
+			stock.renduEmprunt(idEmprunt, nombreRendu, nombreHS);
+			return true;
+		}
+		return false;
+	}
 	
 	public String emprunt(Materiel choix, int nombre, Date dateDebut, Date dateFin){
-		
+		MaterielEmprunte m = new MaterielEmprunte(choix, ((Emprunteur)utilisateurCourant),dateDebut, dateFin);
 		if (choix.empruntable(dateDebut, dateFin, ((Emprunteur)utilisateurCourant))){
 			if (nombre < choix.getNombre()){
-				MaterielEmprunte m = new MaterielEmprunte(choix, ((Emprunteur)utilisateurCourant),dateDebut, dateFin);
 				stock.emprunter(m);
 				return "Reservation effectuée";
 			}
 			else
+				refus.add(m);
 				return "Erreur: Nous n'avons pas autant de materiel (nombre demandé trop grand)\n Nous avons seulement "+ choix.getNombre() + " exemplaire(s)";
 		}
+		refus.add(m);
 		return "Erreur: Vous n'êtes pas autorisé(e) à utiliser ce materiel";
 		
 	}
 	
-	public String AfficherStockTotal(){
+	//Fonctions associees au Gestionnaire:
+	
+	public String afficherStockTotal(){
 		return stock.afficherStock();
 	}
+	
+	/**
+	 * Renvoie la liste de tous les Materiels.
+	 * @return la liste du stock de materiel
+	 */
+	
+	public ArrayList<Materiel> getStockTotal(){
+		return stock.getStockTotal();
+	}
+	/**
+	 * Ajoute des Exemplaire à Un materiel existant.
+	 * @param existant le Materiel existant
+	 * @param nombre le nombre d'exemplaire a rajouter
+	 */
+	public void ajouterExemplaire(Materiel existant, int  nombre){
+		existant.setNombre(nombre);
+		stock.ajouterNouveauMateriel(existant);
+	}
+	
+	public ArrayList<String> getCleMat(){
+		Caracteristiques c = new Caracteristiques();
+		return c.getClePossible();
+	}
+	
+	public boolean existeCleCaracteristique( String cle){
+		Caracteristiques c = new Caracteristiques();
+		
+		if (c.existeCle(cle)){
+			return true;
+		}
+		return false;
+	}
+	
+	public void creationCleCaracteristique (String cle){
+		Caracteristiques c = new Caracteristiques();
+		if (!c.existeCle(cle)){
+			c.addCle(cle);
+		}
+	}
+	/**
+	 * Si la durée max d'emprunt donéne est nulle, on utilise la durée max par defaut
+	 * @param caracs
+	 * @param nombre
+	 * @param duree
+	 */
+	public void ajoutMaterielStock (HashMap<String, String> caracs, int nombre, int duree){
+		//creation des caracteristiques:
+		Caracteristiques c = new Caracteristiques();
+		for ( Element)
+	}
+	
 }
