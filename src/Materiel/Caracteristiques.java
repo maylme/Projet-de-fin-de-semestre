@@ -87,6 +87,14 @@ public class Caracteristiques implements java.io.Serializable{
 	public boolean searchValue(String motAChercher){
 		return resultat.containsValue(motAChercher);
 	}
+	
+	public String toString(){
+		String res = "";
+		for (String key : resultat.keySet()){
+			res += key + " : "+resultat.get(key)+ "\n";
+		}
+		return res;
+	}
 }
 /**
 GEstion
