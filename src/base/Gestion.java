@@ -129,7 +129,6 @@ public class Gestion
 	}
 	
 	
-	
 	public boolean password (String motdepasse, boolean gestionnaire, boolean creationGestionnaire){
 		//si c'est la verification lors de la création d'un gestionnaire:
 		if (creationGestionnaire){
