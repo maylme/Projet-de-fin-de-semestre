@@ -156,7 +156,8 @@ public class FichierData {
 	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 	* @return Retourne le hashmap obtenue.
 	*/
-	public  HashMap<Gestionnaire, String> deserialisationHashMapGestionnaire(String nomListe)
+	@SuppressWarnings("unchecked")
+    public  HashMap<Gestionnaire, String> deserialisationHashMapGestionnaire(String nomListe)
 	{
 		try
 		{
@@ -196,7 +197,8 @@ public class FichierData {
 	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 	* @return Retourne le hashmap obtenue.
 	*/
-	public  HashMap<Emprunteur, String> deserialisationHashMapEmprunteur(String nomListe)
+	@SuppressWarnings("unchecked")
+    public  HashMap<Emprunteur, String> deserialisationHashMapEmprunteur(String nomListe)
 	{
 		try
 		{
@@ -236,7 +238,8 @@ public class FichierData {
 	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 	* @return Retourne la liste obtenue.
 	*/
-	public  ArrayList<MaterielEmprunte> deserialisationListeMaterielEmprunte(String nomListe)
+	@SuppressWarnings("unchecked")
+    public  ArrayList<MaterielEmprunte> deserialisationListeMaterielEmprunte(String nomListe)
 	{
 		try
 		{
@@ -276,7 +279,8 @@ public class FichierData {
 	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 	* @return Retourne la liste obtenue.
 	*/
-	public  ArrayList<Materiel> deserialisationListeMateriel(String nomListe)
+	@SuppressWarnings("unchecked")
+    public  ArrayList<Materiel> deserialisationListeMateriel(String nomListe)
 	{
 		try
 		{
@@ -306,7 +310,6 @@ public class FichierData {
 		}
 		return new ArrayList<Materiel>();
 	}
-			
 	/** 
 	* Methode public de deserialiser les listes de String
 	* C'est a dire qui a partir d'un fichier (ici un .dat) recupere les listes
@@ -316,7 +319,8 @@ public class FichierData {
 	* @param nomListe Une chaine de caractere representant le nom de la liste a deserialiser.
 	* @return Retourne la liste obtenue.
 	*/
-	public  ArrayList<String> deserialisationListeString(String nomListe)
+	@SuppressWarnings("unchecked")
+    public  ArrayList<String> deserialisationListeString(String nomListe)
 	{
 		try
 		{
