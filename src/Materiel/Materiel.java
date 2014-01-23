@@ -6,39 +6,49 @@ import utilisateurs.Emprunteur;
 import utilisateurs.Eleve;
 
 /**
- * La class Materiel représente un objet matériel. Un Materiel est defini par :
- * des Caracteristiques un nombre de Materiel la duree maximum d'emprunt de ce
- * materiel
+ * La classe Materiel représente un groupement de matériel identique.
+ * Un objet Materiel est représenté par : 
+ * - des caractéristiques représentées par la classe Caracteristiques
+ * - une duree maximum d'emprunt
+ * - un nombre d'exemplaires
  * 
  * @author Sonia Tual et Vincent Montalieu
  * @version 2.0 (4.Dec.2013)
  */
 
 public class Materiel implements java.io.Serializable {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 6962479088154766600L;
-
-    /**
-     * 
-     */
 
     public static final int DUREE_EMPRUNT_MAX = 15;
-
     protected int nombreExemplaires;
     protected int dureeMaxEmprunt;
     protected Caracteristiques caracteristiques;
 
     /**
-     * Constructeur de la classe. exemplaires.
+     * Constructeur principal de la classe Materiel avec toutes les informations nécessaires
+     * passées en paramètre.
+     * 
+     * @param c
+     *          Les caracteristiques du matériel
+     * @param dureeMax
+     *          La durée max d'emprunt
+     * @param nbExemplaires
+     *          Le nombre d'exemplaires
      */
     public Materiel(Caracteristiques c, int dureeMax, int nbExemplaires) {
         caracteristiques = c;
         nombreExemplaires = nbExemplaires;
         dureeMaxEmprunt = dureeMax;
     }
-
+    
+    /**
+     * Constructeur de la classe Materiel qui initialise automatiquement la duree 
+     * max d'emprunt à 15 jours.
+     * 
+     * @param c
+     *          Les caracteristiques du matériel
+     * @param nbExemplaires
+     *          Le nombre d'exemplaires
+     */
     public Materiel(Caracteristiques c, int nbExemplaires) {
         caracteristiques = c;
         nombreExemplaires = nbExemplaires;
@@ -46,8 +56,9 @@ public class Materiel implements java.io.Serializable {
     }
 
     /**
-     * Constructeur de la classe Materiel Il construit le matériel avec ses
-     * caracterisque en paramètre
+     * Constructeur de la classe Materiel. Il construit le matériel avec seulement
+     * ses caracteristiques en paramètre, la durée emprunt max est initialisée à 15 par
+     * défaut, et le nombre d'exemplaires à 1.
      * 
      * @param c
      *            Caractéristiques du materiel.
@@ -59,9 +70,9 @@ public class Materiel implements java.io.Serializable {
     }
 
     /**
-     * Méthode publique permettant de faire un affichage du matériel. Elle
-     * affiche le nom, le nombre d'exemplaire et l'identifiant avec un saut de
-     * ligne entre chaque.
+     * Redéfinition de la méthode toString pour un objet Materiel. Elle
+     * affiche les caractéristiques, le nombre d'exemplaires et la durée max 
+     * d'emprunt du matériel.
      * 
      * @return La chaine de caractère contenant la description du matériel à
      *         afficher.
@@ -73,28 +84,27 @@ public class Materiel implements java.io.Serializable {
     }
 
     /**
-     * Méthode publique utilisée pour accéder aux caractéristiques du matériel à
-     * partir d'une autre classe.
+     * Méthode utilisée pour accéder aux caractéristiques du matériel.
      * 
-     * @return Caracteristiques contenant les caractéristiques du matériel.
+     * @return Un objet Caracteristiques contenant les caractéristiques du matériel
      */
     public Caracteristiques getCaracteristiques() {
         return caracteristiques;
     }
 
     /**
-     * Méthode publique utilisée pour accéder à la valeur dureeMaxEmprunt de la
-     * classe à partir d'une autre classe.
+     * Méthode utilisée pour accéder à la valeur dureeMaxEmprunt de la
+     * classe
      * 
-     * @return int contenant la duree max d'emprunt du type de matériel.
+     * @return entier correspondant à la duree max d'emprunt du matériel.
      */
     public int getDureeMaxEmprunt() {
         return dureeMaxEmprunt;
     }
 
     /**
-     * Méthode publique utilisée pour accéder à la valeur nombreExemplaire de la
-     * classe à partir d'une autre classe.
+     * Méthode utilisée pour accéder à la valeur nombreExemplaire de la
+     * classe. 
      * 
      * @return Entier contenant le nombre d'exemplaire du matériel.
      */
@@ -103,21 +113,19 @@ public class Materiel implements java.io.Serializable {
     }
 
     /**
-     * Méthode publique utilisée pour modifier la valeur du nombre d'exemplaire
-     * du matériel à partir d'une autre classe.
+     * Méthode permettant de modifier la valeur du nombre d'exemplaire
+     * du matériel.
      * 
      * @param nombre
-     *            Entier représentant le nombre d'exemplaire que l'on veut
-     *            mettre à la place de l'ancien.
+     *            Entier représentant le nouveau nombre d'exemplaires
      */
     public void setNombre(int nombre) {
         nombreExemplaires = nombre;
     }
 
     /**
-     * Méthode publique utilisée pour modifier la valeur du nombre d'exemplaire
-     * du matériel à partir d'une autre classe. Cette méthode ajoute le nombre
-     * passé en paramètre au nombre d'exemplaire déjà existant.
+     * Méthode utilisée pour incrémenter la valeur du nombre d'exemplaires
+     * du matériel avec la valeur nombre.
      * 
      * @param nombre
      *            Entier représentant le nombre d'exemplaire que l'on veut
@@ -128,9 +136,8 @@ public class Materiel implements java.io.Serializable {
     }
 
     /**
-     * Méthode publique utilisée pour modifier la valeur du nombre d'exemplaire
-     * du matériel à partir d'une autre classe. Cette méthode retire le nombre
-     * passé en paramètre au nombre d'exemplaire déjà existant.
+     * Méthode utilisée pour décrémenter le nombre d'exemplaires
+     * du matériel de la valeur nombre.
      * 
      * @param nombre
      *            Entier représentant le nombre d'exemplaire que l'on veut
@@ -141,13 +148,13 @@ public class Materiel implements java.io.Serializable {
     }
 
     /**
-     * Méthode publique utilisée pour vérifier si deux types Materiel ont les
-     * mêmes caractéristiques et la même durée max d'emprunt.
+     * Méthode utilisée pour vérifier si deux objets Materiel ont les
+     * mêmes caractéristiques et la même durée maximale d'emprunt.
      * 
      * @param mat
-     *            Materiel.
+     *            Le matériel à comparer
      * @return boolean representant le résultat de l'égalité entre deux
-     *         Materiel.
+     *         Materiel
      */
     public boolean equals(Materiel mat) {
         if (this.dureeMaxEmprunt == mat.getDureeMaxEmprunt()) {
@@ -160,25 +167,7 @@ public class Materiel implements java.io.Serializable {
     }
 
     /**
-     * Méthode publique utilisée pour renvoyer le materiel emprunte ou null si
-     * cela ne satisfait pas les conditions d'emprunt du materiel
-     * 
-     * @param debut
-     *            Date de début de l'emprunt.
-     * @param duree
-     *            Entier representant la duree de l'emprunt.
-     * @param emprunteur
-     *            Emprunteur représente la personne demandant un emprunt.
-     * @return MaterielEmprunte modelisant le materiel emprunte avec
-     *         l'emprunteur la date et la duree de l'emprunt.
-     */
-    public MaterielEmprunte matEmprunte(Date debut, Date fin,
-            Emprunteur emprunteur) {
-        return new MaterielEmprunte(this, emprunteur, debut, fin);
-    }
-
-    /**
-     * Méthode publique permettant de créé un clone du materiel
+     * Méthode publique permettant de créer un clone du materiel
      * 
      * @param mat
      *            Materiel a cloner.
@@ -188,7 +177,7 @@ public class Materiel implements java.io.Serializable {
         return new Materiel(caracteristiques, dureeMaxEmprunt,
                 nombreExemplaires);
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Materiel
@@ -215,12 +204,18 @@ public class Materiel implements java.io.Serializable {
 
     /**
      * Methode qui renvoie un boolean pour savoir si l'emprunt de ce materiel
-     * est possible Pour un Materiel "de base" on considère que c'est possible.
+     * est possible ou non.
+     * Pour un objet Materiel "de base", cela dépend de la duree d'emprunt maximum
+     * du matériel et de la durée d'emprunt maximum de l'emprunteur s'il en a une.
+     * Dans notre cas, seul l'eleve a une duree max d'emprunt.
      * 
      * @param dateDebut
-     * @param duree
+     *          la date de début de l'emprunt ou la reservation
+     * @param dateFin
+     *          la date de fin de l'emprunt et la reservation
      * @param e
-     * @return
+     *          l'emprunteur qui souhaite emprunter ce matériel
+     * @return true si l'emprunt est possible par l'emprunteur e, false sinon
      */
     public boolean empruntable(Date dateDebut, Date dateFin, Emprunteur e) {
         long dureeEmprunt = (dateFin.getTime() - dateDebut.getTime())

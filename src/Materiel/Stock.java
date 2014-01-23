@@ -7,11 +7,13 @@ import java.util.Date;
 import utilisateurs.Emprunteur;
 
 /**
- * La classe Stock est une representation par listes de type ArrayList d'un
- * stock de materiel ainsi que d'un referencement des emprunts et reservations.
+ * La classe Stock est une representation par ArrayLists d'un stock. Elle
+ * contient une liste représentant le stock total (contenant le nombre d'objets
+ * en bon état), une liste de matériel en réparation et une liste d'emprunts et
+ * réservations en cours. Elle crée et met à jour également les fichiers de données
+ * correspondant à l'état du stock via la classe FichierData.
  * 
- * @author RABEHASY Riana, TUAL Sonia, MESNIER Maylanie
- * @version 2.1 (4.Dec.2013)
+ * @author RABEHASY Riana
  */
 
 public class Stock {
@@ -27,9 +29,9 @@ public class Stock {
      */
 
     /**
-     * Constructeur de la classe Stock Il construit le stock avec les 5 listes
-     * (disponible, reparations, emprunts, statistiquesReparations,
-     * statistiquesEmprunts).
+     * Constructeur de la classe Stock Il construit le stock avec les 3 listes
+     * (stock total, matériel en réparation et liste d'emprunts et réservations),
+     * ainsi qu'un objet FichierData pour la sérialisation.
      */
     public Stock() {
         f = new FichierData();
@@ -41,7 +43,7 @@ public class Stock {
 
     /**
      * Methode permettant d'obtenir l'emplacement d'un certain type de materiel
-     * dans une liste de materiel.
+     * dans une liste de materiel de type ArrayList.
      * 
      * @param mat
      *            Le matériel recherché
@@ -79,7 +81,7 @@ public class Stock {
     }
 
     /**
-     * Methode qui ajoute du nouveau matériel au stock total.
+     * Methode qui ajoute du matériel au stock total.
      * 
      * @param mat
      *            Le matériel à ajouter
@@ -90,7 +92,7 @@ public class Stock {
     }
 
     /**
-     * Supprime un certain nombre de matériel du stock
+     * Méthode qui supprime un certain nombre de matériel du stock total.
      * 
      * @param aSupprimer
      *            Le matériel a supprimer
@@ -102,7 +104,8 @@ public class Stock {
 
     /**
      * Methode qui ajoute intelligement du materiel dans une liste de materiel
-     * donnee,
+     * donnee de type ArrayList (ajout si le matériel est déjà présent, sinon
+     * une nouvelle entrée est crée)
      * 
      * @param mat
      *            le type de materiel a ajouter
@@ -120,7 +123,7 @@ public class Stock {
     /**
      * Methode permettant de retirer un certain nombre d'exemplaires de materiel
      * d'une liste de materiel, et d'enlever de materiel de la liste si le
-     * nombre d'exemplaires est 0
+     * nombre d'exemplaires est égal à 0.
      * 
      * @param mat
      *            Le type de materiel a enlever
@@ -140,9 +143,9 @@ public class Stock {
 
     /**
      * Methode qui enleve du materiel du stock total pour l'ajouter a la liste
-     * des reparations
+     * des reparations.
      * 
-     * @param aReparer
+     * @param aReparer  Le matériel à réparer
      */
     public void aReparer(Materiel aReparer) {
         retirerMateriel(aReparer, stockTotal);
@@ -154,13 +157,18 @@ public class Stock {
     }
 
     /**
-     * Méthode qui vérifie s'il y a un conflit de dates avec les autres emprunts
-     * au momment d'un emprunt.
+     * Méthode qui vérifie si pour une période donnée délimitée par deux dates
+     * dateDebut et dateFin, un emprunt ou une réservation particulière est en
+     * cours. Cette méthode ne prend pas en compte le matériel demandé.
      * 
      * @param dateDebut
+     *            La date de début de la période
      * @param dateFin
+     *            La date de fin de la période
      * @param emprunt
-     * @return
+     *            L'emprunt
+     * @return True s'il y a conflit de dates, false sinon.
+     * 
      */
     private boolean conflitDates(Date dateDebut, Date dateFin,
             MaterielEmprunte emprunt) {
@@ -176,15 +184,15 @@ public class Stock {
 
     /**
      * Methode qui retourne la liste de tous les materiels qui sont disponibles
-     * en fonction des caracterstiques recherchees et des dates.
+     * en fonction d'une certaine caracteristique du matériel.
      * 
      * @param debut
      *            La date de début de la période voulue
      * @param fin
      *            La date de fin de la période voulue
-     * @param caracs
-     *            Les caracteristiques du matériel
-     * @return
+     * @param caracCherchee
+     *            La caracteristique recherchée sous forme d'un String
+     * @return Une liste de matériel de type ArrayList
      */
 
     public ArrayList<Materiel> materielDispo(Date debut, Date fin,
@@ -195,7 +203,7 @@ public class Stock {
         for (Materiel mat : stockTotal) {
             nombreMaterielDispo = mat.getNombre();
             for (MaterielEmprunte matEmprunt : empruntsEtReservs) {
-                MaterielEmprunte tempMatEmp = matEmprunt.clone();
+                //MaterielEmprunte tempMatEmp = matEmprunt.clone();
                 if (mat.equals(matEmprunt.getMatEmprunt())
                         && (conflitDates(debut, fin, matEmprunt))) {
                     nombreMaterielDispo -= matEmprunt.getMatEmprunt()
@@ -216,11 +224,13 @@ public class Stock {
     }
 
     /**
-     * Retourne la liste d'emprunts correspondant à un emprunteur particulier
+     * Retourne la liste d'emprunts et réservations correspondant à un
+     * emprunteur particulier.
      * 
      * @param emprunteur
      *            Le responsable des emprunts
-     * @return
+     * @return La liste des emprunts et réservations effectués par un
+     *         emprunteur.
      */
     public ArrayList<MaterielEmprunte> empruntsParEmprunteur(
             Emprunteur emprunteur) {
@@ -243,7 +253,7 @@ public class Stock {
      *            - L'id de l'emprunt
      * @param nombreRendus
      *            - Le nombre de materiel rendu
-     * @param HS
+     * @param hs
      *            - Le nombre de materiel HS parmi le materiel rendu
      * @return Un entier positif si l'id est correct, -1 sinon
      */
@@ -288,7 +298,8 @@ public class Stock {
     }
 
     /**
-     * Méthode qui supprime du matériel HS de la liste de réparations
+     * Méthode qui supprime du matériel HS de la liste de réparations si le 
+     * gestionnaire le décide.
      * 
      * @param matSuppr
      */
@@ -298,7 +309,7 @@ public class Stock {
     }
 
     /**
-     * Méthode qui met à jour la liste des emprunts avec son paramètre. void
+     * Méthode qui met à jour la liste des emprunts avec son paramètre.
      * 
      * @param matEmprunte
      *            L'emprunt à rajouter.
@@ -312,7 +323,7 @@ public class Stock {
     /**
      * Methode qui retire un certain emprunt s'il existe dans la liste.
      * 
-     * return -1 si l'emprunt n'est pas dans la liste, l'index de l'emprunt dans
+     * @return -1 si l'emprunt n'est pas dans la liste, l'index de l'emprunt dans
      * la liste sinon.
      * 
      */
@@ -364,23 +375,11 @@ public class Stock {
     }
 
     /**
-     * Methode publique permettant de faire un affichage par defaut de la
-     * classe, ici c'est un message d'erreur car il n'est pas possible
-     * d'afficher stock
-     * 
-     * @return La chaine de caractere contenant le message qu'il faut afficher
-     *         lors d'une demande d'affichage de stock.
-     */
-    public String toString() {
-        return "Affichage impossible : utilisez l'affichage spécifique (Matériel présents en stock, Matériel en réparation, Emprunts en cours";
-    }
-
-    /**
-     * Methode publique permettant de faire un affichage de la liste
+     * Methode publique permettant d'afficher la liste des
      * reparations.
      * 
      * @return La chaine de caractere contenant le contenu de la liste
-     *         reparations
+     *         des reparations
      */
     public String afficherReparations() {
         String retour = "\n     STOCK REPARATION\n";
@@ -393,7 +392,7 @@ public class Stock {
     }
 
     /**
-     * Methode publique permettant de faire un affichage de la liste emprunts.
+     * Methode publique permettant d'afficher la liste des emprunts et reservations.
      * 
      * @return La chaine de caractere contenant le contenu de la liste emprunts
      */
