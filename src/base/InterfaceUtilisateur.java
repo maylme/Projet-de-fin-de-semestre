@@ -124,20 +124,14 @@ public class InterfaceUtilisateur
 								modifEmpruntOuResa();
 								break;
 							}
-							
-							case "6":
-							{
-								suppEmpruntOuResa();
-								break;
-							}
 
-							case "7":
+							case "6":
 							{
 								afficher();
 								break;
 							}
 
-							case "8":
+							case "7":
 							{
 								gestion.serialisationFichierLisible();
 								break;
@@ -319,7 +313,7 @@ public class InterfaceUtilisateur
 	*/ 
 	private String menuGestion()
 	{
-		System.out.println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier un emprunt ou une réservation\n6. Supprimer un emprunt ou une réservation\n7. Affichage des données\n8. Export de toutes les données") ;
+		System.out.println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier un emprunt ou une réservation\n6. Affichage des données\n7. Export de toutes les données") ;
 		String retour = console.readLine() ;
 		return retour ;
 	}
@@ -703,7 +697,7 @@ public class InterfaceUtilisateur
 		MaterielEmprunte matChoisi = gestion.getListeResa().get(choixDansListe(gestion.getListeResa().size()));
 		if (!matChoisi.equals(null))
 		{
-			System.out.printf("\nQuelle modification voulez vous effectuer ?\n\n1. La date de début d'emprunt/réservation \n2. La date de fin d'emprunt/réservation \n3. Le nombre d'exemplaire \n") ;
+			System.out.printf("\nQuelle modification voulez vous effectuer ?\n\n1. La date de début d'emprunt/réservation \n2. La date de fin d'emprunt/réservation \n3. Le nombre d'exemplaire \n4. Supprimer l'emprunt/réservation \n") ;
 			boolean wrong = false ;
 			String choix = "" ;
 
@@ -740,10 +734,15 @@ public class InterfaceUtilisateur
 						gestion.modifNombreExemplaire(matChoisi, nombre);
 					
 				}
+				else if(choix.equals("4"))
+				{
+					wrong = true ;
+					gestion.modifNombreExemplaire(matChoisi, matChoisi.getMatEmprunt().getNombre());
+				}
 
 				else
 				{
-					System.out.printf("\nMerci de choisir entre 1, 2 et 3 : ") ;
+					System.out.printf("\nMerci de choisir entre 1, 2, 3 et 4 : ") ;
 				}
 			}
 			while(!wrong);
@@ -767,15 +766,6 @@ public class InterfaceUtilisateur
 			retour += i+". " + listeEmpruntResa.get(i) + "\n" ;
 		}
 		return retour ;
-	}
-
-	/** 
-	* Permet au gestionnaire de supprimer un emprunt
-	* ou une réservation
-	* Affiche un message confirmant ou infirmant le retrait. 
-	*/ 
-	private void suppEmpruntOuResa()
-	{
 	}
 	
 	/** 
