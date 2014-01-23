@@ -139,7 +139,8 @@ public class Stock {
      */
     public void aReparer(Materiel aReparer) {
         retirerMateriel(aReparer, stockTotal);
-        if (rechercheIndexMateriel(aReparer, stockTotal) == -1)
+        int index=rechercheIndexMateriel(aReparer, stockTotal);
+        if ( index >= 0)
             ajouterMateriel(aReparer, reparations);
         f.serialisationListeMateriel(stockTotal, "stockTotal");
         f.serialisationListeMateriel(reparations, "reparations");
@@ -306,6 +307,10 @@ public class Stock {
     public void viderListeEmprunts(){
         empruntsEtReservs.clear();
         f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
+    }
+    
+    public void listesVersTexte(){
+        f.serialisationFichierLisible(stockTotal, reparations, empruntsEtReservs);
     }
     /**
      * Methode publique permettant de faire un affichage par defaut de la
