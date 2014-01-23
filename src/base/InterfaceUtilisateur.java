@@ -520,7 +520,7 @@ public class InterfaceUtilisateur
 		}
 		else
 		{
-			System.out.printf("\nPour ajouter un nouveau materiel, il faut entrer toutes ses carctéristiques.\nVoici la liste des caractéristiques existante : \n") ;
+			System.out.printf("\nPour ajouter un nouveau materiel, il faut entrer toutes ses caractéristiques.\nVoici la liste des caractéristiques existante : \n") ;
 			System.out.println(gestion.getCleMat());
 			
 			HashMap<String, String> caracDuNewMat = new HashMap <String, String> ();
