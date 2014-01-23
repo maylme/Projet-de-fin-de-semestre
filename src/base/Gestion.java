@@ -296,4 +296,8 @@ public class Gestion
 		stock.retourReparation(m);
 		return true;
 	}
+	
+	public ArrayList<MaterielEmprunte> getListeResa(){
+		return stock.getListeEmpruntsEtReservs();
+	}
 }
