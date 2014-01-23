@@ -7,9 +7,7 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import utilisateurs.Eleve;
 import utilisateurs.Emprunteur;
-import utilisateurs.Personne;
 import utilisateurs.Professeur;
 
 import Outils.FichierData;
@@ -17,21 +15,16 @@ import Outils.FichierData;
 public class FIchierDataTest {
 	
 	@Test
-	public void testSerialisationHashMap(){
-		HashMap<Personne, String> motDePasse = new HashMap<Personne, String>();
+	public void testSerialisationHashMapEmprunteur(){
+		HashMap<Emprunteur, String> motDePasse = new HashMap<Emprunteur, String>();
 		Emprunteur hadock = new Professeur("Capitaine","Hadock");
 		String m2p = "tonnerre de brest";
 		motDePasse.put(hadock, m2p);
 		
 		FichierData f = new FichierData();
-		f.serialisationHashMap(motDePasse, "motDePasse");
+		f.serialisationHashMapEmprunteur(motDePasse, "hashMapEmprunteur");
 		
-		HashMap<Personne, String> recuperation = f.deserialisationHashMap("motDePasse");
-		/**for (Personne p : recuperation.keySet()){
-			if (p.equals(hadock))
-				fail("")
-		}
-		**/
+		HashMap<Emprunteur, String> recuperation = f.deserialisationHashMapEmprunteur("hashMapEmprunteur");
 		
 		if (!recuperation.containsKey(hadock))
 			fail(recuperation.toString()+ "\n" + motDePasse.toString());
