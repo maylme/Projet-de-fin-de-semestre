@@ -278,4 +278,7 @@ public class Gestion
 		return true;
 	}
 	
+	public ArrayList <Materiel> getListeReparation(){
+		return stock.getListeReparations();
+	}
 }
