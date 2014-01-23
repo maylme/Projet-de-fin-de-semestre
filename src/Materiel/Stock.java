@@ -3,12 +3,8 @@ package Materiel;
 import java.util.ArrayList;
 import Outils.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.io.*;
 
 import utilisateurs.Emprunteur;
-import utilisateurs.Personne;
 
 /**
  * La classe Stock est une representation par listes de type ArrayList d'un stock
@@ -127,7 +123,6 @@ public class Stock {
         
         int index=rechercheIndexMateriel(mat, liste);
         if (index>=0) {
-            int nombrePresent = liste.get(index).getNombre();
             liste.get(index).decrNombre(mat.getNombre());
             if (liste.get(index).getNombre() <= 0) {
                 liste.remove(index);
