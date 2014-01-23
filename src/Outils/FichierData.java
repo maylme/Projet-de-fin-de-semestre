@@ -18,8 +18,8 @@ import Materiel.*;
 
 /**
  * Cette classe permet de faire les sérialisations et déserialisations. Ces
- * méthodes sont utilisées pour que les stocks ne soit pas perdu à chaque fois
- * que l'on quitte le programme. Il permet au donnée de persister au dela d'une
+ * méthodes sont utilisées pour que les stocks ne soient pas perdus à chaque fois
+ * que l'on quitte le programme. Il permet aux données de persister au dela d'une
  * exécution du programme.
  * 
  * 
@@ -36,9 +36,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public pour serialiser les listes. C'est a dire qui enregistrer
+	 * Methode publique pour serialiser les listes, c'est a dire qui enregistre
 	 * dans un fichier (ici un .dat) la liste de String passee en parametre,
-	 * parce que lors de la fermeture du programme il faut pouvoir recuperer les
+	 * car lors de la fermeture du programme, il faut pouvoir recuperer les
 	 * informations.
 	 * 
 	 * @param s
@@ -61,10 +61,8 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public serialiser les listes. C'est a dire qui enregistrer dans
-	 * un fichier (ici un .dat) la liste de type Materiel passee en parametre,
-	 * parce que lors de la fermeture du programme il faut pouvoir recuperer les
-	 * informations.
+	 * Methode publique permettant de serialiser les listes, c'est-a-dire qui enregistre dans
+	 * un fichier (ici un .dat) la liste de type Materiel passee en parametre.
 	 * 
 	 * @param s
 	 *            La liste a serialiser dans un fichier.
@@ -87,10 +85,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public serialiser les listes. C'est a dire qui enregistrer dans
+	 * Methode publique permmettant de serialiser les listes, c'est-a-dire enregistrer dans
 	 * un fichier (ici un .dat) la liste de type MaterielEmprunte passee en
-	 * parametre, parce que lors de la fermeture du programme il faut pouvoir
-	 * recuperer les informations.
+	 * parametre.
 	 * 
 	 * @param s
 	 *            La liste a serialiser dans un fichier.
@@ -113,10 +110,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public serialiser une HashMap. C'est a dire qui enregistrer dans
+	 * Methode publique permettant de serialiser une HashMap, c'est-a-dire enregistrer dans
 	 * un fichier (ici un .dat) la hashmap de type Emprunteur et String passee
-	 * en parametre, parce que lors de la fermeture du programme il faut pouvoir
-	 * recuperer les informations.
+	 * en parametre.
 	 * 
 	 * @param s
 	 *            HashMap a serialiser dans un fichier.
@@ -139,10 +135,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public serialiser une HashMap. C'est a dire qui enregistrer dans
+	 * Methode publique permettant de serialiser une HashMap, c'est a dire enregistrer dans
 	 * un fichier (ici un .dat) la hashmap de type Gestionnaire et String passee
-	 * en parametre, parce que lors de la fermeture du programme il faut pouvoir
-	 * recuperer les informations.
+	 * en parametre.
 	 * 
 	 * @param s
 	 *            HashMap a serialiser dans un fichier.
@@ -165,9 +160,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public de deserialiser un Hasmap Gestionnaire String C'est a dire
+	 * Methode public de deserialiser un Hasmap Gestionnaire String, c'est a dire
 	 * qui a partir d'un fichier (ici un .dat) recupere le Hashmap qui a ete
-	 * prealablement enregistre. Ou si le fichier est vide ou non present on
+	 * prealablement enregistre. Si le fichier est vide ou non present, on
 	 * cree un nouvelle liste.
 	 * 
 	 * @param nomListe
@@ -199,9 +194,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public de deserialiser un Hasmap Emprunteur String C'est a dire
+	 * Methode public de deserialiser un Hasmap Emprunteur String, c'est a dire
 	 * qui a partir d'un fichier (ici un .dat) recupere le Hashmap qui a ete
-	 * prealablement enregistre. Ou si le fichier est vide ou non present on
+	 * prealablement enregistre. Si si le fichier est vide ou non present, on
 	 * cree un nouvelle liste.
 	 * 
 	 * @param nomListe
@@ -233,9 +228,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public de deserialiser les listes du type MaterielEmprunte C'est
+	 * Methode public de deserialiser les listes du type MaterielEmprunte, c'est
 	 * a dire qui a partir d'un fichier (ici un .dat) recupere la liste qui a
-	 * ete prealablement enregistre. Ou si le fichier est vide ou non present on
+	 * ete prealablement enregistrees. Si le fichier est vide ou non present, on
 	 * cree un nouvelle liste.
 	 * 
 	 * @param nomListe
@@ -267,9 +262,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public de deserialiser les listes du type Materiel C'est a dire
+	 * Methode public de deserialiser les listes du type Materiel, c'est a dire
 	 * qui a partir d'un fichier (ici un .dat) recupere les listes qui ont ete
-	 * prealablement enregistre. Ou si le fichier est vide ou non present on
+	 * prealablement enregistrees. Si le fichier est vide ou non present, on
 	 * cree un nouvelle liste.
 	 * 
 	 * @param nomListe
@@ -302,9 +297,9 @@ public class FichierData {
 	}
 
 	/**
-	 * Methode public de deserialiser les listes de String C'est a dire qui a
+	 * Methode public de deserialiser les listes de String, c'est a dire qui a
 	 * partir d'un fichier (ici un .dat) recupere les listes qui ont ete
-	 * prealablement enregistre. Ou si le fichier est vide ou non present on
+	 * prealablement enregistres. Si le fichier est vide ou non present, on
 	 * cree un nouvelle liste.
 	 * 
 	 * @param nomListe
