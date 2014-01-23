@@ -96,7 +96,10 @@ public class Stock {
         ajouterMateriel(mat, stockTotal);
         f.serialisationListeMateriel(stockTotal, "stockTotal");
     }
-    
+    public void supprimerMaterielStock(Materiel aSupprimer) {
+        retirerMateriel(aSupprimer, stockTotal);
+        f.serialisationListeMateriel(stockTotal, "stockTotal");
+    }
     /**
      * Methode qui ajoute intelligement du materiel dans une liste de materiel donnee, 
      * 
@@ -124,6 +127,7 @@ public class Stock {
         
         int index=rechercheIndexMateriel(mat, liste);
         if (index>=0) {
+            int nombrePresent = liste.get(index).getNombre();
             liste.get(index).decrNombre(mat.getNombre());
             if (liste.get(index).getNombre() <= 0) {
                 liste.remove(index);
@@ -267,7 +271,7 @@ public class Stock {
     
     /**
      * Méthode qui met à jour la liste des emprunts avec son paramètre.
-     * 
+     * void
      * @param matEmprunte
      *          L'emprunt à rajouter.
      */
