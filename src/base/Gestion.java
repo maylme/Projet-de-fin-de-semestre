@@ -291,7 +291,7 @@ public class Gestion
 		return true;
 	}
 	
-	public boolean terminerReparatino(Materiel m, int nombre){
+	public boolean terminerReparation(Materiel m, int nombre){
 		if (nombre > m.getNombre())
 			return false;
 		
