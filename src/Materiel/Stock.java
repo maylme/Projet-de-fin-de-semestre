@@ -188,12 +188,7 @@ public class Stock {
         return listeMateriel;
     }
     
-    public ArrayList<Caracteristiques> chercherCaracteristique(Date debut, Date fin, String caracteristique) {
-        ArrayList<Caracteristiques> caracsTrouvees = new ArrayList<Caracteristiques>();
-        for (Caracteristiques carac : listeCaracs) {
-            if carac.get
-        }
-    }
+    
     
     public ArrayList<MaterielEmprunte> empruntsParEmprunteur(Emprunteur emprunteur) {
         ArrayList<MaterielEmprunte> liste = new ArrayList<MaterielEmprunte>();
