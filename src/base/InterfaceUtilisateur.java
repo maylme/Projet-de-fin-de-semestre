@@ -335,6 +335,7 @@ public class InterfaceUtilisateur
 		String dateDEmprunt = console.readLine() ;
 		System.out.printf("\nA quelle date voulez vous le rendre ? (format JJ/MM/AAAA) : ") ;
 		String dateRetour = console.readLine() ;
+		System.out.printf("\nQue voulez-vous emprunter ? : ") ;
 		ArrayList<Materiel> matEmpruntable = gestion.listeMaterielEmpruntable(type, formatDate(dateDEmprunt), formatDate(dateRetour));
 		if (!matEmpruntable.equals(null))
 		{
