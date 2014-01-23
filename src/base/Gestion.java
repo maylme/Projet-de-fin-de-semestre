@@ -274,8 +274,9 @@ public class Gestion
 	 * @param nombre le nombre d'exemplaire a rajouter
 	 */
 	public void ajouterExemplaire(Materiel existant, int  nombre){
-		existant.setNombre(nombre);
-		stock.ajouterNouveauMateriel(existant);
+	        Materiel mat = existant.clone();
+	        mat.setNombre(nombre);
+		stock.ajouterNouveauMateriel(mat);
 	}
 	/**
 	 * Renvoie la liste des cle possible pour les caracteristiques
@@ -331,8 +332,9 @@ public class Gestion
 		if (nombre > m.getNombre())
 			return false;
 		
-		m.setNombre(nombre);
-		stock.supprimerMaterielStock(m);
+		Materiel mat = m.clone();
+		mat.setNombre(nombre);
+		stock.supprimerMaterielStock(mat);
 		return true;
 	}
 	

@@ -116,14 +116,5 @@ public class Emprunteur extends Personne implements java.io.Serializable{
 	public String typeEmprunteur(){
 		return "Emprunteur";
 	}
-	@Override
-   public int hashCode(){
-       int result = 0;
-       result = 31*result+ dureeMaxDEmprunt;
-       result = 31*result + (nom !=null ? nom.hashCode() : 0);
-       result = 31*result + (prenom  !=null ? prenom.hashCode() : 0);
-      
-       return result;
-   }
 
 }

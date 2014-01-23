@@ -589,18 +589,20 @@ public class InterfaceUtilisateur
 		if(intTest(nbASupprimer))
 			nombre = Integer.parseInt(nbASupprimer) ;
 		if (nombre!=0)
-			gestion.ajouterExemplaire(matChoisi,nombre);
-		
-		if(gestion.retirerMaterielStock(matChoisi, nombre))
 		{
-			System.out.println("\nSuppression confirmé !") ;
-		}
+		    if(gestion.retirerMaterielStock(matChoisi, nombre))
+	                {
+	                        System.out.println("\nSuppression confirmée !") ;
+	                }
 
-		else
-		{
-			System.out.println("\nSuppression impossible !") ;
-		}
+	                else
+	                {
+	                        System.out.println("\nSuppression impossible !") ;
+	                }
+	        } 
 	}
+		
+		
 
 	/** 
 	* Methode publique permettant de faire un affichage de
