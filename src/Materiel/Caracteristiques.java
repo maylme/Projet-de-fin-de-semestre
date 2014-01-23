@@ -44,6 +44,10 @@ public class Caracteristiques implements java.io.Serializable{
 		return resultat;
 	}
 	
+	public ArrayList<String> getClePossible(){
+		return clePossible;
+	}
+	
 	public boolean  equals(Caracteristiques c){
 		if (c.getResultat().equals(resultat)) {
 		    for (String cle : resultat.keySet()) {
@@ -68,7 +72,7 @@ public class Caracteristiques implements java.io.Serializable{
 	}
 }
 /**
-GEstion ou dans l'interface
+GEstion
 ------------------------------
 Caracteristiques c = new Caracteristique() ;
 
