@@ -5,7 +5,7 @@ package utilisateurs;
  * une période courte. Ils ne peuvent pas faire de réservation plus d'une
  * semaine à l'avance.
  * 
- * @author lyameina
+ * @author Maylanie Mesnier
  * 
  */
 @SuppressWarnings("serial")
@@ -15,7 +15,7 @@ public class Eleve extends Emprunteur implements java.io.Serializable {
     private static final int DUREEMAXRESERVATION = 8;
 
     /**
-     * Constructeur de la classe Eleve Il construit un Emprunteur avec son nom
+     * Constructeur de la classe Eleve Il construit un Eleve avec son nom
      * passe en parametre, son prenom
      * 
      * @param nom
@@ -28,7 +28,7 @@ public class Eleve extends Emprunteur implements java.io.Serializable {
     }
 
     /**
-     * Constructeur de la classe Eleve. Il cree une personne avec objet Personne
+     * Constructeur de la classe Eleve. Il cree un eleve avec objet Personne
      * passe en parametre. Il reprend les informations de la personne et modifie
      * le nombre d'emprunts.
      * 
@@ -47,6 +47,9 @@ public class Eleve extends Emprunteur implements java.io.Serializable {
         super();
     }
 
+    /**
+     * @return Renvoie le type de l'objet sous forme de string
+     */
     public String typeEmprunteur() {
         return "Eleve";
     }

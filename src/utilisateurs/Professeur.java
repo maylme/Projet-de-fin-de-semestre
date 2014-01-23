@@ -6,7 +6,7 @@ package utilisateurs;
  * matériel pour une durée longue si le matériel est disponible. Ils peuvent le
  * réserver à l'avance pour la période de leur cours.
  * 
- * @author lyameina
+ * @author Maylanie Mesnier
  * 
  */
 @SuppressWarnings("serial")
@@ -44,7 +44,7 @@ public class Professeur extends Emprunteur implements java.io.Serializable {
     }
 
     /**
-     * Constructeur par defaut d'un Emprunteur de nom : a et prenom : b
+     * Constructeur par defaut d'un Professeur de nom : a et prenom : b
      * 
      */
     public Professeur() {

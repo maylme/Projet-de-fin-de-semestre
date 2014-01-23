@@ -4,7 +4,7 @@ package utilisateurs;
  * La classe Personne represente une personne avec son nom et son prenom
  * d'emprunts.
  * 
- * @version 2.0 (20.Jan.2014)
+ * @author Maylanie Mesnier 
  */
 
 @SuppressWarnings("serial")

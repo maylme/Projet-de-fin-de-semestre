@@ -1,10 +1,9 @@
 package utilisateurs;
 
 /**
- * Penser à virer le boolean statu. Et mettre les specificité d'un gestionnaire
- * ici.
+ * Classe d'un Gestionnaire. Un Gestionnaire est une personne et n'est pas un emprunteur
  * 
- * @author lyameina
+ * @author Maylanie Mesnier
  */
 @SuppressWarnings("serial")
 public class Gestionnaire extends Personne implements java.io.Serializable {

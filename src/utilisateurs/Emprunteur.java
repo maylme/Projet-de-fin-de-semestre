@@ -3,19 +3,22 @@ package utilisateurs;
 /**
  * Un emprunteur est une personne qui n'est pas un gestionnaire
  * 
- * @author lyameina
+ * @author Maylanie Mesnier
  * 
  */
 
 public class Emprunteur extends Personne implements java.io.Serializable {
 
-    /**
-	 * 
-	 */
+
     private static final int DUREE_MAX_DEMPRUNT = 15;
     protected int nombreEmprunts;
     protected int dureeMaxDEmprunt;
 
+    /**
+     * Constructeur de Emprunteur qui set la duree max d'emprunt a sa valeur par defaut : 15
+     * @param nom le nom de l'emprunteur
+     * @param prenom le prenom de l'eprunteur
+     */
     public Emprunteur(String nom, String prenom) {
         super(nom, prenom);
         dureeMaxDEmprunt = DUREE_MAX_DEMPRUNT;
@@ -40,7 +43,7 @@ public class Emprunteur extends Personne implements java.io.Serializable {
     }
 
     /**
-     * Constructeur de la classe Emprunteur. Il cree une personne avec objet
+     * Constructeur de la classe Emprunteur. Il cree un emprunteur avec objet
      * Personne passe en parametre, et la duree max d'emprunts. Il reprend les
      * informations de la personne et modifie le nombre d'emprunts.
      * 
@@ -108,6 +111,9 @@ public class Emprunteur extends Personne implements java.io.Serializable {
         nombreEmprunts += nbrEmprunt;
     }
 
+    /**
+     * @return Renvoie le type de l'objet sous forme de string
+     */
     public String typeEmprunteur() {
         return "Emprunteur";
     }
