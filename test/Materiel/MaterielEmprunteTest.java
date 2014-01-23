@@ -1,4 +1,4 @@
-package test;
+package Materiel;
 
 import static org.junit.Assert.*;
 
