@@ -22,7 +22,7 @@ import Outils.FichierData;
  * gestionnaires.
  * 
  * 
- * @author lyameina
+ * @author Maylanie Mesnier
  */
 
 public class Gestion {
@@ -383,6 +383,13 @@ public class Gestion {
         stock.ajouterNouveauMateriel(m);
     }
 
+    /**
+     * Enleve du materiel dans le Stock
+     * 
+     * @param m le materiel a enlever
+     * @param nombre le nombre de materiel a enlever
+     * @return true si l'operation s'est bien deroulee
+     */
     public boolean retirerMaterielStock(Materiel m, int nombre) {
         if (nombre > m.getNombre())
             return false;
@@ -393,10 +400,20 @@ public class Gestion {
         return true;
     }
 
+    /**
+     * Renvoie la liste des Materiel en reparation
+     * @return la liste des Materiels en réparation
+     */
     public ArrayList<Materiel> getListeReparation() {
         return stock.getListeReparations();
     }
 
+    /**
+     * Supprime definitivement un materiel parti en reparation
+     * @param m le materiel concernant
+     * @param nombre le nombre de materiel a supprimer
+     * @return true si tout s'est bien passe
+     */
     public boolean supprimerReparation(Materiel m, int nombre) {
         if (nombre > m.getNombre())
             return false;
@@ -406,6 +423,12 @@ public class Gestion {
         return true;
     }
 
+    /**
+     * Renvoie un Materiel partie en reparation dans le Stock
+     * @param m le materiel concerne
+     * @param nombre le nombre de materiel repare
+     * @return true si tout s'est bien passe
+     */
     public boolean terminerReparation(Materiel m, int nombre) {
         if (nombre > m.getNombre())
             return false;
@@ -415,18 +438,37 @@ public class Gestion {
         return true;
     }
 
+    /**
+     * Renvoie la liste des MaterielEmprunte
+     * @return la liste des MaterielEmprunte
+     */
     public ArrayList<MaterielEmprunte> getListeResa() {
         return stock.getListeEmpruntsEtReservs();
     }
 
+    /**
+     * Modifie la date de debut d'un emprunt
+     * @param m le materiel concerne
+     * @param nvlDate la nouvelle date de debut d'emprunt
+     */
     public void modifDateDebut(MaterielEmprunte m, Date nvlDate) {
         m.setDateEmprunt(nvlDate);
     }
 
+    /**
+     * Modifie la date de fin d'un emprunt
+     * @param m le materiel concerne
+     * @param nvlDate la nouvelle date de fin d'emprunt
+     */
     public void modifDateFin(MaterielEmprunte m, Date nvlDate) {
         m.setDateFin(nvlDate);
     }
 
+    /**
+     * Modifie le nombre d'exemplaire d'un Materiel Emprunte
+     * @param m le materiel concerne
+     * @param nvnombre le nouveau nombre de materiel
+     */
     public void modifNombreExemplaire(MaterielEmprunte m, int nvnombre) {
         if (nvnombre == 0) {
             stock.retirerEmprunt(m.getId());
@@ -434,14 +476,25 @@ public class Gestion {
         m.getMatEmprunt().setNombre(nvnombre);
     }
 
+    /**
+     * Retourne une String pour afficher les reservation et Emprunt
+     * @return une String pour afficher les reservation et Emprunt
+     */
     public String afficherResa() {
         return stock.afficherEmpruntsEtReservs();
     }
 
+    /**
+     * Retourne une String pour afficher les reparations
+     * @return une String pour afficher les reparations
+     */
     public String afficherReparation() {
         return stock.afficherReparations();
     }
-
+    /**
+     * Retourne une String pour afficher les Refus
+     * @return une String pour afficher les Refus
+     */
     public String afficherRefus() {
         String retour = "\n     Emprunt Refusés\n";
 
