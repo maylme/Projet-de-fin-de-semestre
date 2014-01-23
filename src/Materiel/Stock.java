@@ -139,7 +139,8 @@ public class Stock {
      */
     public void aReparer(Materiel aReparer) {
         retirerMateriel(aReparer, stockTotal);
-        if (rechercheIndexMateriel(aReparer, stockTotal) == -1)
+        int index=rechercheIndexMateriel(aReparer, stockTotal);
+        if ( index >= 0)
             ajouterMateriel(aReparer, reparations);
         f.serialisationListeMateriel(stockTotal, "stockTotal");
         f.serialisationListeMateriel(reparations, "reparations");
@@ -166,10 +167,11 @@ public class Stock {
      * @return
      */
     
-    public ArrayList<Caracteristiques> materielDispo(Date debut, Date fin,
-            Caracteristiques caracs) {
-        ArrayList<Caracteristiques> listeCaracs = new ArrayList<Caracteristiques>();
+    public ArrayList<Materiel> materielDispo(Date debut, Date fin,
+            String caracCherchee) {
+        ArrayList<Materiel> listeMateriel = new ArrayList<Materiel>();
         int nombreMaterielDispo;
+        Caracteristiques carac;
         for (Materiel mat : stockTotal) {
             nombreMaterielDispo=mat.getNombre();
             for (MaterielEmprunte matEmprunt : empruntsEtReservs) {
@@ -177,11 +179,17 @@ public class Stock {
                     nombreMaterielDispo-=matEmprunt.getMatEmprunt().getNombre();
                 }
             }
-            if (nombreMaterielDispo > 0) listeCaracs.add(mat.getCaracteristiques());
+            if (nombreMaterielDispo > 0) {
+                carac=mat.getCaracteristiques();
+                if (carac.searchValue(caracCherchee))
+                    listeMateriel.add(mat);
+            }
         }
-        return listeCaracs;
+        return listeMateriel;
     }
-
+    
+    
+    
     public ArrayList<MaterielEmprunte> empruntsParEmprunteur(Emprunteur emprunteur) {
         ArrayList<MaterielEmprunte> liste = new ArrayList<MaterielEmprunte>();
         for (MaterielEmprunte matEmp : empruntsEtReservs) {
@@ -306,6 +314,12 @@ public class Stock {
     public void viderListeEmprunts(){
         empruntsEtReservs.clear();
         f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
+    }
+    /**
+     * Méthode qui enregistre toutes les listes du stock vers un fichier texte lisible
+     */
+    public void listesVersTexte(){
+        f.serialisationFichierLisible(stockTotal, reparations, empruntsEtReservs);
     }
     /**
      * Methode publique permettant de faire un affichage par defaut de la
