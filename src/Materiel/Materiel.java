@@ -3,8 +3,6 @@ package Materiel;
 import java.util.Date;
 
 import utilisateurs.Emprunteur;
-import utilisateurs.Personne;
-import utilisateurs.Professeur;
 import utilisateurs.Eleve;
 
 /** 
@@ -18,6 +16,7 @@ import utilisateurs.Eleve;
 * @version 2.0 (4.Dec.2013) 
 */
 
+@SuppressWarnings("serial")
 public class Materiel implements java.io.Serializable
 {
 	public static final int DUREE_EMPRUNT_MAX = 15;
