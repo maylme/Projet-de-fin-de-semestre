@@ -1,0 +1,40 @@
+	/**
+	 * Renvoie true si l'utilisateur est correctement loggé.
+	 * Set definitivement l'utlisateur courant
+	 * @param nom
+	 * @param Prenom
+	 * @param motDePasse
+	 * @param gestionnaire
+	 * @return true su l'utilisateur est loggé
+	 */
+	private boolean isLogged(String nom, String prenom, String motDePasse, boolean gestionnaire){
+		if (existe(nom, prenom, gestionnaire)){
+			if (gestionnaire){
+				Gestionnaire aTester = new Gestionnaire(nom,prenom);
+				String vraiMotDePasse = hashMapGestionnaire.get(aTester);
+				if (vraiMotDePasse.equals(motDePasse)) {
+					for( Gestionnaire g : hashMapGestionnaire.keySet()){
+						if (g.equals(aTester))
+							utilisateurCourant = g;
+							return true;
+					}
+				}
+					
+			}
+			else{
+				Emprunteur aTester = new Emprunteur(nom,prenom);
+				String vraiMotDePasse = hashMapEmprunteur.get(aTester);
+				if (vraiMotDePasse.equals(motDePasse)) {
+					for( Emprunteur e : hashMapEmprunteur.keySet()){
+						if (e.equals(aTester))
+							utilisateurCourant = e;
+							return true;
+					}
+				}
+				
+			}
+		}
+		return false;
+	}
+	
+	
