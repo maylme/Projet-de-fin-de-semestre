@@ -299,6 +299,10 @@ public class Gestion
 		return false;
 	}
 	
+	/**
+	 * creation d'une nouvelle cle
+	 * @param cle la nouvelle cle
+	 */
 	public void creationCleCaracteristique (String cle){
 		Caracteristiques c = new Caracteristiques();
 		if (!c.existeCle(cle)){
