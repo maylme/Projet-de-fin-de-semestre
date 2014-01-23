@@ -175,7 +175,7 @@ public class Stock {
         for (Materiel mat : stockTotal) {
             nombreMaterielDispo=mat.getNombre();
             for (MaterielEmprunte matEmprunt : empruntsEtReservs) {
-                if (mat.equals(matEmprunt.getMatEmprunt()) && (!(conflitDates(debut, fin, matEmprunt)))) {
+                if (mat.equals(matEmprunt.getMatEmprunt()) && (conflitDates(debut, fin, matEmprunt))) {
                     nombreMaterielDispo-=matEmprunt.getMatEmprunt().getNombre();
                 }
             }
