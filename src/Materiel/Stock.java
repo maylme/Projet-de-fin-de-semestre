@@ -181,8 +181,12 @@ public class Stock {
             }
             if (nombreMaterielDispo > 0) {
                 carac=mat.getCaracteristiques();
-                if (carac.searchValue(caracCherchee))
-                    listeMateriel.add(mat);
+                if (carac.searchValue(caracCherchee)) {
+                    Materiel matTrouve = mat.clone();
+                    matTrouve.setNombre(nombreMaterielDispo);
+                    listeMateriel.add(matTrouve);
+                    
+                }
             }
         }
         return listeMateriel;
