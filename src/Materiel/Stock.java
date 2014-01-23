@@ -36,12 +36,6 @@ public class Stock {
         stockTotal = f.deserialisationListeMateriel("stockTotal");
         reparations = f.deserialisationListeMateriel("reparations");
         empruntsEtReservs = f.deserialisationListeMaterielEmprunte("empruntsEtReservs");
-        /*statistiquesReparations =
-                deserialisationListeTypeDeMateriel("statistiquesReparations");
-        statistiquesEmprunts =
-                deserialisationListeTypeDeMateriel("statistiquesEmprunts");
-                */
-
     }
     
     /**
@@ -92,6 +86,12 @@ public class Stock {
         ajouterMateriel(mat, stockTotal);
         f.serialisationListeMateriel(stockTotal, "stockTotal");
     }
+    
+    /**
+     * Supprime un certain nombre de matériel du stock
+     * 
+     * @param aSupprimer        Le matériel a supprimer
+     */
     public void supprimerMaterielStock(Materiel aSupprimer) {
         retirerMateriel(aSupprimer, stockTotal);
         f.serialisationListeMateriel(stockTotal, "stockTotal");
@@ -145,6 +145,15 @@ public class Stock {
         f.serialisationListeMateriel(reparations, "reparations");
     }
     
+    /**
+     * Méthode qui vérifie s'il y a un conflit de dates avec les autres emprunts
+     * au momment d'un emprunt.
+     * 
+     * @param dateDebut
+     * @param dateFin
+     * @param emprunt
+     * @return
+     */
     private boolean conflitDates(Date dateDebut, Date dateFin, MaterielEmprunte emprunt) {
         Date dateDebutEmprunt = emprunt.getDateEmprunt();
         Date dateFinEmprunt = emprunt.getDateFin();
@@ -160,9 +169,9 @@ public class Stock {
      * Methode qui retourne la liste de tous les materiels qui sont disponibles
      * en fonction des caracterstiques recherchees et des dates.
      * 
-     * @param debut
-     * @param fin
-     * @param caracs
+     * @param debut     La date de début de la période voulue
+     * @param fin       La date de fin de la période voulue
+     * @param caracs    Les caracteristiques du matériel
      * @return
      */
     
@@ -191,6 +200,12 @@ public class Stock {
         return listeMateriel;
     }
     
+    /**
+     * Retourne la liste d'emprunts correspondant à un emprunteur particulier
+     * 
+     * @param emprunteur        Le responsable des emprunts
+     * @return          
+     */
     public ArrayList<MaterielEmprunte> empruntsParEmprunteur(Emprunteur emprunteur) {
         ArrayList<MaterielEmprunte> liste = new ArrayList<MaterielEmprunte>();
         for (MaterielEmprunte matEmp : empruntsEtReservs) {
@@ -359,10 +374,10 @@ public class Stock {
      */
     public String afficherEmprunts() {
         String retour = "\n     EMPRUNTS EN COURS\n";
-        /*
-        for (int i = 0; i < emprunts.size(); i++) {
-            retour += emprunts.get(i);
-        }*/
+        
+        for (int i = 0; i < empruntsEtReservs.size(); i++) {
+            retour += empruntsEtReservs.get(i);
+        }
 
         return retour;
     }
