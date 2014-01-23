@@ -94,6 +94,7 @@ public class Stock {
      */
     public void ajouterNouveauMateriel(Materiel mat) {
         ajouterMateriel(mat, stockTotal);
+        f.serialisationListeMateriel(stockTotal, "stockTotal");
     }
     
     /**
@@ -120,6 +121,7 @@ public class Stock {
      *          La liste a manipuler
      */
     public void retirerMateriel(Materiel mat, ArrayList<Materiel> liste) {
+        
         int index=rechercheIndexMateriel(mat, liste);
         if (index>=0) {
             liste.get(index).decrNombre(mat.getNombre());
@@ -137,7 +139,8 @@ public class Stock {
      */
     public void aReparer(Materiel aReparer) {
         retirerMateriel(aReparer, stockTotal);
-        ajouterMateriel(aReparer, reparations);
+        if (rechercheIndexMateriel(aReparer, stockTotal) == -1)
+            ajouterMateriel(aReparer, reparations);
         f.serialisationListeMateriel(stockTotal, "stockTotal");
         f.serialisationListeMateriel(reparations, "reparations");
     }
@@ -285,6 +288,7 @@ public class Stock {
      */
     public void viderListeStock(){
         stockTotal.clear();
+        f.serialisationListeMateriel(stockTotal, "stockTotal");
     }
     
     /**
@@ -293,6 +297,7 @@ public class Stock {
      */
     public void viderListeReparations(){
         reparations.clear();
+        f.serialisationListeMateriel(reparations, "reparations");
     }
     
     /**
@@ -300,6 +305,7 @@ public class Stock {
      */
     public void viderListeEmprunts(){
         empruntsEtReservs.clear();
+        f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
     }
     /**
      * Methode publique permettant de faire un affichage par defaut de la
