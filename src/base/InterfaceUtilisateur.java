@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import Materiel.Materiel;
 import Materiel.MaterielEmprunte;
+import Outils.FichierData;
 
 /** 
 * Cette classe gere l'interface utilisateur du programme.
@@ -22,7 +23,6 @@ public class InterfaceUtilisateur
 {
 	private Console console ;
 	private Gestion gestion ;
-	private static final String MOT_DE_PASSE = "ipa2013_ihm!" ;
 
 	/** 
 	* Constructeur qui contient l'architecture
@@ -133,7 +133,8 @@ public class InterfaceUtilisateur
 
 							case "7":
 							{
-								gestion.serialisationFichierLisible();
+								FichierData f = new FichierData();
+								f.serialisationFichierLisible(gestion.getStockTotal(), gestion.getListeReparation(), gestion.getListeResa());
 								break;
 							}
 
@@ -220,6 +221,7 @@ public class InterfaceUtilisateur
 			}
 		}
 		while(!wrong);
+		return false;
 	}
 
 	/** 
@@ -818,29 +820,35 @@ public class InterfaceUtilisateur
 	*/ 
 	private void afficher()
 	{
-		System.out.println("\nQue voulez-vous afficher ? : \n1. Matériel disponible\n2. Matériel en réparations\n3. Emprunts et Réservation en cours\n") ;
+		System.out.println("\nQue voulez-vous afficher ? : \n1. Stock total\n2. Matériel en réparations\n3. Emprunts et Réservations en cours\n4. Emprunts et réservations refusés\n") ;
 		String choix = console.readLine();
 
 		switch(choix)
 		{
 			case "1":
 			{
-				System.out.println(gestion.afficherStock()) ;
+				System.out.println(gestion.afficherStockTotal()) ;
 				break;
 			}
 
 			case "2":
 			{
-				System.out.println(gestion.afficherReparations()) ;
+				System.out.println(gestion.afficherReparation()) ;
 				break;
 			}
 
 			case "3":
 			{
-				System.out.println(gestion.afficherEmprunts()) ;
+				System.out.println(gestion.afficherResa()) ;
 				break;
 			}
 
+			case "4":
+			{
+				System.out.println(gestion.afficherRefus()) ;
+				break;
+			}
+			
 			default:
 			{
 				break;

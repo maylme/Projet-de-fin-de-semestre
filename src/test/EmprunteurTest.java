@@ -113,11 +113,5 @@ public class EmprunteurTest {
 			fail("nb emprunt");
 	}
 
-	@Test
-	public void testIncrementNbrEmprunt() {
-		fail("Not yet implemented");
-	}
-	
-	
 
 }
