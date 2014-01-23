@@ -372,7 +372,7 @@ public class Stock {
      * 
      * @return La chaine de caractere contenant le contenu de la liste emprunts
      */
-    public String afficherEmprunts() {
+    public String afficherEmpruntsEtReservs() {
         String retour = "\n     EMPRUNTS EN COURS\n";
         
         for (int i = 0; i < empruntsEtReservs.size(); i++) {
