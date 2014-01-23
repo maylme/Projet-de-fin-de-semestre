@@ -274,6 +274,7 @@ public class Gestion {
         if (choix.empruntable(dateDebut, dateFin,
                 ((Emprunteur) utilisateurCourant))) {
             if (nombre < choix.getNombre()) {
+                m.getMatEmprunt().setNombre(nombre);
                 stock.emprunter(m);
                 return "Reservation effectuée";
             } else {
@@ -472,6 +473,7 @@ public class Gestion {
     public void modifNombreExemplaire(MaterielEmprunte m, int nvnombre) {
         if (nvnombre == 0) {
             stock.retirerEmprunt(m.getId());
+            return;
         }
         m.getMatEmprunt().setNombre(nvnombre);
     }

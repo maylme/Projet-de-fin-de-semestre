@@ -153,7 +153,7 @@ public class InterfaceUtilisateur {
     }
 
     /**
-     * Permet a l'utilisateur choisir son statut entre celui d'emprunteur et
+     * Permet a l'utilisateur de choisir son statut entre celui d'emprunteur et
      * celui de gestionnaire. S'il choisit gestionnaire, il devra renseigner un
      * mot de passe (présent dans la classe gestion) l'autorisant à créer un profil
      * gestionnaire.
@@ -684,8 +684,7 @@ public class InterfaceUtilisateur {
 
                 } else if (choix.equals("4")) {
                     wrong = true;
-                    gestion.modifNombreExemplaire(matChoisi, matChoisi
-                            .getMatEmprunt().getNombre());
+                    gestion.modifNombreExemplaire(matChoisi, 0);
                 }
 
                 else {
