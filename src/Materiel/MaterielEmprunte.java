@@ -14,6 +14,7 @@ import utilisateurs.Emprunteur;
 * @version 1.0 (4.Dec.2013) 
 */
 
+@SuppressWarnings("serial")
 public class MaterielEmprunte implements java.io.Serializable
 {
 	private Materiel emprunt ;
