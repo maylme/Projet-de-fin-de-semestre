@@ -1,6 +1,7 @@
 package base;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.io.*;
 
@@ -10,6 +11,7 @@ import utilisateurs.Gestionnaire;
 import utilisateurs.Personne;
 import utilisateurs.Professeur;
 
+import Materiel.Materiel;
 import Materiel.MaterielEmprunte;
 import Materiel.Stock;
 import Outils.FichierData;
@@ -159,5 +161,18 @@ public class Gestion
 		
 		return stock.empruntsParEmprunteur((Emprunteur)utilisateurCourant);
 	}
+	
+	public ArrayList<Materiel> listeMaterielEmpruntable( String motAChercher , Date dateDebut, Date dateFin){
 		
+		//TODO
+	}
+	
+	public void emprunt(Materiel choix, int nombre, Date dateDebut, Date dateFin){
+		
+		if (choix.)
+	}
+	
+	public String AfficherStockTotal(){
+		return stock.afficherStock();
+	}
 }
