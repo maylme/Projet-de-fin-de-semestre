@@ -601,38 +601,54 @@ public class InterfaceUtilisateur
 	}
 
 	/** 
+	* Methode publique permettant de faire un affichage de
+	* la liste de reparation.
+	* 
+	* @return La chaine de caractere contenant le contenu
+	* de la liste de réparation
+	*/
+	private String afficherChoixReparation(ArrayList<Materiel> reparation)
+	{
+		String retour = "\n     MATERIEL EN REPARATION\n" ;
+
+		for(int i = 0 ; i<reparation.size() ; i++)
+		{
+			retour += i+". " + reparation.get(i) + "\n" ;
+		}
+		return retour ;
+	}
+	
+	/** 
 	* Permet au gestionnaire de supprimer
 	* un materiel de la liste de réparation si celui-ci
 	* n'est pas réparable
 	*/  
 	private void supprimerReparations()
 	{
-		System.out.println(gestion.afficherStock());
+		System.out.println(afficherChoixReparation(gestion.getListeReparation()));
 
-		System.out.printf("\nQuel type voulez-vous faire réparer ? : ") ;
-		String type = console.readLine() ;
-		System.out.println("\nCombien d'exemplaires voulez-vous faire réparer ? : ") ;
-		String test = console.readLine() ;
-		int nombre = 0 ;
-		
-		if(intTest(test))
-			nombre = Integer.parseInt(test) ;
-
-		int retour = gestion.aReparer(type,nombre);
-
-		if(retour==-1)
+		System.out.printf("\nQuel materiel voulez-vous supprimer des réparations ? : ") ;
+		Materiel matChoisi = gestion.getListeReparation().get(choixDansListe(gestion.getListeReparation().size()));
+		if (!matChoisi.equals(null))
 		{
-			System.out.println("\nMise en réparation confirmée !") ;
-		}
+			System.out.println("\nCombien d'exemplaires voulez-vous supprimer ? : ") ;
+			String supp = console.readLine() ;
+			int nombre = 0 ;
+			
+			if(intTest(supp))
+				nombre = Integer.parseInt(supp) ;
+			if (nombre!=0)
+			{
+				if (gestion.supprimerReparation(matChoisi,nombre))
+				{
+					System.out.println("\nSuppression du materiel en réparation confirmée !") ;
+				}
+				else
+				{
+					System.out.println("\nImpossible de supprimer le materiel") ;
+				}
+			}
 
-		else if(retour!=0)
-		{
-			System.out.println("\nMise en réparation impossible... Seulement " + retour + " exemplaires disponibles.") ;
-		}
-
-		else
-		{
-			System.out.println("\nMise en réparation impossible") ;
 		}
 	}
 
@@ -644,27 +660,27 @@ public class InterfaceUtilisateur
 	*/ 
 	private void terminerReparations()
 	{
-		System.out.println(gestion.afficherReparations());
-
-		System.out.printf("\nQuel type voulez-vous retirer des réparations ? : ") ;
-		String type = console.readLine() ;
-		System.out.printf("\nCombien d'exemplaires voulez-vous retirer des réparations ? : ") ;
-		String test = console.readLine() ;
-		int nombre = 0 ;
-		
-		if(intTest(test))
-			nombre = Integer.parseInt(test) ;
-
-		int retour = gestion.retourReparation(type, nombre);
-
-		if(retour>0)
+		System.out.printf("\nQuel materiel voulez-vous retirer des réparations pour les remettre dans stock? : ") ;
+		Materiel matChoisi = gestion.getListeReparation().get(choixDansListe(gestion.getListeReparation().size()));
+		if (!matChoisi.equals(null))
 		{
-			System.out.println("\nRetrait confirmé !") ;
-		}
-
-		else
-		{
-			System.out.println("\nRetrait impossible !") ;
+			System.out.println("\nCombien d'exemplaires voulez-vous retirer ? : ") ;
+			String retirer = console.readLine() ;
+			int nombre = 0 ;
+			
+			if(intTest(retirer))
+				nombre = Integer.parseInt(retirer) ;
+			if (nombre!=0)
+			{
+				if (gestion.terminerReparation(matChoisi,nombre))
+				{
+					System.out.println("\nRetrait de réparation confirmée !") ;
+				}
+				else
+				{
+					System.out.println("\nRetrait de réparation impossible !") ;
+				}
+			}
 		}
 	}
 
