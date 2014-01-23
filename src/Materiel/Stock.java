@@ -188,8 +188,6 @@ public class Stock {
         return listeMateriel;
     }
     
-    
-    
     public ArrayList<MaterielEmprunte> empruntsParEmprunteur(Emprunteur emprunteur) {
         ArrayList<MaterielEmprunte> liste = new ArrayList<MaterielEmprunte>();
         for (MaterielEmprunte matEmp : empruntsEtReservs) {
@@ -400,7 +398,7 @@ public class Stock {
      *         disponible
      */
     public String afficherStock() {
-        String retour = "\n     STOCK DISPONIBLE\n";
+        String retour = "\n     STOCK TOTAL\n";
     
         for (int i = 0; i < stockTotal.size(); i++) {
             retour += stockTotal.get(i) + "\n";
