@@ -36,6 +36,13 @@ public class Materiel implements java.io.Serializable
 		nombreExemplaires = nbExemplaires;
 		dureeMaxEmprunt = dureeMax;
 	}
+	
+	public Materiel(Caracteristiques c, int nbExemplaires)
+	{
+		caracteristiques = c;
+		nombreExemplaires = nbExemplaires;
+		dureeMaxEmprunt = DUREE_EMPRUNT_MAX;
+	}
 
 	/** 
 	* Constructeur de la classe Materiel

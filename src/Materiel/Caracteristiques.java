@@ -25,6 +25,16 @@ public class Caracteristiques implements java.io.Serializable{
 		resultat = new HashMap<String, String>();
 	}
 	
+	/**
+	 * constructeur utilisé dans la classe gestion car tous est verifier
+	 * au fur et à mesure.
+	 * @param h HashMap representant les caracteristiques
+	 */
+	public Caracteristiques(HashMap<String, String> h){
+		FichierData f = new FichierData();
+		clePossible = f.deserialisationListeString(NOMFICHIER);
+		resultat = h;
+	}
 	public void addSpecification (String cle, String valeur) throws CleInexistanteException {
 		if (!(clePossible.contains(cle))){
 			throw new CleInexistanteException();

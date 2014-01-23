@@ -259,8 +259,23 @@ public class Gestion
 	 */
 	public void ajoutMaterielStock (HashMap<String, String> caracs, int nombre, int duree){
 		//creation des caracteristiques:
-		Caracteristiques c = new Caracteristiques();
-		for ( Element)
+		Caracteristiques c = new Caracteristiques(caracs);
+		Materiel m;
+		if (duree == 0)
+			m = new Materiel(c , nombre);
+		else
+			m = new Materiel(c , duree, nombre);
+		
+		stock.ajouterNouveauMateriel(m);
+	}
+	
+	public boolean retirerMaterielStock (Materiel m, int nombre){
+		if (nombre > m.getNombre())
+			return false;
+		
+		m.setNombre(nombre);
+		stock.supprimerMaterielStock();
+		return true;
 	}
 	
 }
