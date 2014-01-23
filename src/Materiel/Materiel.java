@@ -4,6 +4,8 @@ import java.util.Date;
 
 import utilisateurs.Emprunteur;
 import utilisateurs.Personne;
+import utilisateurs.Professeur;
+import utilisateurs.Eleve;
 
 /** 
 * La class Materiel représente un objet matériel.
@@ -202,4 +204,18 @@ public class Materiel implements java.io.Serializable
       
        return result;
    }
+	
+	/**
+	 * Methode qui renvoie un boolean pour savoir si l'emprunt de ce materiel est possible
+	 * Pour un Materiel "de base" on considère que c'est possible.
+	 * @param dateDebut
+	 * @param duree
+	 * @param e
+	 * @return
+	 */
+	public boolean empruntable(Date dateDebut, Date dateFin, Emprunteur e ){
+		int duréeEmprunt = dateFin.getTime() - 
+		
+		return true;
+	}
 }
