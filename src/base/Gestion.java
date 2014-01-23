@@ -3,8 +3,6 @@ package base;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.io.*;
-
 import utilisateurs.Eleve;
 import utilisateurs.Emprunteur;
 import utilisateurs.Gestionnaire;
@@ -274,7 +272,7 @@ public class Gestion
 			return false;
 		
 		m.setNombre(nombre);
-		stock.supprimerMaterielStock();
+		stock.supprimerMaterielStock(m);
 		return true;
 	}
 	
