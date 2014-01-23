@@ -209,7 +209,7 @@ public class Gestion
 	
 	//Fonctions associees au Gestionnaire:
 	
-	public String AfficherStockTotal(){
+	public String afficherStockTotal(){
 		return stock.afficherStock();
 	}
 	
@@ -260,6 +260,7 @@ public class Gestion
 	public void ajoutMaterielStock (HashMap<String, String> caracs, int nombre, int duree){
 		//creation des caracteristiques:
 		Caracteristiques c = new Caracteristiques();
+		for ( Element)
 	}
 	
 }
