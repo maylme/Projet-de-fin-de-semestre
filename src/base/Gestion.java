@@ -87,6 +87,15 @@ public class Gestion
 		}
 	}
 	
+	public boolean rendre (MaterielEmprunte choix, nombreRendu, nombreHS){
+		if (nombreRendu <= choix.getMatEmprunt().getNombre()){
+			String idEmprunt = choix.getId();
+			stock.renduEmprunt(idEmprunt, nombreRendus, nombreHS);
+			return true;
+		}
+		return false;
+	}
+	
 	
 	/**
 	 * Renvoie true si l'utilisateur est correctement loggé.
@@ -157,6 +166,9 @@ public class Gestion
 		hashMapEmprunteur.put((Emprunteur)utilisateurCourant, passwd);
 	}
 	
+	
+	//Fonctions associees à l'Emprunteur:
+	
 	public ArrayList<MaterielEmprunte> listeEmpruntParEmprunteur(){
 		
 		return stock.empruntsParEmprunteur((Emprunteur)utilisateurCourant);
@@ -185,4 +197,9 @@ public class Gestion
 	public String AfficherStockTotal(){
 		return stock.afficherStock();
 	}
+	
+	//Fonctions associees au Gestionnaire:
+	
+	
+	
 }
