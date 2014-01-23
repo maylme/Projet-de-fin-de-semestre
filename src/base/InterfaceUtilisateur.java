@@ -121,17 +121,23 @@ public class InterfaceUtilisateur
 
 							case "5":
 							{
-								consulterStatistiques();
+								modifEmpruntOuResa();
+								break;
+							}
+							
+							case "6":
+							{
+								suppEmpruntOuResa();
 								break;
 							}
 
-							case "6":
+							case "7":
 							{
 								afficher();
 								break;
 							}
 
-							case "7":
+							case "8":
 							{
 								gestion.serialisationFichierLisible();
 								break;
@@ -313,7 +319,7 @@ public class InterfaceUtilisateur
 	*/ 
 	private String menuGestion()
 	{
-		System.out.println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier ou annuler un emprunt ou une réservation\n6. Affichage des données\n7. Export de toutes les données") ;
+		System.out.println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier un emprunt ou une réservation\n6. Supprimer un emprunt ou une réservation\n7. Affichage des données\n8. Export de toutes les données") ;
 		String retour = console.readLine() ;
 		return retour ;
 	}
@@ -683,7 +689,95 @@ public class InterfaceUtilisateur
 			}
 		}
 	}
+	
+	/** 
+	* Permet au gestionnaire de modifier un emprunt
+	* ou une réservation
+	* Affiche un message confirmant ou infirmant le retrait. 
+	*/ 
+	private void modifEmpruntOuResa()
+	{
+		System.out.println(afficherChoixEmpruntEtResa(gestion.getListeResa()));
 
+		System.out.printf("\nQuel emprunt ou reservation voulez vous modifier ? : ") ;
+		MaterielEmprunte matChoisi = gestion.getListeResa().get(choixDansListe(gestion.getListeResa().size()));
+		if (!matChoisi.equals(null))
+		{
+			System.out.printf("\nQuelle modification voulez vous effectuer ?\n\n1. La date de début d'emprunt/réservation \n2. La date de fin d'emprunt/réservation \n3. Le nombre d'exemplaire \n") ;
+			boolean wrong = false ;
+			String choix = "" ;
+
+			do
+			{
+				choix = console.readLine() ;
+
+				if(choix.equals("1"))
+				{
+					wrong = true ;
+					System.out.printf("\nQuelle est la nouvelle date d'emprunt ? (JJ/MM/AAAA)");
+					String date = console.readLine() ;
+					gestion.modifDateDebut(matChoisi, formatDate(date));
+				}
+
+				else if(choix.equals("2"))
+				{
+					wrong = true ;
+					System.out.printf("\nQuelle est la nouvelle date de fin d'emprunt ? (JJ/MM/AAAA)");
+					String date = console.readLine() ;
+					gestion.modifDateFin(matChoisi, formatDate(date));
+				}
+				
+				else if(choix.equals("3"))
+				{
+					wrong = true ;
+					System.out.printf("\nQuelle est le nouveau nombre d'exemplaire emprunte ? ");
+					String nbExemplaire = console.readLine() ;
+					int nombre = 0 ;
+					
+					if(intTest(nbExemplaire))
+						nombre = Integer.parseInt(nbExemplaire) ;
+					if (nombre>=0)
+						gestion.modifNombreExemplaire(matChoisi, nombre);
+					
+				}
+
+				else
+				{
+					System.out.printf("\nMerci de choisir entre 1, 2 et 3 : ") ;
+				}
+			}
+			while(!wrong);
+
+		}
+	}
+	
+	/** 
+	* Methode publique permettant de faire un affichage de
+	* la liste des emprunts.
+	* 
+	* @return La chaine de caractere contenant le contenu
+	* de la liste d'emprunt et reservation
+	*/
+	private String afficherChoixEmpruntEtResa(ArrayList<MaterielEmprunte> listeEmpruntResa)
+	{
+		String retour = "\n     EMPRUNTS ET RESERVATIONS\n" ;
+
+		for(int i = 0 ; i<listeEmpruntResa.size() ; i++)
+		{
+			retour += i+". " + listeEmpruntResa.get(i) + "\n" ;
+		}
+		return retour ;
+	}
+
+	/** 
+	* Permet au gestionnaire de supprimer un emprunt
+	* ou une réservation
+	* Affiche un message confirmant ou infirmant le retrait. 
+	*/ 
+	private void suppEmpruntOuResa()
+	{
+	}
+	
 	/** 
 	* Demande a l'utilisateur s'il souhaite
 	* retourner au menu principal, a savoir le menu de
@@ -725,58 +819,6 @@ public class InterfaceUtilisateur
 		System.out.printf("\nVoulez-vous revenir au menu EMPRUNT ? (Y/N) : ") ;
 		String choix = console.readLine();
 		return choix ;
-	}
-
-	/** 
-	* Affiche le menu statistiques et affiche
-	* la statistique correspondant au choix de
-	* l'utilisateur.
-	*/ 
-	private void consulterStatistiques()
-	{
-		System.out.println("\nQue voulez-vous savoir ? : \n1. Matériel le plus emprunté\n2. Matériel le plus réparé\n3. Plus gros emprunteur\n") ;
-		String choix = console.readLine();
-
-		switch(choix)
-		{
-			case "1":
-			{
-				if(gestion.materielPlusEmprunte()!=null)
-					System.out.println("\nType de matériel : " + gestion.materielPlusEmprunte().getNom() + "\nIdentifiation : " + gestion.materielPlusEmprunte().getIdent() + "\nNombre d'emprunts : " + gestion.materielPlusEmprunte().getNombre()) ;
-
-				else
-					System.out.println("Aucun emprunt !") ;
-
-				break;
-			}
-
-			case "2":
-			{
-				if(gestion.materielPlusRepare()!=null)
-					System.out.println("\nType de matériel : " + gestion.materielPlusRepare().getNom() + "\nIdentifiation : " + gestion.materielPlusRepare().getIdent() + "\nNombre de réparations : " + gestion.materielPlusRepare().getNombre()) ;
-
-				else
-					System.out.println("Aucune réparation !") ;
-
-				break;
-			}
-
-			case "3":
-			{
-				if(gestion.plusGrosEmprunteur()!=null)
-					System.out.println("\n" + gestion.plusGrosEmprunteur().getNom().toUpperCase() + " " +gestion.plusGrosEmprunteur().getPrenom() + "\nNombre d'emprunts : " + gestion.plusGrosEmprunteur().getNbrEmprunt()) ;
-
-				else
-					System.out.println("Aucun emprunteur !") ;
-
-				break;
-			}
-
-			default:
-			{
-				break;
-			}
-		}
 	}
 
 	/** 
