@@ -407,7 +407,7 @@ public class InterfaceUtilisateur {
         int nombreHS = 0;
 
         if (intTest(nbHS))
-            nombreHS = Integer.parseInt(test);
+            nombreHS = Integer.parseInt(nbHS);
 
         boolean retour = gestion.rendre(matARendre, nombre, nombreHS);
 
