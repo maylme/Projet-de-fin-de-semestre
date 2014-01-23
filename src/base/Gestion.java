@@ -164,12 +164,22 @@ public class Gestion
 	
 	public ArrayList<Materiel> listeMaterielEmpruntable( String motAChercher , Date dateDebut, Date dateFin){
 		
-		//TODO
+		return stock.materielDispo(dateDebut, dateFin, motAChercher);
 	}
 	
-	public void emprunt(Materiel choix, int nombre, Date dateDebut, Date dateFin){
+	public String emprunt(Materiel choix, int nombre, Date dateDebut, Date dateFin){
 		
-		if (choix.)
+		if (choix.empruntable(dateDebut, dateFin, ((Emprunteur)utilisateurCourant))){
+			if (nombre < choix.getNombre()){
+				MaterielEmprunte m = new MaterielEmprunte(choix, ((Emprunteur)utilisateurCourant),dateDebut, dateFin);
+				stock.emprunter(m);
+				return "Reservation effectuée";
+			}
+			else
+				return "Erreur: Nous n'avons pas autant de materiel (nombre demandé trop grand)\n Nous avons seulement "+ choix.getNombre() + " exemplaire(s)";
+		}
+		return "Erreur: Vous n'êtes pas autorisé(e) à utiliser ce materiel";
+		
 	}
 	
 	public String AfficherStockTotal(){
