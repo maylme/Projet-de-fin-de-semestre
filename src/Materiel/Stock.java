@@ -167,10 +167,11 @@ public class Stock {
      * @return
      */
     
-    public ArrayList<Caracteristiques> materielDispo(Date debut, Date fin,
-            Caracteristiques caracs) {
-        ArrayList<Caracteristiques> listeCaracs = new ArrayList<Caracteristiques>();
+    public ArrayList<Materiel> materielDispo(Date debut, Date fin,
+            String caracCherchee) {
+        ArrayList<Materiel> listeMateriel = new ArrayList<Materiel>();
         int nombreMaterielDispo;
+        Caracteristiques carac;
         for (Materiel mat : stockTotal) {
             nombreMaterielDispo=mat.getNombre();
             for (MaterielEmprunte matEmprunt : empruntsEtReservs) {
@@ -178,11 +179,22 @@ public class Stock {
                     nombreMaterielDispo-=matEmprunt.getMatEmprunt().getNombre();
                 }
             }
-            if (nombreMaterielDispo > 0) listeCaracs.add(mat.getCaracteristiques());
+            if (nombreMaterielDispo > 0) {
+                carac=mat.getCaracteristiques();
+                if (carac.searchValue(caracCherchee))
+                    listeMateriel.add(mat);
+            }
         }
-        return listeCaracs;
+        return listeMateriel;
     }
-
+    
+    public ArrayList<Caracteristiques> chercherCaracteristique(Date debut, Date fin, String caracteristique) {
+        ArrayList<Caracteristiques> caracsTrouvees = new ArrayList<Caracteristiques>();
+        for (Caracteristiques carac : listeCaracs) {
+            if carac.get
+        }
+    }
+    
     public ArrayList<MaterielEmprunte> empruntsParEmprunteur(Emprunteur emprunteur) {
         ArrayList<MaterielEmprunte> liste = new ArrayList<MaterielEmprunte>();
         for (MaterielEmprunte matEmp : empruntsEtReservs) {
@@ -308,7 +320,9 @@ public class Stock {
         empruntsEtReservs.clear();
         f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
     }
-    
+    /**
+     * Méthode qui enregistre toutes les listes du stock vers un fichier texte lisible
+     */
     public void listesVersTexte(){
         f.serialisationFichierLisible(stockTotal, reparations, empruntsEtReservs);
     }
