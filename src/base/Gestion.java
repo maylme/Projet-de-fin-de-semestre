@@ -132,6 +132,7 @@ public class Gestion
 		if (creationGestionnaire){
 			if(motdepasse.equals(motDePasseGestionnaire))
 				return true;
+		return false;
 		}
 		else{
 			return (this.isLogged(utilisateurCourant.getNom(), utilisateurCourant.getPrenom(), motdepasse, gestionnaire));
@@ -154,5 +155,9 @@ public class Gestion
 		hashMapEmprunteur.put((Emprunteur)utilisateurCourant, passwd);
 	}
 	
-	
+	public ArrayList<MaterielEmprunte> listeEmpruntParEmprunteur(){
+		
+		return stock.empruntsParEmprunteur((Emprunteur)utilisateurCourant);
+	}
+		
 }

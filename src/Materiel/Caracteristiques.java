@@ -62,6 +62,12 @@ public class Caracteristiques implements java.io.Serializable{
 		result = 31*result + (clePossible !=null ? clePossible.hashCode() : 0);
 		return result;
    }
+	
+	public boolean searchValue(String motAChercher){
+		
+		
+		return true;
+	}
 }
 /**
 GEstion ou dans l'interface
