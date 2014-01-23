@@ -228,14 +228,15 @@ public class Stock {
                 matRepar.setNombre(hs);
                 ajouterMateriel(matRepar, reparations);
                 retirerMateriel(matRepar, stockTotal);
+                f.serialisationListeMateriel(reparations, "reparations");
+                f.serialisationListeMateriel(stockTotal, "stockTotal");
+                f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
                 
             }
             return true;
             
         }
-        f.serialisationListeMateriel(reparations, "reparations");
-        f.serialisationListeMateriel(stockTotal, "stockTotal");
-        f.serialisationListeMaterielEmprunte(empruntsEtReservs, "empruntsEtReservs");
+        
         return false;
     }
     
