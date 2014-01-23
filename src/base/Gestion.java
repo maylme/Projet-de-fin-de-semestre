@@ -287,7 +287,16 @@ public class Gestion
 			return false;
 		
 		m.setNombre(nombre);
-		stock.supprimerMaterielHS();
+		stock.supprimerMaterielHS(m);
+		return true;
+	}
+	
+	public boolean terminerReparatino(Materiel m, int nombre){
+		if (nombre > m.getNombre())
+			return false;
+		
+		m.setNombre(nombre);
+		stock.retourReparation(m);
 		return true;
 	}
 }

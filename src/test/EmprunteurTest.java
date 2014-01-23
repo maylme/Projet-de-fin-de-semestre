@@ -108,7 +108,6 @@ public class EmprunteurTest {
 	@Test
 	public void testSetNbrEmprunt() {
 		Emprunteur e  = new Emprunteur ();
-		int expectedResult = 17;
 		e.setNbrEmprunt(17);
 		if ( 17 != e.getNbrEmprunt())
 			fail("nb emprunt");
@@ -118,5 +117,7 @@ public class EmprunteurTest {
 	public void testIncrementNbrEmprunt() {
 		fail("Not yet implemented");
 	}
+	
+	
 
 }
