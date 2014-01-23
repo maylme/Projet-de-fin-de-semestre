@@ -48,6 +48,9 @@ public class Eleve extends Emprunteur{
 	{
 		super();
 	}
+	public String typeEmprunteur(){
+		return "Eleve";
+	}
 
 	/**
 	 * Accesseur de la duree maximum de reservation 

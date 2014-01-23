@@ -109,7 +109,9 @@ public class Emprunteur extends Personne{
 		nombreEmprunts+=nbrEmprunt;
 	}
 	
-	
+	public String typeEmprunteur(){
+		return "Emprunteur";
+	}
 	@Override
    public int hashCode(){
        int result = 0;

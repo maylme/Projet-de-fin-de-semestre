@@ -41,6 +41,9 @@ public class Professeur extends Emprunteur{
 		super(utilisateur, DUREEMAXEMPRUNTPROF);
 	}
 
+	public String typeEmprunteur(){
+		return "Professeur";
+	}
 	
 	/**Constructeur par defaut d'un Emprunteur 
 	 * de nom : a et prenom : b

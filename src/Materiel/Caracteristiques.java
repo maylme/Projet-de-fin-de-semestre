@@ -64,9 +64,7 @@ public class Caracteristiques implements java.io.Serializable{
    }
 	
 	public boolean searchValue(String motAChercher){
-		
-		
-		return true;
+		return resultat.containsValue(motAChercher);
 	}
 }
 /**
