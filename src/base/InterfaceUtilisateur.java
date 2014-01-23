@@ -109,13 +109,13 @@ public class InterfaceUtilisateur
 
 							case "3":
 							{
-								ajouterReparations();
+								supprimerReparations();
 								break;
 							}
 
 							case "4":
 							{
-								retirerReparations();
+								terminerReparations();
 								break;
 							}
 
@@ -544,7 +544,7 @@ public class InterfaceUtilisateur
 					caracDuNewMat.put(cleCarac, valueCarac);
 				}
 				
-				System.out.printf("\nVoulez ajoutez une autre caractéristique ?(Y/N)\n");
+				System.out.printf("\nVoulez vous ajoutez une autre caractéristique ?(Y/N)\n");
 			}while (console.readLine().equals("Y"));
 			
 			System.out.printf("Combien d'exemplaires voulez-vous ajouter ? : ") ;
@@ -553,8 +553,19 @@ public class InterfaceUtilisateur
 			
 			if(intTest(nbExemp))
 				nombre = Integer.parseInt(nbExemp) ;
+			
+			int duree = 0 ;
+			System.out.printf("\nVoulez vous ajoutez une durée max d'emprunt de ce materiel ?(Y/N)\n");
+			if (console.readLine().equals("Y"))
+			{
+				System.out.printf("Quelle est la durée max d'emprunt de ce matériel ? : ") ;
+				String dureeMax = console.readLine() ;
+				
+				if(intTest(dureeMax))
+					duree = Integer.parseInt(dureeMax) ;
+			}
 
-			gestion.ajoutMaterielStock(caracDuNewMat,nombre);
+			gestion.ajoutMaterielStock(caracDuNewMat,nombre, duree);
 		}
 	}
 
@@ -564,14 +575,21 @@ public class InterfaceUtilisateur
 	*/ 
 	private void supprimerStock()
 	{
-		System.out.println(gestion.afficherStock());
+		System.out.println(afficherChoixStockTotal(gestion.getStockTotal()));
 
-		System.out.printf("\nQuel type voulez-vous supprimer ? : ") ;
-		String type = console.readLine() ;
+		System.out.printf("\nQuel materiel voulez-vous supprimer ? : ") ;
+		Materiel matChoisi = gestion.getStockTotal().get(choixDansListe(gestion.getStockTotal().size()));
 
-		int retour = gestion.retirerMaterielStock(type);
-
-		if(retour>-2)
+		System.out.printf("Combien d'exemplaires voulez-vous supprimer ? : ") ;
+		String nbASupprimer = console.readLine() ;
+		int nombre = 0 ;
+		
+		if(intTest(nbASupprimer))
+			nombre = Integer.parseInt(nbASupprimer) ;
+		if (nombre!=0)
+			gestion.ajouterExemplaire(matChoisi,nombre);
+		
+		if(gestion.retirerMaterielStock(matChoisi, nombre))
 		{
 			System.out.println("\nSuppression confirmé !") ;
 		}
@@ -583,11 +601,11 @@ public class InterfaceUtilisateur
 	}
 
 	/** 
-	* Permet a l'utilisateur d'ajouter
-	* un materiel a la liste en saisissant le type de materiel et
-	* le nombre d'exemplaires a ajouter.
+	* Permet au gestionnaire de supprimer
+	* un materiel de la liste de réparation si celui-ci
+	* n'est pas réparable
 	*/  
-	private void ajouterReparations()
+	private void supprimerReparations()
 	{
 		System.out.println(gestion.afficherStock());
 
@@ -621,11 +639,10 @@ public class InterfaceUtilisateur
 	/** 
 	* Permet a l'utilisateur de retirer
 	* un materiel de la liste des réparations
-	* en saisissant le type de materiel et le nombre
-	* d'exemplaires a retirer.
+	* pour le remettre dans stock.
 	* Affiche un message confirmant ou infirmant le retrait. 
 	*/ 
-	private void retirerReparations()
+	private void terminerReparations()
 	{
 		System.out.println(gestion.afficherReparations());
 
