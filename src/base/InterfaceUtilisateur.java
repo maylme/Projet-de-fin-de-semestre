@@ -344,23 +344,8 @@ public class InterfaceUtilisateur
 			if(intTest(test))
 				nombre = Integer.parseInt(test) ;
 		
-
-			int retour = -2 ;
-
 			if(nombre>0)
-				retour=gestion.emprunt(matChoisi,nombre,formatDate(dateDEmprunt),formatDate(dateRetour));
-
-			if(retour==-1)
-				System.out.println("\nEmprunt validé !") ;
-
-			else if(retour!=0 && retour!=-2)
-				System.out.println("\nEmprunt impossible... Seulement " + retour + " exemplaire(s) disponible(s).\n") ;
-
-			else if(retour==0)
-				System.out.println("\nAucun exemplaire disponible !\n") ;
-
-			else if(retour==-2)
-				System.out.println("\nErreur de saisie !\n") ;
+				System.out.println(gestion.emprunt(matChoisi,nombre,formatDate(dateDEmprunt),formatDate(dateRetour)));
 		}
 		else
 			System.out.println("\nAucun materiel de ce type.\n") ;
@@ -488,6 +473,25 @@ public class InterfaceUtilisateur
 		c.set(Integer.parseInt(elements[2]), Integer.parseInt(elements[1]), Integer.parseInt(elements[0]));
 		return c.getTime();		
 	}
+	
+	/** 
+	* Methode publique permettant de faire un affichage de
+	* la liste du stock total.
+	* 
+	* @return La chaine de caractere contenant le contenu
+	* de la liste d'emprunt de la personne
+	*/
+	private String afficherChoixStockTotal(ArrayList<Materiel> stock)
+	{
+		String retour = "\n     STOCK TOTAL\n" ;
+
+		for(int i = 0 ; i<stock.size() ; i++)
+		{
+			retour += i+". " + stock.get(i) + "\n" ;
+		}
+		return retour ;
+	}
+	
 	/** 
 	* Permet a l'utilisateur d'ajouter
 	* un materiel au stock en saisissant le type de materiel et
@@ -496,17 +500,33 @@ public class InterfaceUtilisateur
 	private void ajouterStock()
 	{
 		System.out.println(gestion.afficherStockTotal());
+		System.out.printf("\nVoulez juste ajouter un nombre d'exemplaire à un materiel existant ? (Y/N): ") ;
+		if (console.readLine().equals("Y"))
+		{
+			System.out.println(afficherChoixStockTotal(gestion.getStockTotal()));
+			Materiel matChoisi = gestion.getStockTotal().get(choixDansListe(gestion.getStockTotal().size()));
+			System.out.printf("Combien d'exemplaires voulez-vous ajouter ? : ") ;
+			String nbAAjouter = console.readLine() ;
+			int nombre = 0 ;
+			
+			if(intTest(nbAAjouter))
+				nombre = Integer.parseInt(nbAAjouter) ;
+			if (nombre!=0)
+				gestion.ajouterExemplaire(matChoisi,nombre);
+		}
+		else
+		{
+			System.out.printf("\nQuel type voulez-vous ajouter ? : ") ;
+			String type = console.readLine() ;
+			System.out.printf("Combien d'exemplaires voulez-vous ajouter ? : ") ;
+			String test = console.readLine() ;
+			int nombre = 0 ;
+			
+			if(intTest(test))
+				nombre = Integer.parseInt(test) ;
 
-		System.out.printf("\nQuel type voulez-vous ajouter ? : ") ;
-		String type = console.readLine() ;
-		System.out.printf("Combien d'exemplaires voulez-vous ajouter ? : ") ;
-		String test = console.readLine() ;
-		int nombre = 0 ;
-		
-		if(intTest(test))
-			nombre = Integer.parseInt(test) ;
-
-		gestion.ajoutMaterielStock(type,nombre);
+			gestion.ajoutMaterielStock(type,nombre);
+		}
 	}
 
 	/** 
