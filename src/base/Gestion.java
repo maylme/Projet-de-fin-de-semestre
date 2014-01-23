@@ -35,7 +35,8 @@ public class Gestion
 	private HashMap<Gestionnaire, String> hashMapGestionnaire;
 	private Personne utilisateurCourant;
 	private String motDePasseGestionnaire;
-	
+	private FichierData f ;
+
 
 	/** 
 	* Constructeur avec paramètres qui cree un nouvel objet Gestion
@@ -44,8 +45,8 @@ public class Gestion
 	*/ 
 	public Gestion()
 	{
+		f = new FichierData();
 		//recuperation du HashMap motDePasse:
-		FichierData f  = new FichierData();
 		hashMapEmprunteur = f.deserialisationHashMapEmprunteur("hashMapEmprunteur");
 		hashMapGestionnaire = f.deserialisationHashMapGestionnaire("hashMapGestionnaire");
 		
@@ -90,7 +91,7 @@ public class Gestion
 	
 	
 	/**
-	 * Renvoie true si l'utilisateur est correctement loggé.
+	 * Renvoie true si l'utilisateur est correctement logge.
 	 * Set definitivement l'utlisateur courant
 	 * @param nom
 	 * @param Prenom
@@ -128,7 +129,14 @@ public class Gestion
 		return false;
 	}
 	
-	
+	/**
+	 * Verifie si un mot de passe est bon. 
+	 * Test le mot de passe gestionnaire et le mot de passe utilisateur
+	 * @param motdepasse le mot de passe à tester
+	 * @param gestionnaire si l'utilisateur est un gestionnaire
+	 * @param creationGestionnaire si on test le mot de passe de securité gestionnaire
+	 * @return true si le mot de passe est bon, false sinon.
+	 */
 	public boolean password (String motdepasse, boolean gestionnaire, boolean creationGestionnaire){
 		//si c'est la verification lors de la création d'un gestionnaire:
 		if (creationGestionnaire){
@@ -141,31 +149,62 @@ public class Gestion
 		}
 	}
 	
-	
+	/**
+	 * Crée un nouveau compte gestionnaire
+	 * @param nom le nom de l'utilisateur
+	 * @param prenom le prenom de l'utilisateur
+	 * @param passwd le mot de passe de l'utilisateur
+	 */
 	public void createNewGestionnaire(String nom, String prenom, String passwd){
 		utilisateurCourant = new Gestionnaire (nom, prenom);
 		hashMapGestionnaire.put((Gestionnaire)utilisateurCourant, passwd);
+		f.serialisationHashMapGestionnaire(hashMapGestionnaire, "hashMapGestionnaire");
+		
 	}
-	
+	/**
+	 * Crée un nouveau compte Professeur
+	 * @param nom le nom de l'utilisateur
+	 * @param prenom le prenom de l'utilisateur
+	 * @param passwd le mot de passe de l'utilisateur
+	 */
 	public void createNewProf(String nom, String prenom, String passwd){
 		utilisateurCourant = new Professeur(nom, prenom);
 		hashMapEmprunteur.put((Emprunteur)utilisateurCourant, passwd);
+		f.serialisationHashMapEmprunteur(hashMapEmprunteur, "hashMapEmprunteur");
 	}
 	
+	/**
+	 * Crée un nouveau compte Eleve
+	 * @param nom le nom de l'utilisateur
+	 * @param prenom le prenom de l'utilisateur
+	 * @param passwd le mot de passe de l'utilisateur
+	 */
 	public void createNewEleve(String nom, String prenom, String passwd){
 		utilisateurCourant = new Eleve(nom, prenom);
 		hashMapEmprunteur.put((Emprunteur)utilisateurCourant, passwd);
+		f.serialisationHashMapEmprunteur(hashMapEmprunteur, "hashMapEmprunteur");
+
 	}
 	
 	
 	//Fonctions associees à l'Emprunteur:
 	
+	/**
+	 * Retourne la liste des Emprunts effectues par l'utlisiteur courant
+	 * @return la  liste des Emprunts effectues par l'utlisiteur courant
+	 */
 	public ArrayList<MaterielEmprunte> listeEmpruntParEmprunteur(){
 		
 		return stock.empruntsParEmprunteur((Emprunteur)utilisateurCourant);
 	}
 	
-	
+	/**
+	 * Renvoie la liste des Materiels empruntable selon des dates et un mot cle
+	 * @param motAChercher le mot a chercher
+	 * @param dateDebut la date de debut souhaiter pour l'emprunt
+	 * @param dateFin la date de fin souhaité pour l'emprunt
+	 * @return la liste des materiels correspondant a la recherche
+	 */
 	public ArrayList<Materiel> listeMaterielEmpruntable( String motAChercher , Date dateDebut, Date dateFin){
 		
 		return stock.materielDispo(dateDebut, dateFin, motAChercher);
@@ -173,10 +212,10 @@ public class Gestion
 	/**
 	 * Rend le Materiel renseigné. et supprimme l'emprunt si tout a été rendu.
 	 * 
-	 * @param choix
-	 * @param nombreRendu 
+	 * @param choix le Materiel choisit
+	 * @param nombreRendu le nombre de materiel rendu
 	 * @param nombreHS le nombre de Materiel HS
-	 * @return true si le rendu s'est bien passé
+	 * @return true si le rendu s'est bien passé, false sinon
 	 */
 	
 	public boolean rendre (MaterielEmprunte choix, int nombreRendu, int nombreHS){
@@ -188,6 +227,14 @@ public class Gestion
 		return false;
 	}
 	
+	/**
+	 * Effectue un emprunt
+	 * @param choix le Materiel a emprunte
+	 * @param nombre le nombre souhaite
+	 * @param dateDebut la date de debut de l'emprunt
+	 * @param dateFin la date de fin de l'emprunt
+	 * @return le message d'erreur ou de bon deroulement des operations
+	 */
 	public String emprunt(Materiel choix, int nombre, Date dateDebut, Date dateFin){
 		MaterielEmprunte m = new MaterielEmprunte(choix, ((Emprunteur)utilisateurCourant),dateDebut, dateFin);
 		if (choix.empruntable(dateDebut, dateFin, ((Emprunteur)utilisateurCourant))){
@@ -205,7 +252,10 @@ public class Gestion
 	}
 	
 	//Fonctions associees au Gestionnaire:
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public String afficherStockTotal(){
 		return stock.afficherStock();
 	}
@@ -299,5 +349,38 @@ public class Gestion
 	
 	public ArrayList<MaterielEmprunte> getListeResa(){
 		return stock.getListeEmpruntsEtReservs();
+	}
+	
+	public void modifDateDebut(MaterielEmprunte m , Date nvlDate){
+		 m.setDateEmprunt(nvlDate);
+	}
+	
+	public void modifDateFin(MaterielEmprunte m , Date nvlDate){
+		m.setDateFin(nvlDate);
+	}
+	
+	public void modifNombreExemplaire(MaterielEmprunte m , int nvnombre){
+		if (nvnombre == 0){
+			stock.retirerEmprunt(m.getId());
+		}
+		m.getMatEmprunt().setNombre(nvnombre);
+	}
+	
+	public String afficherResa(){
+		return stock.afficherEmprunts();
+	}
+	
+	public String afficherReparation(){
+		return stock.afficherReparations();
+	}
+	
+	public String afficherRefus(){
+		String retour = "\n     Emprunt Refusés\n";
+		
+		for (int i = 0; i < refus.size(); i++) {
+		    retour += refus.get(i) + "\n";
+		}
+		
+		return retour;
 	}
 }
