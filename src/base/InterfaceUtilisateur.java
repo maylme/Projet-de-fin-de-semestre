@@ -3,6 +3,7 @@ import java.io.Console;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import Materiel.Materiel;
 import Materiel.MaterielEmprunte;
@@ -429,10 +430,10 @@ public class InterfaceUtilisateur
 	private void rendre()
 	{
 		
-		System.out.println(afficherEmpruntUtilisateur(gestion.listeEmpruntsParEmprunteur());
+		System.out.println(afficherEmpruntUtilisateur(gestion.listeEmpruntParEmprunteur()));
 		
 		System.out.printf("\nQue voulez-vous rendre ? : ") ;
-		MaterielEmprunte matARendre = gestion.listeEmpruntsParEmprunteur().get(choixDansListe(gestion.listeEmpruntsParEmprunteur().size()));
+		MaterielEmprunte matARendre = gestion.listeEmpruntParEmprunteur().get(choixDansListe(gestion.listeEmpruntParEmprunteur().size()));
 		System.out.printf("Combien d'exemplaires désirez-vous rendre ? : ") ;
 		String test = console.readLine() ;
 		int nombre = 0 ;
@@ -503,6 +504,7 @@ public class InterfaceUtilisateur
 		System.out.printf("\nVoulez juste ajouter un nombre d'exemplaire à un materiel existant ? (Y/N): ") ;
 		if (console.readLine().equals("Y"))
 		{
+			System.out.printf("\nVeuillez choisir le materiel parmis la liste suivante\n");
 			System.out.println(afficherChoixStockTotal(gestion.getStockTotal()));
 			Materiel matChoisi = gestion.getStockTotal().get(choixDansListe(gestion.getStockTotal().size()));
 			System.out.printf("Combien d'exemplaires voulez-vous ajouter ? : ") ;
@@ -516,16 +518,43 @@ public class InterfaceUtilisateur
 		}
 		else
 		{
-			System.out.printf("\nQuel type voulez-vous ajouter ? : ") ;
-			String type = console.readLine() ;
+			System.out.printf("\nPour ajouter un nouveau materiel, il faut entrer toutes ses carctéristiques.\nVoici la liste des caractéristiques existante : \n") ;
+			System.out.println(gestion.getCleMat());
+			
+			HashMap<String, String> caracDuNewMat = new HashMap <String, String> ();
+			do
+			{
+				System.out.printf("\nQuelle caractéristique voulez vous compléter ?\n");
+				String cleCarac = console.readLine() ;
+				if (!gestion.existeCleCaracteristique(cleCarac))
+				{
+					System.out.printf("\nVoulez vous créez cette nouvelle caractéristique " + cleCarac + " ? (Y/N)\n");
+					if (console.readLine().equals("Y"))
+					{
+						gestion.creationCleCaracteristique(cleCarac);
+						System.out.printf("\nQuelle valeur voulez vous mettre à cette caractéristique ?\n");
+						String valueCarac = console.readLine() ;
+						caracDuNewMat.put(cleCarac, valueCarac);
+					}
+				}
+				else
+				{
+					System.out.printf("\nQuelle valeur voulez vous mettre à cette caractéristique ?\n");
+					String valueCarac = console.readLine() ;
+					caracDuNewMat.put(cleCarac, valueCarac);
+				}
+				
+				System.out.printf("\nVoulez ajoutez une autre caractéristique ?(Y/N)\n");
+			}while (console.readLine().equals("Y"));
+			
 			System.out.printf("Combien d'exemplaires voulez-vous ajouter ? : ") ;
-			String test = console.readLine() ;
+			String nbExemp = console.readLine() ;
 			int nombre = 0 ;
 			
-			if(intTest(test))
-				nombre = Integer.parseInt(test) ;
+			if(intTest(nbExemp))
+				nombre = Integer.parseInt(nbExemp) ;
 
-			gestion.ajoutMaterielStock(type,nombre);
+			gestion.ajoutMaterielStock(caracDuNewMat,nombre);
 		}
 	}
 
