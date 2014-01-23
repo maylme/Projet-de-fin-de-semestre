@@ -51,10 +51,12 @@ public class Caracteristiques implements java.io.Serializable{
 		return true;
 	}
 
-	public void  addCle(String cle){
-		clePossible.add(cle);
-		FichierData f = new FichierData();
-		f.serialisationListeString(clePossible, NOMFICHIER);
+	public void  addCle(String cle) {
+		if (existeCle(cle)){
+			clePossible.add(cle);
+			FichierData f = new FichierData();
+			f.serialisationListeString(clePossible, NOMFICHIER);
+		}
 	}
 	
 	public HashMap<String, String> getResultat(){

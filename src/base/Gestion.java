@@ -28,13 +28,13 @@ import Outils.FichierData;
 
 public class Gestion
 {
+	private final String motDePasseGestionnaire = "mdpAdmin";
 
 	private Stock stock;
 	private ArrayList<MaterielEmprunte> refus ;
 	private HashMap<Emprunteur, String> hashMapEmprunteur;
 	private HashMap<Gestionnaire, String> hashMapGestionnaire;
 	private Personne utilisateurCourant;
-	private String motDePasseGestionnaire;
 	private FichierData f ;
 
 
