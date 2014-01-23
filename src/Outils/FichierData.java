@@ -1,10 +1,13 @@
 package Outils;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -342,5 +345,31 @@ public class FichierData {
 			e.printStackTrace();
 		}
 		return new ArrayList<String>();
+	}
+	
+	/** 
+	* Methode de sauvegarde dans un fichier lisible .txt
+	* de l'ensemble des donnees concernant le programme :
+	* stock disponible, reparations en cours, emprunts en cours
+	* et liste d'utilisateurs.
+	*/
+	public void serialisationFichierLisible(ArrayList<Materiel> stockTotal, ArrayList<Materiel> reparations, ArrayList<MaterielEmprunte> empruntsEtReservs)
+	{
+		try
+		{
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/salleIHM.txt")));
+			out.println("liste du stock total :");
+			out.println(stockTotal);
+			out.println("\nliste du materiel emprunte et des reservations :");
+			out.println(empruntsEtReservs);
+			out.println("\nliste du materiel en reparation :");
+			out.println(reparations);
+			out.flush();
+			out.close();
+		}
+		catch (java.io.IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
