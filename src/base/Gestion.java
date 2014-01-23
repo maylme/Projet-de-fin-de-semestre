@@ -87,14 +87,7 @@ public class Gestion
 		}
 	}
 	
-	public boolean rendre (MaterielEmprunte choix, nombreRendu, nombreHS){
-		if (nombreRendu <= choix.getMatEmprunt().getNombre()){
-			String idEmprunt = choix.getId();
-			stock.renduEmprunt(idEmprunt, nombreRendus, nombreHS);
-			return true;
-		}
-		return false;
-	}
+
 	
 	
 	/**
@@ -174,9 +167,19 @@ public class Gestion
 		return stock.empruntsParEmprunteur((Emprunteur)utilisateurCourant);
 	}
 	
+	
 	public ArrayList<Materiel> listeMaterielEmpruntable( String motAChercher , Date dateDebut, Date dateFin){
 		
 		return stock.materielDispo(dateDebut, dateFin, motAChercher);
+	}
+	
+	public boolean rendre (MaterielEmprunte choix, int nombreRendu, int nombreHS){
+		if (nombreRendu <= choix.getMatEmprunt().getNombre()){
+			String idEmprunt = choix.getId();
+			stock.renduEmprunt(idEmprunt, nombreRendu, nombreHS);
+			return true;
+		}
+		return false;
 	}
 	
 	public String emprunt(Materiel choix, int nombre, Date dateDebut, Date dateFin){
