@@ -11,7 +11,7 @@ package utilisateurs;
  *
  */
 @SuppressWarnings("serial")
-public class Professeur extends Emprunteur{
+public class Professeur extends Emprunteur implements java.io.Serializable{
 
 	private static final int DUREEMAXEMPRUNTPROF=30;
 	

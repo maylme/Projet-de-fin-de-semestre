@@ -5,9 +5,12 @@ package utilisateurs;
  * @author lyameina
  *
  */
-@SuppressWarnings("serial")
-public class Emprunteur extends Personne{
+
+public class Emprunteur extends Personne implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
 	private static final int DUREE_MAX_DEMPRUNT = 15;
 	protected int nombreEmprunts ;
 	protected int dureeMaxDEmprunt;
@@ -122,4 +125,5 @@ public class Emprunteur extends Personne{
       
        return result;
    }
+
 }

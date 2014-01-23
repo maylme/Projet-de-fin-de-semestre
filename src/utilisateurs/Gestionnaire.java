@@ -8,7 +8,7 @@ package utilisateurs;
  * @author lyameina
  */
 @SuppressWarnings("serial")
-public class Gestionnaire extends Personne{
+public class Gestionnaire extends Personne implements java.io.Serializable{
 
 	/** 
 	* Constructeur de la classe Gestionnaire

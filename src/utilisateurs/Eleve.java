@@ -8,7 +8,7 @@ package utilisateurs;
  *
  */
 @SuppressWarnings("serial")
-public class Eleve extends Emprunteur{
+public class Eleve extends Emprunteur implements java.io.Serializable{
 	
 	private static final int DUREEMAXEMPRUNTELEVE=15;
 	private static final int DUREEMAXRESERVATION=8;
