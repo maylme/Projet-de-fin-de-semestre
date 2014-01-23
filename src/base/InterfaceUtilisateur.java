@@ -73,7 +73,7 @@ public class InterfaceUtilisateur
 					boolean prof = choixUtilisateur();
 					if(prof)
 					{
-						gestion.createNewProfesseur(nom,prenom, newMotDePasse());
+						gestion.createNewProf(nom,prenom, newMotDePasse());
 					}
 					else
 					{
@@ -312,7 +312,7 @@ public class InterfaceUtilisateur
 	*/ 
 	private String menuGestion()
 	{
-		System.out.println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock\n3. Faire réparer du matériel\n4. Terminer une réparation de matériel\n5. Consulter les statistiques\n6. Affichage des données\n7. Export de toutes les données") ;
+		System.out.println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier ou annuler un emprunt ou une réservation\n6. Affichage des données\n7. Export de toutes les données") ;
 		String retour = console.readLine() ;
 		return retour ;
 	}
@@ -495,7 +495,7 @@ public class InterfaceUtilisateur
 	*/ 
 	private void ajouterStock()
 	{
-		System.out.println(gestion.afficherStock());
+		System.out.println(gestion.afficherStockTotal());
 
 		System.out.printf("\nQuel type voulez-vous ajouter ? : ") ;
 		String type = console.readLine() ;
@@ -704,7 +704,7 @@ public class InterfaceUtilisateur
 	*/ 
 	private void afficher()
 	{
-		System.out.println("\nQue voulez-vous afficher ? : \n1. Matériel disponible\n2. Matériel en réparations\n3. Emprunts en cours\n4. Liste des utilisateurs\n") ;
+		System.out.println("\nQue voulez-vous afficher ? : \n1. Matériel disponible\n2. Matériel en réparations\n3. Emprunts et Réservation en cours\n") ;
 		String choix = console.readLine();
 
 		switch(choix)
@@ -724,12 +724,6 @@ public class InterfaceUtilisateur
 			case "3":
 			{
 				System.out.println(gestion.afficherEmprunts()) ;
-				break;
-			}
-
-			case "4":
-			{
-				System.out.println(gestion.afficherUtilisateurs()) ;
 				break;
 			}
 
