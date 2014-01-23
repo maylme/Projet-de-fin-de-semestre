@@ -7,6 +7,7 @@ package utilisateurs;
  * @author lyameina
  *
  */
+@SuppressWarnings("serial")
 public class Eleve extends Emprunteur{
 	
 	private static final int DUREEMAXEMPRUNTELEVE=15;

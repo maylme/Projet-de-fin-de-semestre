@@ -7,6 +7,7 @@ package utilisateurs;
  * 
  * @author lyameina
  */
+@SuppressWarnings("serial")
 public class Gestionnaire extends Personne{
 
 	/** 

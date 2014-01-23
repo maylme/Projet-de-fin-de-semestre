@@ -281,4 +281,13 @@ public class Gestion
 	public ArrayList <Materiel> getListeReparation(){
 		return stock.getListeReparations();
 	}
+	
+	public boolean supprimerReparation( Materiel m , int nombre){
+		if (nombre > m.getNombre())
+			return false;
+		
+		m.setNombre(nombre);
+		stock.supprimerMaterielHS();
+		return true;
+	}
 }

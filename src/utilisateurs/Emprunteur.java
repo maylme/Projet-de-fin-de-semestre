@@ -5,6 +5,7 @@ package utilisateurs;
  * @author lyameina
  *
  */
+@SuppressWarnings("serial")
 public class Emprunteur extends Personne{
 	
 	private static final int DUREE_MAX_DEMPRUNT = 15;

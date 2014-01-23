@@ -10,6 +10,7 @@ package utilisateurs;
  * @author lyameina
  *
  */
+@SuppressWarnings("serial")
 public class Professeur extends Emprunteur{
 
 	private static final int DUREEMAXEMPRUNTPROF=30;

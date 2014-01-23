@@ -8,6 +8,7 @@ package utilisateurs;
 * @version 2.0 (20.Jan.2014) 
 */
 
+@SuppressWarnings("serial")
 public class Personne implements java.io.Serializable
 {
 	protected String nom ;
