@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import Materiel.Materiel;
 import Materiel.MaterielEmprunte;
 
 /** 
@@ -325,45 +326,64 @@ public class InterfaceUtilisateur
 	*/ 
 	private void emprunter()
 	{
-		System.out.println(gestion.afficherStock());
-
-		System.out.printf("\nQue voulez-vous emprunter ? : ") ;
+		System.out.printf("\nQue voulez-vous emprunter (entrer un mot clé) ? : ") ;
 		String type = console.readLine() ;
-		System.out.printf("Combien d'exemplaires désirez-vous ? : ") ;
-		String test = console.readLine() ;
-		int nombre = 0 ;
+		System.out.printf("\nA quelle date voulez vous l'emprunter ? (format JJ/MM/AAAA) : ") ;
+		String dateDEmprunt = console.readLine() ;
+		System.out.printf("\nA quelle date voulez vous le rendre ? (format JJ/MM/AAAA) : ") ;
+		String dateRetour = console.readLine() ;
+		ArrayList<Materiel> matEmpruntable = gestion.listeMaterielEmpruntable(type, formatDate(dateDEmprunt), formatDate(dateRetour));
+		if (!matEmpruntable.equals(null))
+		{
+			System.out.printf(afficherEmpruntable(matEmpruntable)) ;
+			Materiel matChoisi = matEmpruntable.get(choixDansListe(matEmpruntable.size()));
+			System.out.printf("Combien d'exemplaires désirez-vous ? : ") ;
+			String test = console.readLine() ;
+			int nombre = 0 ;
 		
-		if(intTest(test))
-			nombre = Integer.parseInt(test) ;
-
-		System.out.printf("Pendant combien de jours ? : ") ;
-		test = console.readLine() ;
-		int duree = 0 ;
+			if(intTest(test))
+				nombre = Integer.parseInt(test) ;
 		
-		if(intTest(test))
-			duree = Integer.parseInt(test) ;
 
-		System.out.printf("Entrez la date du jour (format JJ/MM/AA) : ") ;
-		String date = console.readLine() ;
+			int retour = -2 ;
 
-		int retour = -2 ;
+			if(nombre>0)
+				retour=gestion.emprunt(matChoisi,nombre,formatDate(dateDEmprunt),formatDate(dateRetour));
 
-		if(nombre!=0 && duree!=0)
-			retour=gestion.emprunter(type,nombre,date,duree);
+			if(retour==-1)
+				System.out.println("\nEmprunt validé !") ;
 
-		if(retour==-1)
-			System.out.println("\nEmprunt validé !") ;
+			else if(retour!=0 && retour!=-2)
+				System.out.println("\nEmprunt impossible... Seulement " + retour + " exemplaire(s) disponible(s).\n") ;
 
-		else if(retour!=0 && retour!=-2)
-			System.out.println("\nEmprunt impossible... Seulement " + retour + " exemplaire(s) disponible(s).\n") ;
+			else if(retour==0)
+				System.out.println("\nAucun exemplaire disponible !\n") ;
 
-		else if(retour==0)
-			System.out.println("\nAucun exemplaire disponible !\n") ;
-
-		else if(retour==-2)
-			System.out.println("\nErreur de saisie !\n") ;
+			else if(retour==-2)
+				System.out.println("\nErreur de saisie !\n") ;
+		}
+		else
+			System.out.println("\nAucun materiel de ce type.\n") ;
 	}
 
+	/** 
+	* Methode publique permettant de faire un affichage de
+	* la liste des emprunts de la personne.
+	* 
+	* @return La chaine de caractere contenant le contenu
+	* de la liste d'emprunt de la personne
+	*/
+	private String afficherEmpruntable(ArrayList<Materiel> matEmpruntable)
+	{
+		String retour = "\n     MATERIELS DISPONIBLES\n" ;
+
+		for(int i = 0 ; i<matEmpruntable.size() ; i++)
+		{
+			retour += i+". " + matEmpruntable.get(i) + "\n" ;
+		}
+		return retour ;
+	}
+	
 	/** 
 	* Methode publique permettant de faire un affichage de
 	* la liste des emprunts de la personne.
@@ -458,7 +478,7 @@ public class InterfaceUtilisateur
 	/** 
 	* Permet de répérer une date dans le format Date à partir d'un String
 	* 
-	* @param date Chaine de caractere contenant la date JJ/MM/AA
+	* @param date Chaine de caractere contenant la date JJ/MM/AAAA
 	* @return Date retourne la date dans le bon format
 	*/ 
 	private Date formatDate (String date)
