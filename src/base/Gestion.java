@@ -378,7 +378,7 @@ public class Gestion
 	}
 	
 	public String afficherResa(){
-		return stock.afficherEmprunts();
+		return stock.afficherEmpruntsEtReservs();
 	}
 	
 	public String afficherReparation(){
