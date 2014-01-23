@@ -215,19 +215,22 @@ public class Materiel implements java.io.Serializable
 	 */
 	public boolean empruntable(Date dateDebut, Date dateFin, Emprunteur e ){
 		long dureeEmprunt = (dateFin.getTime() - dateDebut.getTime())/ (1000*60*60*24);
-		
-		if (e.getDureeMaxDEmprunt() <= (int) dureeEmprunt){
-			if (e.typeEmprunteur().equals("Eleve")){
-				int dureeMaxReservation = ((Eleve)e).getDureeMaxReservation();
-				Date today = new Date();
-				long dureeAujourdhuiResevation = (dateDebut.getTime() - today.getTime())/ (1000*60*60*24);
-				if (dureeAujourdhuiResevation > dureeMaxReservation)
-					return false;
+		if (dureeMaxEmprunt < dureeEmprunt){
+			if (e.getDureeMaxDEmprunt() <= (int) dureeEmprunt){
+				
+				if (e.typeEmprunteur().equals("Eleve")){
+					int dureeMaxReservation = ((Eleve)e).getDureeMaxReservation();
+					Date today = new Date();
+					long dureeAujourdhuiResevation = (dateDebut.getTime() - today.getTime())/ (1000*60*60*24);
+					if (dureeAujourdhuiResevation > dureeMaxReservation)
+						return false;
+					else
+						return true;
+				}
 				else
 					return true;
 			}
-			else
-				return true;
+			return false;
 		}
 		return false;
 	}

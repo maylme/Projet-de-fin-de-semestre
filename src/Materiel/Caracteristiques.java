@@ -33,6 +33,13 @@ public class Caracteristiques implements java.io.Serializable{
 			resultat.put(cle, valeur);
 		}
 	}
+	
+	public boolean existeCle(String cle){
+		if (!(clePossible.contains(cle))){
+			return false;
+		}
+		return true;
+	}
 
 	public void  addCle(String cle){
 		clePossible.add(cle);

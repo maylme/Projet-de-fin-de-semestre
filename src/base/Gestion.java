@@ -235,4 +235,31 @@ public class Gestion
 		Caracteristiques c = new Caracteristiques();
 		return c.getClePossible();
 	}
+	
+	public boolean existeCleCaracteristique( String cle){
+		Caracteristiques c = new Caracteristiques();
+		
+		if (c.existeCle(cle)){
+			return true;
+		}
+		return false;
+	}
+	
+	public void creationCleCaracteristique (String cle){
+		Caracteristiques c = new Caracteristiques();
+		if (!c.existeCle(cle)){
+			c.addCle(cle);
+		}
+	}
+	/**
+	 * Si la durée max d'emprunt donéne est nulle, on utilise la durée max par defaut
+	 * @param caracs
+	 * @param nombre
+	 * @param duree
+	 */
+	public void ajoutMaterielStock (HashMap<String, String> caracs, int nombre, int duree){
+		//creation des caracteristiques:
+		Caracteristiques c = new Caracteristiques();
+	}
+	
 }
