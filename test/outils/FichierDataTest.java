@@ -1,4 +1,4 @@
-package Outils;
+package outils;
 
 import static org.junit.Assert.*;
 
@@ -6,14 +6,17 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import materiel.Caracteristiques;
+import materiel.CleInexistanteException;
+import materiel.Materiel;
+import materiel.MaterielEmprunte;
+
 import org.junit.Test;
+
+import outils.FichierData;
 
 import utilisateurs.Emprunteur;
 import utilisateurs.Gestionnaire;
-import Materiel.Caracteristiques;
-import Materiel.CleInexistanteException;
-import Materiel.Materiel;
-import Materiel.MaterielEmprunte;
 
 public class FichierDataTest {
 

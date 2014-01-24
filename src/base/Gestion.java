@@ -4,18 +4,20 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
+import outils.FichierData;
+
+import materiel.Caracteristiques;
+import materiel.Materiel;
+import materiel.MaterielEmprunte;
+import materiel.MaterielProfesseur;
+import materiel.Stock;
 import utilisateurs.Eleve;
 import utilisateurs.Emprunteur;
 import utilisateurs.Gestionnaire;
 import utilisateurs.Personne;
 import utilisateurs.Professeur;
 
-import Materiel.Caracteristiques;
-import Materiel.Materiel;
-import Materiel.MaterielEmprunte;
-import Materiel.MaterielProfesseur;
-import Materiel.Stock;
-import Outils.FichierData;
 
 /**
  * Cette classe fait le lien entre un utilisateur et le stock sur lequel il

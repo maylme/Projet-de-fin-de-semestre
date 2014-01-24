@@ -1,4 +1,4 @@
-package Materiel;
+package materiel;
 
 /**
  * Classe représentant l'exception par un objet Caractéristiques lorsqu'une clé

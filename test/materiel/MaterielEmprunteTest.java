@@ -1,15 +1,16 @@
-package Materiel;
+package materiel;
 
 import static org.junit.Assert.*;
 
 import java.util.Date;
 
+import materiel.Materiel;
+import materiel.MaterielEmprunte;
+
 import org.junit.Test;
 
 import utilisateurs.Emprunteur;
 
-import Materiel.Materiel;
-import Materiel.MaterielEmprunte;
 
 
 public class MaterielEmprunteTest {

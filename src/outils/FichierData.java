@@ -1,4 +1,4 @@
-package Outils;
+package outils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,10 +11,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import materiel.*;
+
 import utilisateurs.Emprunteur;
 import utilisateurs.Gestionnaire;
 
-import Materiel.*;
 
 /**
  * Cette classe permet de faire les sérialisations et déserialisations. Ces

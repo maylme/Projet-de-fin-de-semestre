@@ -1,9 +1,10 @@
-package Materiel;
+package materiel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Outils.FichierData;
+import outils.FichierData;
+
 
 /**
  * Contient les caracteristiques pour construire un Materiel. Un objet

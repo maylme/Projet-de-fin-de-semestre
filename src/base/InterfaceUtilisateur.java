@@ -6,9 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-import Materiel.Materiel;
-import Materiel.MaterielEmprunte;
-import Outils.FichierData;
+import outils.FichierData;
+
+import materiel.Materiel;
+import materiel.MaterielEmprunte;
+
 
 /**
  * Cette classe gere l'interface utilisateur du programme. Elle permet a

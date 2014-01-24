@@ -1,10 +1,11 @@
-package Materiel;
+package materiel;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import Materiel.Materiel;
+import materiel.Materiel;
+
 import utilisateurs.Emprunteur;
 
 /**

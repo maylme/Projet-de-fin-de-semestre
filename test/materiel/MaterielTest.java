@@ -1,8 +1,12 @@
-package Materiel;
+package materiel;
 
 import static org.junit.Assert.*;
 
 import java.util.Date;
+
+import materiel.Caracteristiques;
+import materiel.CleInexistanteException;
+import materiel.Materiel;
 
 import org.junit.Test;
 
@@ -21,7 +25,7 @@ public class MaterielTest {
 		Materiel m1 = new Materiel (c);
 		
 		int result = 0;
-		result = 31 * result + m1.dureeMaxEmprunt;
+		result = 31 * result + m1.getDureeMaxEmprunt();
         result = 31 * result + (m1.getCaracteristiques() != null ? m1.getCaracteristiques().hashCode() : 0);
         result = 31 * result + m1.getNombre();
         
