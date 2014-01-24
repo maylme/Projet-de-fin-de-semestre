@@ -13,7 +13,7 @@ import utilisateurs.Emprunteur;
  * le type de matériel et le nombre d'exemplaires emprunté, ainsi que la date de début
  * et la date de din de l'emprunt.
  * 
- * @author Sonia TUAL, Maylanie MESNIER, Riana RABEHASY
+ * @author Sonia TUAL, Maylanie MESNIER
  * @version 2.1 (24 Jav. 2014)
  */
 
