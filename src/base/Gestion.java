@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import outils.FichierData;
+
 import materiel.Caracteristiques;
 import materiel.Materiel;
 import materiel.MaterielEmprunte;
@@ -16,7 +18,6 @@ import utilisateurs.Gestionnaire;
 import utilisateurs.Personne;
 import utilisateurs.Professeur;
 
-import Outils.FichierData;
 
 /**
  * Cette classe fait le lien entre un utilisateur et le stock sur lequel il

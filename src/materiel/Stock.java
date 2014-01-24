@@ -1,8 +1,9 @@
 package materiel;
 
 import java.util.ArrayList;
-import Outils.*;
 import java.util.Date;
+
+import outils.*;
 
 import utilisateurs.Emprunteur;
 

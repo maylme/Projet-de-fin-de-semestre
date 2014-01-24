@@ -1,4 +1,4 @@
-package Outils;
+package outils;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,8 @@ import materiel.Materiel;
 import materiel.MaterielEmprunte;
 
 import org.junit.Test;
+
+import outils.FichierData;
 
 import utilisateurs.Emprunteur;
 import utilisateurs.Gestionnaire;

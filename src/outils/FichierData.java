@@ -1,4 +1,4 @@
-package Outils;
+package outils;
 
 import java.io.BufferedWriter;
 import java.io.File;
