@@ -22,6 +22,8 @@ import Outils.FichierData;
 public class InterfaceUtilisateur {
     private Console console;
     private Gestion gestion;
+    private Date dateCourante;
+    private Calendar c = Calendar.getInstance();
 
     /**
      * Constructeur qui contient l'architecture de l'interface utilisateur.
@@ -35,6 +37,10 @@ public class InterfaceUtilisateur {
         String menu = "Y";
         boolean premierPassage = false;
         boolean mdpCorrect;
+        
+        c.roll(Calendar.DATE, true);
+        dateCourante=new Date();
+        
 
         do {
             System.out
@@ -115,6 +121,11 @@ public class InterfaceUtilisateur {
                                     gestion.getStockTotal(),
                                     gestion.getListeReparation(),
                                     gestion.getListeResa());
+                            break;
+                        }
+                        
+                        case "8": {
+                            avancerJour();
                             break;
                         }
 
@@ -276,7 +287,7 @@ public class InterfaceUtilisateur {
      */
     private String menuGestion() {
         System.out
-                .println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier un emprunt ou une réservation\n6. Affichage des données\n7. Export de toutes les données\n");
+                .println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier un emprunt ou une réservation\n6. Affichage des données\n7. Export de toutes les données\n8. Avancer la date du jour\n");
         String retour = console.readLine();
         return retour;
     }
@@ -299,7 +310,7 @@ public class InterfaceUtilisateur {
         String dateRetour = console.readLine();
         ArrayList<Materiel> matEmpruntable = gestion.listeMaterielEmpruntable(
                 type, formatDate(dateDEmprunt), formatDate(dateRetour));
-        if (!matEmpruntable.equals(null)) {
+        if (!matEmpruntable.isEmpty()) {
             System.out.printf(afficherEmpruntable(matEmpruntable));
             System.out.printf("\nQue voulez-vous emprunter ? : ");
             Materiel matChoisi = matEmpruntable
@@ -363,20 +374,23 @@ public class InterfaceUtilisateur {
         boolean wrong = false;
         String choix = "";
 
-        do {
-            choix = console.readLine();
+        if (tailleDeLaListe >0)
+        {
+            do {
+                choix = console.readLine();
 
-            if (intTest(choix)) {
-                if (Integer.parseInt(choix) >= 0
-                        && Integer.parseInt(choix) < tailleDeLaListe) {
-                    wrong = true;
-                    return Integer.parseInt(choix);
+                if (intTest(choix)) {
+                    if (Integer.parseInt(choix) >= 0
+                            && Integer.parseInt(choix) < tailleDeLaListe) {
+                        wrong = true;
+                        return Integer.parseInt(choix);
+                    }
+                } else {
+                    System.out.printf("\nMerci de choisir entre 0 et "
+                            + (tailleDeLaListe - 1) + " : ");
                 }
-            } else {
-                System.out.printf("\nMerci de choisir entre 0 et "
-                        + (tailleDeLaListe - 1) + " : ");
-            }
-        } while (!wrong);
+            } while (!wrong); 
+        }
         return -1;
     }
 
@@ -388,28 +402,32 @@ public class InterfaceUtilisateur {
      */
     private void rendre() {
 
+        boolean retour=false;
         System.out.println(afficherEmpruntUtilisateur(gestion
                 .listeEmpruntParEmprunteur()));
 
-        System.out.printf("\nQue voulez-vous rendre ? : ");
-        MaterielEmprunte matARendre = gestion.listeEmpruntParEmprunteur().get(
-                choixDansListe(gestion.listeEmpruntParEmprunteur().size()));
-        System.out.printf("Combien d'exemplaires désirez-vous rendre ? : ");
-        String test = console.readLine();
-        int nombre = 0;
+        if (gestion.listeEmpruntParEmprunteur().size()>0)
+        {
+            System.out.printf("\nQue voulez-vous rendre ? : ");
+            MaterielEmprunte matARendre = gestion.listeEmpruntParEmprunteur().get(
+                    choixDansListe(gestion.listeEmpruntParEmprunteur().size()));
+            System.out.printf("Combien d'exemplaires désirez-vous rendre ? : ");
+            String test = console.readLine();
+            int nombre = 0;
 
-        if (intTest(test))
-            nombre = Integer.parseInt(test);
+            if (intTest(test))
+                nombre = Integer.parseInt(test);
 
-        System.out
-                .printf("Combien d'exemplaires rendus sont hors service ? : ");
-        String nbHS = console.readLine();
-        int nombreHS = 0;
+            System.out
+                    .printf("Combien d'exemplaires rendus sont hors service ? : ");
+            String nbHS = console.readLine();
+            int nombreHS = 0;
 
-        if (intTest(nbHS))
-            nombreHS = Integer.parseInt(nbHS);
+            if (intTest(nbHS))
+                nombreHS = Integer.parseInt(nbHS);
 
-        boolean retour = gestion.rendre(matARendre, nombre, nombreHS);
+            retour = gestion.rendre(matARendre, nombre, nombreHS);
+        }
 
         if (retour) {
             System.out.println("\nRetour confirmé !");
@@ -458,9 +476,15 @@ public class InterfaceUtilisateur {
      */
     private void ajouterStock() {
         System.out.println(gestion.afficherStockTotal());
-        System.out
-                .printf("\nVoulez juste ajouter un nombre d'exemplaire à un materiel existant ? (Y/N): ");
-        if (console.readLine().equals("Y")) {
+        String choix="N";
+        if (gestion.getStockTotal().size()>0)
+        {
+            System.out
+            .printf("\nVoulez juste ajouter un nombre d'exemplaire à un materiel existant ? (Y/N): ");
+            choix=console.readLine();
+        }
+        
+        if (choix.equals("Y")) {
             System.out
                     .printf("\nVeuillez choisir le materiel parmis la liste suivante\n");
             System.out
@@ -526,7 +550,13 @@ public class InterfaceUtilisateur {
                     duree = Integer.parseInt(dureeMax);
             }
 
-            gestion.ajoutMaterielStock(caracDuNewMat, nombre, duree);
+            System.out
+            .printf("\nVoulez vous limiter l'emprunt aux professeurs ? (Y/N) : ");
+            if (console.readLine().equals("Y")) {
+                gestion.ajoutMaterielStock(caracDuNewMat, nombre, duree, "Prof");
+            }
+            else
+                gestion.ajoutMaterielStock(caracDuNewMat, nombre, duree, "base");
         }
     }
 
@@ -535,27 +565,33 @@ public class InterfaceUtilisateur {
      * et en entrant le nombre d'exemplaire à supprimer.
      */
     private void supprimerStock() {
-        System.out.println(afficherChoixStockTotal(gestion.getStockTotal()));
+        System.out.printf(afficherChoixStockTotal(gestion.getStockTotal())+"\n");
 
-        System.out.printf("\nQuel materiel voulez-vous supprimer ? : ");
-        Materiel matChoisi = gestion.getStockTotal().get(
-                choixDansListe(gestion.getStockTotal().size()));
+        if (gestion.getStockTotal().size()>0)
+        {
+            System.out.printf("\nQuel materiel voulez-vous supprimer ? : ");
+            Materiel matChoisi = gestion.getStockTotal().get(
+                    choixDansListe(gestion.getStockTotal().size()));
 
-        System.out.printf("Combien d'exemplaires voulez-vous supprimer ? : ");
-        String nbASupprimer = console.readLine();
-        int nombre = 0;
+            System.out.printf("Combien d'exemplaires voulez-vous supprimer ? : ");
+            String nbASupprimer = console.readLine();
+            int nombre = 0;
 
-        if (intTest(nbASupprimer))
-            nombre = Integer.parseInt(nbASupprimer);
-        if (nombre != 0) {
-            if (gestion.retirerMaterielStock(matChoisi, nombre)) {
-                System.out.println("\nSuppression confirmée !");
-            }
+            if (intTest(nbASupprimer))
+                nombre = Integer.parseInt(nbASupprimer);
+            if (nombre != 0) {
+                if (gestion.retirerMaterielStock(matChoisi, nombre)) {
+                    System.out.println("\nSuppression confirmée !");
+                }
 
-            else {
-                System.out.println("\nSuppression impossible !");
-            }
+                else {
+                    System.out.println("\nSuppression impossible !");
+                }
+            } 
         }
+        else
+            System.out.println("Il n'y a rien à supprimer!");
+        
     }
 
     /**
@@ -582,28 +618,34 @@ public class InterfaceUtilisateur {
         System.out
                 .println(afficherChoixReparation(gestion.getListeReparation()));
 
-        System.out
-                .printf("\nQuel materiel voulez-vous supprimer des réparations ? : ");
-        Materiel matChoisi = gestion.getListeReparation().get(
-                choixDansListe(gestion.getListeReparation().size()));
-        if (!matChoisi.equals(null)) {
+        if (gestion.getListeReparation().size()>0)
+        {
             System.out
-                    .println("\nCombien d'exemplaires voulez-vous supprimer ? : ");
-            String supp = console.readLine();
-            int nombre = 0;
+            .printf("\nQuel materiel voulez-vous supprimer des réparations ? : ");
+    Materiel matChoisi = gestion.getListeReparation().get(
+            choixDansListe(gestion.getListeReparation().size()));
+    if (matChoisi != null) {
+        System.out
+                .println("\nCombien d'exemplaires voulez-vous supprimer ? : ");
+        String supp = console.readLine();
+        int nombre = 0;
 
-            if (intTest(supp))
-                nombre = Integer.parseInt(supp);
-            if (nombre != 0) {
-                if (gestion.supprimerReparation(matChoisi, nombre)) {
-                    System.out
-                            .println("\nSuppression du materiel en réparation confirmée !");
-                } else {
-                    System.out.println("\nImpossible de supprimer le materiel");
-                }
+        if (intTest(supp))
+            nombre = Integer.parseInt(supp);
+        if (nombre != 0) {
+            if (gestion.supprimerReparation(matChoisi, nombre)) {
+                System.out
+                        .println("\nSuppression du materiel en réparation confirmée !");
+            } else {
+                System.out.println("\nImpossible de supprimer le materiel");
             }
-
         }
+
+    }
+        }
+        else
+            System.out.println("Il n'y a pas de materiel en réparation.");
+        
     }
 
     /**
@@ -613,25 +655,33 @@ public class InterfaceUtilisateur {
      */
     private void terminerReparations() {
         System.out
-                .printf("\nQuel materiel voulez-vous retirer des réparations pour les remettre dans stock? : ");
-        Materiel matChoisi = gestion.getListeReparation().get(
-                choixDansListe(gestion.getListeReparation().size()));
-        if (!matChoisi.equals(null)) {
+        .println(afficherChoixReparation(gestion.getListeReparation()));
+        if (gestion.getListeReparation().size()>0)
+        {
             System.out
-                    .println("\nCombien d'exemplaires voulez-vous retirer ? : ");
-            String retirer = console.readLine();
-            int nombre = 0;
+            .printf("\nQuel materiel voulez-vous retirer des réparations pour les remettre dans stock? : ");
+    Materiel matChoisi = gestion.getListeReparation().get(
+            choixDansListe(gestion.getListeReparation().size()));
+    if (matChoisi!=null) {
+        System.out
+                .println("\nCombien d'exemplaires voulez-vous retirer ? : ");
+        String retirer = console.readLine();
+        int nombre = 0;
 
-            if (intTest(retirer))
-                nombre = Integer.parseInt(retirer);
-            if (nombre != 0) {
-                if (gestion.terminerReparation(matChoisi, nombre)) {
-                    System.out.println("\nRetrait de réparation confirmée !");
-                } else {
-                    System.out.println("\nRetrait de réparation impossible !");
-                }
+        if (intTest(retirer))
+            nombre = Integer.parseInt(retirer);
+        if (nombre != 0) {
+            if (gestion.terminerReparation(matChoisi, nombre)) {
+                System.out.println("\nRetrait de réparation confirmée !");
+            } else {
+                System.out.println("\nRetrait de réparation impossible !");
             }
         }
+    }
+        }
+        else
+            System.out.println("Il n'y a pas de materiel en réparation.");
+        
     }
 
     /**
@@ -641,59 +691,66 @@ public class InterfaceUtilisateur {
     private void modifEmpruntOuResa() {
         System.out.println(afficherChoixEmpruntEtResa(gestion.getListeResa()));
 
-        System.out
-                .printf("\nQuel emprunt ou reservation voulez vous modifier ? : ");
-        MaterielEmprunte matChoisi = gestion.getListeResa().get(
-                choixDansListe(gestion.getListeResa().size()));
-        if (!matChoisi.equals(null)) {
+        if (gestion.getListeResa().size()>0)
+        {
             System.out
-                    .printf("\nQuelle modification voulez vous effectuer ?\n\n1. La date de début d'emprunt/réservation \n2. La date de fin d'emprunt/réservation \n3. Le nombre d'exemplaire \n4. Supprimer l'emprunt/réservation \n");
-            boolean wrong = false;
-            String choix = "";
-
-            do {
-                choix = console.readLine();
-
-                if (choix.equals("1")) {
-                    wrong = true;
-                    System.out
-                            .printf("\nQuelle est la nouvelle date d'emprunt ? (JJ/MM/AAAA)");
-                    String date = console.readLine();
-                    gestion.modifDateDebut(matChoisi, formatDate(date));
-                }
-
-                else if (choix.equals("2")) {
-                    wrong = true;
-                    System.out
-                            .printf("\nQuelle est la nouvelle date de fin d'emprunt ? (JJ/MM/AAAA)");
-                    String date = console.readLine();
-                    gestion.modifDateFin(matChoisi, formatDate(date));
-                }
-
-                else if (choix.equals("3")) {
-                    wrong = true;
-                    System.out
-                            .printf("\nQuelle est le nouveau nombre d'exemplaire emprunte ? ");
-                    String nbExemplaire = console.readLine();
-                    int nombre = 0;
-
-                    if (intTest(nbExemplaire))
-                        nombre = Integer.parseInt(nbExemplaire);
-                    if (nombre >= 0)
-                        gestion.modifNombreExemplaire(matChoisi, nombre);
-
-                } else if (choix.equals("4")) {
-                    wrong = true;
-                    gestion.modifNombreExemplaire(matChoisi, 0);
-                }
-
-                else {
-                    System.out
-                            .printf("\nMerci de choisir entre 1, 2, 3 et 4 : ");
-                }
-            } while (!wrong);
-
+                    .printf("\nQuel emprunt ou reservation voulez vous modifier ? : ");
+            MaterielEmprunte matChoisi = gestion.getListeResa().get(
+                    choixDansListe(gestion.getListeResa().size()));
+            if (!matChoisi.equals(null)) {
+                System.out
+                        .printf("\nQuelle modification voulez vous effectuer ?\n\n1. La date de début d'emprunt/réservation \n2. La date de fin d'emprunt/réservation \n3. Le nombre d'exemplaire \n4. Supprimer l'emprunt/réservation \n");
+                boolean wrong = false;
+                String choix = "";
+    
+                do {
+                    choix = console.readLine();
+    
+                    if (choix.equals("1")) {
+                        wrong = true;
+                        System.out
+                                .printf("\nQuelle est la nouvelle date d'emprunt ? (JJ/MM/AAAA)");
+                        String date = console.readLine();
+                        gestion.modifDateDebut(matChoisi, formatDate(date));
+                    }
+    
+                    else if (choix.equals("2")) {
+                        wrong = true;
+                        System.out
+                                .printf("\nQuelle est la nouvelle date de fin d'emprunt ? (JJ/MM/AAAA)");
+                        String date = console.readLine();
+                        gestion.modifDateFin(matChoisi, formatDate(date));
+                    }
+    
+                    else if (choix.equals("3")) {
+                        wrong = true;
+                        System.out
+                                .printf("\nQuelle est le nouveau nombre d'exemplaire emprunte ? ");
+                        String nbExemplaire = console.readLine();
+                        int nombre = 0;
+    
+                        if (intTest(nbExemplaire))
+                            nombre = Integer.parseInt(nbExemplaire);
+                        if (gestion.modifNombreExemplaire(matChoisi, nombre)) {
+                            System.out.println("Modification du nombre d'exemplaires réussie!");
+                        }
+                        else System.out.println("Impossible d'effectuer la modification");
+    
+                    } else if (choix.equals("4")) {
+                        wrong = true;
+                        gestion.modifNombreExemplaire(matChoisi, 0);
+                    }
+    
+                    else {
+                        System.out
+                                .printf("\nMerci de choisir entre 1, 2, 3 et 4 : ");
+                    }
+                } while (!wrong);
+    
+            }
         }
+        else
+            System.out.println("Il n'y a pas d'emprunt ou de réservation.");
     }
 
     /**
@@ -712,7 +769,12 @@ public class InterfaceUtilisateur {
         }
         return retour;
     }
-
+    
+    private void avancerJour() {
+        c.roll(Calendar.DATE, true);
+        dateCourante.setTime(c.getTimeInMillis());
+    }
+    
     /**
      * Demande a l'utilisateur s'il souhaite retourner au menu principal, a
      * savoir le menu de choix de statut (emprunteur, gestionnaire).

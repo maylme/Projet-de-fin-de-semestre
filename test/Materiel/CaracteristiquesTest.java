@@ -12,7 +12,7 @@ import Materiel.CleInexistanteException;
 /**
  * Test de la classe Caracteristiques
  * 
- * @author lyameina
+ * @author Maylanie MESNIER
  * 
  */
 public class CaracteristiquesTest {

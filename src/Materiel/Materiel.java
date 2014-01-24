@@ -12,8 +12,8 @@ import utilisateurs.Eleve;
  * - une duree maximum d'emprunt
  * - un nombre d'exemplaires
  * 
- * @author Sonia Tual et Vincent Montalieu
- * @version 2.0 (4.Dec.2013)
+ * @author Sonia TUAL, Maylanie MESNIER
+ * @version 2.1 (20 Jav. 2014)
  */
 
 public class Materiel implements java.io.Serializable {

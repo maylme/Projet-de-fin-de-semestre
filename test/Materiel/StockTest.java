@@ -17,7 +17,12 @@ import Materiel.CleInexistanteException;
 import Materiel.Materiel;
 import Materiel.MaterielEmprunte;
 import Materiel.Stock;
-
+/***
+ * Cette classe est la classe de test de Stock.
+ * 
+ * @author RABEHASY Riana
+ *
+ */
 public class StockTest {
     Stock stock;
     Caracteristiques c1, c2, c3;

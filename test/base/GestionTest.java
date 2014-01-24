@@ -8,14 +8,12 @@ import base.Gestion;
 
 public class GestionTest {
 
-<<<<<<< HEAD
     @Test
     public void testExiste() {
         Gestion g = new Gestion();
 
         fail("Not yet implemented");
     }
-=======
 	
 	@Test
 	public void testCreateNewProf(){

@@ -13,7 +13,9 @@ import utilisateurs.Emprunteur;
  * réservations en cours. Elle crée et met à jour également les fichiers de données
  * correspondant à l'état du stock via la classe FichierData.
  * 
- * @author RABEHASY Riana
+ * @author RABEHASY Riana (premiers auteurs : Vincent MONTALIEU, Sonia TUAL)
+ * @version 2.3
+ * 
  */
 
 public class Stock {
@@ -203,7 +205,6 @@ public class Stock {
         for (Materiel mat : stockTotal) {
             nombreMaterielDispo = mat.getNombre();
             for (MaterielEmprunte matEmprunt : empruntsEtReservs) {
-                //MaterielEmprunte tempMatEmp = matEmprunt.clone();
                 if (mat.equals(matEmprunt.getMatEmprunt())
                         && (conflitDates(debut, fin, matEmprunt))) {
                     nombreMaterielDispo -= matEmprunt.getMatEmprunt()
@@ -270,12 +271,11 @@ public class Stock {
                 matRepar.setNombre(hs);
                 ajouterMateriel(matRepar, reparations);
                 retirerMateriel(matRepar, stockTotal);
-                f.serialisationListeMateriel(reparations, "reparations");
-                f.serialisationListeMateriel(stockTotal, "stockTotal");
-                f.serialisationListeMaterielEmprunte(empruntsEtReservs,
-                        "empruntsEtReservs");
-
             }
+            f.serialisationListeMateriel(reparations, "reparations");
+            f.serialisationListeMateriel(stockTotal, "stockTotal");
+            f.serialisationListeMaterielEmprunte(empruntsEtReservs,
+                    "empruntsEtReservs");
             return true;
 
         }

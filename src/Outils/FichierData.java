@@ -23,7 +23,7 @@ import Materiel.*;
  * exécution du programme.
  * 
  * 
- * @author Sonia Tual
+ * @author Sonia TUAL
  * @version 1.4 (24.Jav.2014)
  */
 public class FichierData {

@@ -14,7 +14,7 @@ import Outils.FichierData;
  * l'ensemble des cles contenues dans clePossible, sans quoi il devra confirmer
  * l'ajout d'une nouvelle clé à cette liste.
  * 
- * @author lyameina
+ * @author Maylanie MESNIER
  * 
  */
 @SuppressWarnings("serial")

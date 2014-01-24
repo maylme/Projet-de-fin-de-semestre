@@ -12,6 +12,7 @@ import utilisateurs.Professeur;
 import Materiel.Caracteristiques;
 import Materiel.Materiel;
 import Materiel.MaterielEmprunte;
+import Materiel.MaterielProfesseur;
 import Materiel.Stock;
 import Outils.FichierData;
 
@@ -23,6 +24,7 @@ import Outils.FichierData;
  * 
  * 
  * @author Maylanie Mesnier
+ * 
  */
 
 public class Gestion {
@@ -30,6 +32,7 @@ public class Gestion {
 
     private Stock stock;
     private ArrayList<MaterielEmprunte> refus;
+    private ArrayList<MaterielEmprunte> retards;
     private HashMap<Emprunteur, String> hashMapEmprunteur;
     private HashMap<Gestionnaire, String> hashMapGestionnaire;
     private Personne utilisateurCourant;
@@ -55,6 +58,8 @@ public class Gestion {
         stock = new Stock();
 
         refus = f.deserialisationListeMaterielEmprunte("refus");
+        
+        retards = new ArrayList<MaterielEmprunte>();
     }
 
     /**
@@ -229,7 +234,7 @@ public class Gestion {
      */
     public ArrayList<Materiel> listeMaterielEmpruntable(String motAChercher,
             Date dateDebut, Date dateFin) {
-
+        
         return stock.materielDispo(dateDebut, dateFin, motAChercher);
     }
 
@@ -372,14 +377,20 @@ public class Gestion {
      * @param duree
      */
     public void ajoutMaterielStock(HashMap<String, String> caracs, int nombre,
-            int duree) {
+            int duree, String typeMat) {
         // creation des caracteristiques:
         Caracteristiques c = new Caracteristiques(caracs);
         Materiel m;
         if (duree == 0)
-            m = new Materiel(c, nombre);
+            if (typeMat.toUpperCase().equals("PROF"))
+                m = new MaterielProfesseur(c, nombre);
+            else
+                m = new Materiel(c, nombre);
         else
-            m = new Materiel(c, duree, nombre);
+            if(typeMat.toUpperCase().equals("PROF"))
+                m = new MaterielProfesseur(c, duree, nombre);
+            else
+                m = new Materiel(c, duree, nombre);
 
         stock.ajouterNouveauMateriel(m);
     }
@@ -470,14 +481,24 @@ public class Gestion {
      * @param m le materiel concerne
      * @param nvnombre le nouveau nombre de materiel
      */
-    public void modifNombreExemplaire(MaterielEmprunte m, int nvnombre) {
+    public boolean modifNombreExemplaire(MaterielEmprunte m, int nvnombre) {
         if (nvnombre == 0) {
             stock.retirerEmprunt(m.getId());
-            return;
+            return true;
+        }
+        else {
+            
+            int nombre = stock.getStockTotal().get(stock.rechercheIndexMateriel(m.getMatEmprunt(), stock.getStockTotal())).getNombre();
+            System.out.println(nombre);
+            if ((nvnombre>nombre) || (nvnombre<0)) 
+                return false;
         }
         m.getMatEmprunt().setNombre(nvnombre);
+        return true;
     }
+    private void calculerRetards() {
 
+    }
     /**
      * Retourne une String pour afficher les reservation et Emprunt
      * @return une String pour afficher les reservation et Emprunt
@@ -498,12 +519,23 @@ public class Gestion {
      * @return une String pour afficher les Refus
      */
     public String afficherRefus() {
-        String retour = "\n     Emprunt Refusés\n";
+        String retour = "\n     Emprunts Refusés\n";
 
         for (int i = 0; i < refus.size(); i++) {
             retour += refus.get(i) + "\n";
         }
 
         return retour;
+    }
+    
+    public String afficherRetards() {
+        calculerRetards();
+        String retour = "\n      Emprunts en retard\n";
+        for (int i = 0; i < retards.size(); i++) {
+            retour += retards.get(i) + "\n";
+        }
+
+        return retour;
+        
     }
 }
