@@ -1,5 +1,6 @@
 package Materiel;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -7,8 +8,10 @@ import Materiel.Materiel;
 import utilisateurs.Emprunteur;
 
 /**
- * La classe MaterielEmprunte represente une materiel avec un emprunteur, la
- * date d'emprunt et la duree d'emprunt.
+ * La classe MaterielEmprunte represente une instance d'emprunt/reservation.
+ * Un objet MaterielEmprunte contient donc un emprunteur, un objet Materiel contenant
+ * le type de matériel et le nombre d'exemplaires emprunté, ainsi que la date de début
+ * et la date de din de l'emprunt.
  * 
  * @author Sonia Tual et Vincent Montalieu
  * @version 1.0 (4.Dec.2013)
@@ -21,6 +24,7 @@ public class MaterielEmprunte implements java.io.Serializable {
     private Date dateEmprunt;
     private Date dateFin;
     private String id = UUID.randomUUID().toString();
+    DateFormat df = DateFormat.getInstance();
 
     /**
      * Constructeur de la classe MaterielEmprunte Il recupere un Materiel, un
@@ -46,7 +50,7 @@ public class MaterielEmprunte implements java.io.Serializable {
     }
 
     /**
-     * Constructeur par defaut de la classe MaterielEmprunte Par defaut, on
+     * Constructeur par defaut de la classe MaterielEmprunte. Par defaut, on
      * construit un nouveau Materiel, un nouvel emprunteur, la date du jour pour
      * une fin d'emprunt à la date du jour.
      */
@@ -56,8 +60,7 @@ public class MaterielEmprunte implements java.io.Serializable {
     }
 
     /**
-     * Methode publique utilisee pour acceder au materiel emprunte a partir
-     * d'une autre classe.
+     * Methode utilisee pour acceder au materiel emprunte
      * 
      * @return Un Materiel representant le materiel emprunte.
      */
@@ -66,8 +69,7 @@ public class MaterielEmprunte implements java.io.Serializable {
     }
 
     /**
-     * Methode publique utilisee pour acceder a l'emprunteur a partir d'une
-     * autre classe.
+     * Methode utilisee pour acceder a l'emprunteur
      * 
      * @return Emprunteur representant l'emprunteur du materiel.
      */
@@ -76,8 +78,7 @@ public class MaterielEmprunte implements java.io.Serializable {
     }
 
     /**
-     * Methode publique utilisee pour acceder l'information date d'emprunt a
-     * partir d'une autre classe.
+     * Methode utilisee pour obtenir la date de debut d'emprunt
      * 
      * @return Date contenant la date de l'emprunt.
      */
@@ -86,8 +87,8 @@ public class MaterielEmprunte implements java.io.Serializable {
     }
 
     /**
-     * Methode publique utilisee pour acceder a l'information date de fin
-     * d'emprunt a partir d'une autre classe.
+     * Methode utilisee pour acceder a la date de fin
+     * d'emprunt
      * 
      * @return Date representant la fin de l'emprunt.
      */
@@ -96,24 +97,21 @@ public class MaterielEmprunte implements java.io.Serializable {
     }
 
     /**
-     * Methode publique utilisee pour modifier la date de fin d'emprunt a partir
-     * d'une autre classe.
+     * Methode utilisee pour modifier la date de fin d'emprunt.
      * 
      * @param newDateFin
      *            Entier representant la date de fin de l'emprunt que l'on veut
-     *            modifier.
+     *            modifier
      */
     public void setDateFin(Date newDateFin) {
         dateFin = newDateFin;
     }
 
     /**
-     * Methode publique utilisee pour modifier la date de debut d'emprunt a
-     * partir d'une autre classe.
+     * Methodeutilisee pour modifier la date de debut d'emprunt.
      * 
      * @param newDateDebut
-     *            Entier representant la date de debut de l'emprunt que l'on
-     *            veut modifier.
+     *            Entier representant la nouvelle date de debut de l'emprunt
      */
     public void setDateEmprunt(Date newDateDebut) {
         dateEmprunt = newDateDebut;
@@ -139,8 +137,8 @@ public class MaterielEmprunte implements java.io.Serializable {
     public String toString() {
         return emprunt + "\nEmprunteur : " + emprunteur.getNom().toUpperCase()
                 + " " + emprunteur.getPrenom() + "\nDate d'emprunt : "
-                + dateEmprunt.toString() + "\nDate de fin d'emprunt : "
-                + dateFin.toString() + " \n";
+                + df.format(dateEmprunt) + "\nDate de fin d'emprunt : "
+                + df.format(dateFin) + " \n";
     }
 
     @Override

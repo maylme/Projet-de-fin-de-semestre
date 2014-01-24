@@ -15,8 +15,8 @@ import Outils.FichierData;
  * l'utilisateur de se connecter puis d'effectuer un ensemble d'actions sur le
  * stock en fonction de son statut (emprunteur ou gestionnaire).
  * 
- * @author Vincent Montalieu
- * @version 1.2 (5.Dec.2013)
+ * @author Sonia Tual (Premier auteur : Vincent Montalieu)
+ * @version 2.5 (24.Jav.2014)
  */
 
 public class InterfaceUtilisateur {
@@ -153,10 +153,10 @@ public class InterfaceUtilisateur {
     }
 
     /**
-     * Permet a l'utilisateur choisir son statut entre celui d'emprunteur et
+     * Permet a l'utilisateur de choisir son statut entre celui d'emprunteur et
      * celui de gestionnaire. S'il choisit gestionnaire, il devra renseigner un
-     * mot de passe. Apres 3 essais, il sera automatiquement considere comme un
-     * emprunteur.
+     * mot de passe (présent dans la classe gestion) l'autorisant à créer un profil
+     * gestionnaire.
      * 
      * @return Un booleen representant le statut : false pour un emprunteur et
      *         true pour un gestionnaire.
@@ -276,7 +276,7 @@ public class InterfaceUtilisateur {
      */
     private String menuGestion() {
         System.out
-                .println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier un emprunt ou une réservation\n6. Affichage des données\n7. Export de toutes les données");
+                .println("\n          Menu GESTION\n\nQue voulez-vous faire ?\n\n1. Ajouter du matériel au stock\n2. Supprimer du matériel du stock total\n3. Supprimer du matériel en réparation\n4. Terminer une réparation de matériel\n5. Modifier un emprunt ou une réservation\n6. Affichage des données\n7. Export de toutes les données\n");
         String retour = console.readLine();
         return retour;
     }
@@ -297,11 +297,11 @@ public class InterfaceUtilisateur {
         System.out
                 .printf("\nA quelle date voulez vous le rendre ? (format JJ/MM/AAAA) : ");
         String dateRetour = console.readLine();
-        System.out.printf("\nQue voulez-vous emprunter ? : ");
         ArrayList<Materiel> matEmpruntable = gestion.listeMaterielEmpruntable(
                 type, formatDate(dateDEmprunt), formatDate(dateRetour));
         if (!matEmpruntable.equals(null)) {
             System.out.printf(afficherEmpruntable(matEmpruntable));
+            System.out.printf("\nQue voulez-vous emprunter ? : ");
             Materiel matChoisi = matEmpruntable
                     .get(choixDansListe(matEmpruntable.size()));
             System.out.printf("Combien d'exemplaires désirez-vous ? : ");
@@ -320,7 +320,7 @@ public class InterfaceUtilisateur {
 
     /**
      * Methode publique permettant de faire un affichage de la liste des
-     * emprunts de la personne.
+     * emprunts de la personne avec une numérotation pour qu'il puisse choisir.
      * 
      * @return La chaine de caractere contenant le contenu de la liste d'emprunt
      *         de la personne
@@ -336,7 +336,7 @@ public class InterfaceUtilisateur {
 
     /**
      * Methode publique permettant de faire un affichage de la liste des
-     * emprunts de la personne.
+     * emprunts de la personne avec une numérotation pour qu'il puisse choisir.
      * 
      * @return La chaine de caractere contenant le contenu de la liste d'emprunt
      *         de la personne
@@ -381,8 +381,9 @@ public class InterfaceUtilisateur {
     }
 
     /**
-     * Permet a l'utilisateur de rendre un materiel en saisissant le type de
-     * materiel souhaite et le nombre d'exemplaires a rendre. Affiche un message
+     * Permet a l'utilisateur de rendre un materiel en saisissant le numéro correspondant
+     * au materiel qu'il souhaite rendre dans la liste de ses emprunts
+     * et le nombre d'exemplaires a rendre. Affiche un message
      * confirmant ou infirmant le retour.
      */
     private void rendre() {
@@ -406,7 +407,7 @@ public class InterfaceUtilisateur {
         int nombreHS = 0;
 
         if (intTest(nbHS))
-            nombreHS = Integer.parseInt(test);
+            nombreHS = Integer.parseInt(nbHS);
 
         boolean retour = gestion.rendre(matARendre, nombre, nombreHS);
 
@@ -436,7 +437,7 @@ public class InterfaceUtilisateur {
 
     /**
      * Methode publique permettant de faire un affichage de la liste du stock
-     * total.
+     * total avec une numérotation pour qu'il puisse choisir.
      * 
      * @return La chaine de caractere contenant le contenu de la liste d'emprunt
      *         de la personne
@@ -452,7 +453,8 @@ public class InterfaceUtilisateur {
 
     /**
      * Permet a l'utilisateur d'ajouter un materiel au stock en saisissant le
-     * type de materiel et le nombre d'exemplaires a ajouter
+     * le nombre d'exemplaires a ajouter seulement ou en entrant toutes les
+     * caractéristiques du nouveau materiel.
      */
     private void ajouterStock() {
         System.out.println(gestion.afficherStockTotal());
@@ -481,28 +483,28 @@ public class InterfaceUtilisateur {
             HashMap<String, String> caracDuNewMat = new HashMap<String, String>();
             do {
                 System.out
-                        .printf("\nQuelle caractéristique voulez vous compléter ?\n");
+                        .printf("\nQuelle caractéristique voulez vous compléter ? : ");
                 String cleCarac = console.readLine();
                 if (!gestion.existeCleCaracteristique(cleCarac)) {
                     System.out
                             .printf("\nVoulez vous créez cette nouvelle caractéristique "
-                                    + cleCarac + " ? (Y/N)\n");
+                                    + cleCarac + " ? (Y/N) : ");
                     if (console.readLine().equals("Y")) {
                         gestion.creationCleCaracteristique(cleCarac);
                         System.out
-                                .printf("\nQuelle valeur voulez vous mettre à cette caractéristique ?\n");
+                                .printf("\nQuelle valeur voulez vous mettre à cette caractéristique ? : ");
                         String valueCarac = console.readLine();
                         caracDuNewMat.put(cleCarac, valueCarac);
                     }
                 } else {
                     System.out
-                            .printf("\nQuelle valeur voulez vous mettre à cette caractéristique ?\n");
+                            .printf("\nQuelle valeur voulez vous mettre à cette caractéristique ? : ");
                     String valueCarac = console.readLine();
                     caracDuNewMat.put(cleCarac, valueCarac);
                 }
 
                 System.out
-                        .printf("\nVoulez vous ajoutez une autre caractéristique ?(Y/N)\n");
+                        .printf("\nVoulez vous ajoutez une autre caractéristique ?(Y/N) : ");
             } while (console.readLine().equals("Y"));
 
             System.out.printf("Combien d'exemplaires voulez-vous ajouter ? : ");
@@ -514,7 +516,7 @@ public class InterfaceUtilisateur {
 
             int duree = 0;
             System.out
-                    .printf("\nVoulez vous ajoutez une durée max d'emprunt de ce materiel ?(Y/N)\n");
+                    .printf("\nVoulez vous ajoutez une durée max d'emprunt de ce materiel ?(Y/N) : ");
             if (console.readLine().equals("Y")) {
                 System.out
                         .printf("Quelle est la durée max d'emprunt de ce matériel ? : ");
@@ -529,8 +531,8 @@ public class InterfaceUtilisateur {
     }
 
     /**
-     * Permet a l'utilisateur de supprimer un type du stock en saisissant le nom
-     * du type.
+     * Permet a l'utilisateur de supprimer un type du stock en choisissant parmis la liste
+     * et en entrant le nombre d'exemplaire à supprimer.
      */
     private void supprimerStock() {
         System.out.println(afficherChoixStockTotal(gestion.getStockTotal()));
@@ -558,7 +560,7 @@ public class InterfaceUtilisateur {
 
     /**
      * Methode publique permettant de faire un affichage de la liste de
-     * reparation.
+     * reparation avec une numérotation pour qu'il puisse choisir.
      * 
      * @return La chaine de caractere contenant le contenu de la liste de
      *         réparation
@@ -633,7 +635,7 @@ public class InterfaceUtilisateur {
     }
 
     /**
-     * Permet au gestionnaire de modifier un emprunt ou une réservation Affiche
+     * Permet au gestionnaire de modifier un emprunt ou une réservation. Affiche
      * un message confirmant ou infirmant le retrait.
      */
     private void modifEmpruntOuResa() {
@@ -682,8 +684,7 @@ public class InterfaceUtilisateur {
 
                 } else if (choix.equals("4")) {
                     wrong = true;
-                    gestion.modifNombreExemplaire(matChoisi, matChoisi
-                            .getMatEmprunt().getNombre());
+                    gestion.modifNombreExemplaire(matChoisi, 0);
                 }
 
                 else {
@@ -697,7 +698,7 @@ public class InterfaceUtilisateur {
 
     /**
      * Methode publique permettant de faire un affichage de la liste des
-     * emprunts.
+     * emprunts avec une numérotation pour qu'il puisse choisir.
      * 
      * @return La chaine de caractere contenant le contenu de la liste d'emprunt
      *         et reservation
