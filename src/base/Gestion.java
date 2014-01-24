@@ -1,6 +1,8 @@
 package base;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import utilisateurs.Eleve;
@@ -28,11 +30,15 @@ import Outils.FichierData;
  */
 
 public class Gestion {
-    private final String motDePasseGestionnaire = "mdpAdmin";
-
+    private static final String MOT_DE_PASSE_GESTIONNAIRE = "mdpAdmin";
+    private static final long JOUR_EN_MS = (1000 * 60 * 60 * 24);
+    private Calendar c = Calendar.getInstance();
+    private Date dateCourante;
+    private DateFormat df = DateFormat.getInstance();
     private Stock stock;
     private ArrayList<MaterielEmprunte> refus;
     private ArrayList<MaterielEmprunte> retards;
+    private ArrayList<MaterielEmprunte> rappels;
     private HashMap<Emprunteur, String> hashMapEmprunteur;
     private HashMap<Gestionnaire, String> hashMapGestionnaire;
     private Personne utilisateurCourant;
@@ -58,8 +64,11 @@ public class Gestion {
         stock = new Stock();
 
         refus = f.deserialisationListeMaterielEmprunte("refus");
-        
+
         retards = new ArrayList<MaterielEmprunte>();
+        rappels = new ArrayList<MaterielEmprunte>();
+        dateCourante = new Date();
+
     }
 
     /**
@@ -149,7 +158,7 @@ public class Gestion {
             boolean creationGestionnaire) {
         // si c'est la verification lors de la création d'un gestionnaire:
         if (creationGestionnaire) {
-            if (motdepasse.equals(motDePasseGestionnaire))
+            if (motdepasse.equals(MOT_DE_PASSE_GESTIONNAIRE))
                 return true;
             return false;
         } else {
@@ -234,7 +243,7 @@ public class Gestion {
      */
     public ArrayList<Materiel> listeMaterielEmpruntable(String motAChercher,
             Date dateDebut, Date dateFin) {
-        
+
         return stock.materielDispo(dateDebut, dateFin, motAChercher);
     }
 
@@ -251,7 +260,8 @@ public class Gestion {
      */
 
     public boolean rendre(MaterielEmprunte choix, int nombreRendu, int nombreHS) {
-        if (nombreRendu <= choix.getMatEmprunt().getNombre()) {
+        if (nombreRendu <= choix.getMatEmprunt().getNombre()
+                && (nombreHS <= nombreRendu)) {
             String idEmprunt = choix.getId();
             stock.renduEmprunt(idEmprunt, nombreRendu, nombreHS);
             return true;
@@ -278,7 +288,7 @@ public class Gestion {
                 ((Emprunteur) utilisateurCourant), dateDebut, dateFin);
         if (choix.empruntable(dateDebut, dateFin,
                 ((Emprunteur) utilisateurCourant))) {
-            if (nombre < choix.getNombre()) {
+            if (nombre <= choix.getNombre()) {
                 m.getMatEmprunt().setNombre(nombre);
                 stock.emprunter(m);
                 return "Reservation effectuée";
@@ -286,7 +296,7 @@ public class Gestion {
                 refus.add(m);
                 f.serialisationListeMaterielEmprunte(refus, "refus");
                 return "Erreur: Nous n'avons pas autant de materiel (nombre demandé trop grand)\n Nous avons seulement "
-                + choix.getNombre() + " exemplaire(s)";
+                        + choix.getNombre() + " exemplaire(s)";
             }
         }
         refus.add(m);
@@ -386,11 +396,10 @@ public class Gestion {
                 m = new MaterielProfesseur(c, nombre);
             else
                 m = new Materiel(c, nombre);
+        else if (typeMat.toUpperCase().equals("PROF"))
+            m = new MaterielProfesseur(c, duree, nombre);
         else
-            if(typeMat.toUpperCase().equals("PROF"))
-                m = new MaterielProfesseur(c, duree, nombre);
-            else
-                m = new Materiel(c, duree, nombre);
+            m = new Materiel(c, duree, nombre);
 
         stock.ajouterNouveauMateriel(m);
     }
@@ -398,8 +407,10 @@ public class Gestion {
     /**
      * Enleve du materiel dans le Stock
      * 
-     * @param m le materiel a enlever
-     * @param nombre le nombre de materiel a enlever
+     * @param m
+     *            le materiel a enlever
+     * @param nombre
+     *            le nombre de materiel a enlever
      * @return true si l'operation s'est bien deroulee
      */
     public boolean retirerMaterielStock(Materiel m, int nombre) {
@@ -414,6 +425,7 @@ public class Gestion {
 
     /**
      * Renvoie la liste des Materiel en reparation
+     * 
      * @return la liste des Materiels en réparation
      */
     public ArrayList<Materiel> getListeReparation() {
@@ -422,8 +434,11 @@ public class Gestion {
 
     /**
      * Supprime definitivement un materiel parti en reparation
-     * @param m le materiel concernant
-     * @param nombre le nombre de materiel a supprimer
+     * 
+     * @param m
+     *            le materiel concernant
+     * @param nombre
+     *            le nombre de materiel a supprimer
      * @return true si tout s'est bien passe
      */
     public boolean supprimerReparation(Materiel m, int nombre) {
@@ -437,8 +452,11 @@ public class Gestion {
 
     /**
      * Renvoie un Materiel partie en reparation dans le Stock
-     * @param m le materiel concerne
-     * @param nombre le nombre de materiel repare
+     * 
+     * @param m
+     *            le materiel concerne
+     * @param nombre
+     *            le nombre de materiel repare
      * @return true si tout s'est bien passe
      */
     public boolean terminerReparation(Materiel m, int nombre) {
@@ -452,6 +470,7 @@ public class Gestion {
 
     /**
      * Renvoie la liste des MaterielEmprunte
+     * 
      * @return la liste des MaterielEmprunte
      */
     public ArrayList<MaterielEmprunte> getListeResa() {
@@ -460,8 +479,11 @@ public class Gestion {
 
     /**
      * Modifie la date de debut d'un emprunt
-     * @param m le materiel concerne
-     * @param nvlDate la nouvelle date de debut d'emprunt
+     * 
+     * @param m
+     *            le materiel concerne
+     * @param nvlDate
+     *            la nouvelle date de debut d'emprunt
      */
     public void modifDateDebut(MaterielEmprunte m, Date nvlDate) {
         m.setDateEmprunt(nvlDate);
@@ -469,8 +491,11 @@ public class Gestion {
 
     /**
      * Modifie la date de fin d'un emprunt
-     * @param m le materiel concerne
-     * @param nvlDate la nouvelle date de fin d'emprunt
+     * 
+     * @param m
+     *            le materiel concerne
+     * @param nvlDate
+     *            la nouvelle date de fin d'emprunt
      */
     public void modifDateFin(MaterielEmprunte m, Date nvlDate) {
         m.setDateFin(nvlDate);
@@ -478,29 +503,67 @@ public class Gestion {
 
     /**
      * Modifie le nombre d'exemplaire d'un Materiel Emprunte
-     * @param m le materiel concerne
-     * @param nvnombre le nouveau nombre de materiel
+     * 
+     * @param m
+     *            le materiel concerne
+     * @param nvnombre
+     *            le nouveau nombre de materiel
      */
     public boolean modifNombreExemplaire(MaterielEmprunte m, int nvnombre) {
         if (nvnombre == 0) {
             stock.retirerEmprunt(m.getId());
             return true;
-        }
-        else {
-            
-            int nombre = stock.getStockTotal().get(stock.rechercheIndexMateriel(m.getMatEmprunt(), stock.getStockTotal())).getNombre();
-            System.out.println(nombre);
-            if ((nvnombre>nombre) || (nvnombre<0)) 
+        } else {
+
+            int nombre = stock
+                    .getStockTotal()
+                    .get(stock.rechercheIndexMateriel(m.getMatEmprunt(),
+                            stock.getStockTotal())).getNombre();
+            if ((nvnombre > nombre) || (nvnombre < 0))
                 return false;
         }
         m.getMatEmprunt().setNombre(nvnombre);
         return true;
     }
-    private void calculerRetards() {
 
+    /**
+     * Méthode interne qui permet d'ajouter dans liste tous les emprunts qui
+     * n'ont pas été rendus à la date indiquée.
+     * 
+     * @param listeEmprunts
+     *            - La liste d'emprunts à parcourir
+     */
+    private void calculerRetards(ArrayList<MaterielEmprunte> listeEmprunts) {
+        retards.clear();
+        for (MaterielEmprunte matEmp : listeEmprunts) {
+            Date dateFinEmp1 = matEmp.getDateFin();
+            if (dateFinEmp1.compareTo(dateCourante) < 0) {
+                MaterielEmprunte tempMatEmp = matEmp.clone();
+                retards.add(tempMatEmp);
+            }
+        }
     }
+
+    private void calculerRappels(ArrayList<MaterielEmprunte> listeEmprunts) {
+        rappels.clear();
+        for (MaterielEmprunte matEmp : listeEmprunts) {
+            Date dateFinEmp1 = matEmp.getDateFin();
+            long difference = ((dateFinEmp1.getTime() - dateCourante.getTime()) / JOUR_EN_MS);
+            if ((difference <= 2) && (difference >= 0)) {
+                MaterielEmprunte tempMatEmp = matEmp.clone();
+                rappels.add(tempMatEmp);
+            }
+        }
+    }
+
+    public String avancerJour() {
+        dateCourante.setTime(dateCourante.getTime() + JOUR_EN_MS);
+        return "La date du jour est : " + df.format(dateCourante);
+    }
+
     /**
      * Retourne une String pour afficher les reservation et Emprunt
+     * 
      * @return une String pour afficher les reservation et Emprunt
      */
     public String afficherResa() {
@@ -509,13 +572,16 @@ public class Gestion {
 
     /**
      * Retourne une String pour afficher les reparations
+     * 
      * @return une String pour afficher les reparations
      */
     public String afficherReparation() {
         return stock.afficherReparations();
     }
+
     /**
      * Retourne une String pour afficher les Refus
+     * 
      * @return une String pour afficher les Refus
      */
     public String afficherRefus() {
@@ -527,15 +593,38 @@ public class Gestion {
 
         return retour;
     }
-    
-    public String afficherRetards() {
-        calculerRetards();
-        String retour = "\n      Emprunts en retard\n";
-        for (int i = 0; i < retards.size(); i++) {
-            retour += retards.get(i) + "\n";
-        }
 
+    /**
+     * Méthode qui permet d'afficher la liste des emprunts en retards si
+     * celle-ci n'est pas vide
+     * 
+     * @param listeEmprunts
+     *            La liste d'emprunts
+     * @return La chaine de caractère contenant la liste
+     */
+    public String afficherRetards(ArrayList<MaterielEmprunte> listeEmprunts) {
+        calculerRetards(listeEmprunts);
+        String retour = "";
+        if (retards.size() > 0) {
+            retour += "\n      Emprunts non rendus\n";
+            for (int i = 0; i < retards.size(); i++) {
+                retour += retards.get(i) + "\n";
+            }
+        }
         return retour;
-        
+    }
+
+    public String afficherRappels(ArrayList<MaterielEmprunte> listeEmprunts) {
+        calculerRappels(listeEmprunts);
+        String retour = "";
+        if (rappels.size() > 0) {
+            retour += "\n      Emprunts à rendre bientôt\n";
+            for (int i = 0; i < rappels.size(); i++) {
+                retour += rappels.get(i) + "\n";
+            }
+        } else
+            retour += "Pas de matériel à rendre bientôt";
+        return retour;
+
     }
 }

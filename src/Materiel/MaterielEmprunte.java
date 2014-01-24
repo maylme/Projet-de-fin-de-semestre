@@ -19,12 +19,13 @@ import utilisateurs.Emprunteur;
 
 @SuppressWarnings("serial")
 public class MaterielEmprunte implements java.io.Serializable {
+    
     private Materiel emprunt;
     private Emprunteur emprunteur;
     private Date dateEmprunt;
     private Date dateFin;
     private String id = UUID.randomUUID().toString();
-    DateFormat df = DateFormat.getInstance();
+    private DateFormat df = DateFormat.getInstance();
 
     /**
      * Constructeur de la classe MaterielEmprunte Il recupere un Materiel, un
@@ -43,6 +44,7 @@ public class MaterielEmprunte implements java.io.Serializable {
      */
     public MaterielEmprunte(Materiel emprunt, Emprunteur emprunteur,
             Date dateEmprunt, Date dateFin) {
+
         this.emprunt = emprunt;
         this.emprunteur = emprunteur;
         this.dateEmprunt = dateEmprunt;

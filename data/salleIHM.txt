@@ -1,0 +1,45 @@
+liste du stock total :
+[
+Caractéristiques du matériel : Marque : Apple
+Type : Tablette
+
+Nombre de matériel de ce type : 35
+Duree max d'emprunt : 20, 
+Caractéristiques du matériel : Marque : Motorola
+Type : Telephone
+
+Nombre de matériel de ce type : 20
+Duree max d'emprunt : 15]
+
+liste du materiel emprunte et des reservations :
+[
+Caractéristiques du matériel : Type : Telephone
+Marque : Motorola
+
+Nombre de matériel de ce type : 10
+Duree max d'emprunt : 15
+Emprunteur : NOM Prenom
+Date d'emprunt : 25/01/14 14:44
+Date de fin d'emprunt : 30/01/14 14:44 
+, 
+Caractéristiques du matériel : Type : Telephone
+Marque : Motorola
+
+Nombre de matériel de ce type : 10
+Duree max d'emprunt : 15
+Emprunteur : NOM Prenom
+Date d'emprunt : 24/01/14 14:45
+Date de fin d'emprunt : 29/01/14 14:45 
+, 
+Caractéristiques du matériel : Type : Tablette
+Marque : Apple
+
+Nombre de matériel de ce type : 2
+Duree max d'emprunt : 20
+Emprunteur : NOM Prenom
+Date d'emprunt : 25/01/14 14:46
+Date de fin d'emprunt : 28/01/14 14:46 
+]
+
+liste du materiel en reparation :
+[]
