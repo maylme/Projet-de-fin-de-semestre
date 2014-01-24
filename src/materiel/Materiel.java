@@ -1,4 +1,4 @@
-package Materiel;
+package materiel;
 
 import java.util.Date;
 

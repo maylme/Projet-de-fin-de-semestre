@@ -6,17 +6,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import materiel.Caracteristiques;
+import materiel.CleInexistanteException;
+import materiel.Materiel;
+import materiel.MaterielEmprunte;
+import materiel.Stock;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import utilisateurs.Emprunteur;
 
-import Materiel.Caracteristiques;
-import Materiel.CleInexistanteException;
-import Materiel.Materiel;
-import Materiel.MaterielEmprunte;
-import Materiel.Stock;
 /***
  * Cette classe est la classe de test de Stock.
  * 
@@ -151,7 +152,6 @@ public class StockTest {
         assertEquals(2, nb1);
 
     }
-
     /*
      * Cette méthode de test vérifie que l'ajout de matériel se comporte bien :
      * on rajoute un type de matériel s'il est déjà présent, sinon on crée une
@@ -431,5 +431,32 @@ public class StockTest {
         MaterielEmprunte matEmprunt = new MaterielEmprunte();
         stock.emprunter(matEmprunt);
         assertTrue(!stock.getListeEmpruntsEtReservs().isEmpty());
+    }
+    
+    @Test
+    public void testRetirerEmprunt() {
+        m1.setNombre(10);
+        m2.setNombre(10);
+        m3.setNombre(10);
+        Materiel mat1 = m1.clone();
+        mat1.setNombre(6);
+        
+        cal.set(2014, 5, 4);
+        Date dateDebut1 = cal.getTime();
+        cal.set(2014, 5, 9);
+        Date dateFin1 = cal.getTime();
+        
+        Emprunteur emp1 = new Emprunteur("Jacques", "Dupont");
+
+        MaterielEmprunte matEmp1 = new MaterielEmprunte(mat1, emp1, dateDebut1,
+                dateFin1);
+        stock.emprunter(matEmp1);
+        
+        String idEmprunt1 = matEmp1.getId();
+        int retrait = stock.retirerEmprunt(idEmprunt1);
+        assertTrue(retrait >= 0);
+        
+        retrait = stock.retirerEmprunt(idEmprunt1);
+        assertTrue(retrait<0);
     }
 }

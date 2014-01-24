@@ -6,8 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-import Materiel.Materiel;
-import Materiel.MaterielEmprunte;
+import materiel.Materiel;
+import materiel.MaterielEmprunte;
+
 import Outils.FichierData;
 
 /**

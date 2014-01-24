@@ -2,51 +2,123 @@ package base;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-
-import base.Gestion;
 
 public class GestionTest {
 
-    @Test
-    public void testExiste() {
-        Gestion g = new Gestion();
+    @Before
+    public void setUp() throws Exception {
+    }
 
+    @After
+    public void tearDown() throws Exception {
+    }
+
+    @Test
+    public void testGestion() {
         fail("Not yet implemented");
     }
-	
-	@Test
-	public void testCreateNewProf(){
-		Gestion g = new Gestion();
-		if(g.existe("Capitaine", "Hadock", false)){
-			fail ("il est au debut, vire le .dat et re essaie");
-		}
-		g.createNewProf("Capitaine", "Hadock", "tonnerre");
-		if (!g.existe("Capitaine", "Hadock", false))
-				fail("et ben non il l'ajoute pas");
 
-		
-	}
-	@Test
-	public void testExiste() {
-		Gestion g = new Gestion();
-		
-		if(g.existe("Capitaine", "Hadock", false)){
-			fail ("il est au debut, vire le .dat et re essaie");
-		}
-		else{
-			g.createNewProf("Capitaine", "Hadock", "tonnerre");
-			if (!g.existe("Capitaine", "Hadock", false)){
-				fail ("il y est pas apres l'avoir ajouté! ");
-			}
-			Gestion g2 = new Gestion();
-			if (!g2.existe("Capitaine", "Hadock", false)){
-				fail ("il y est pas dans un nouveau Gestion");
-			}
-			
-			
-		}
-	}
->>>>>>> 4d7ca4ae77e7dc316ecb98a9291ec89350085054
+    @Test
+    public void testExiste() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testPassword() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testCreateNewGestionnaire() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testCreateNewProf() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testCreateNewEleve() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testListeEmpruntParEmprunteur() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testListeMaterielEmpruntable() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testRendre() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testEmprunt() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testAjouterExemplaire() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testExisteCleCaracteristique() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testCreationCleCaracteristique() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testAjoutMaterielStock() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testRetirerMaterielStock() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testSupprimerReparation() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testTerminerReparation() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testModifDateDebut() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testModifDateFin() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testModifNombreExemplaire() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void testAvancerJour() {
+        fail("Not yet implemented");
+    }
 
 }

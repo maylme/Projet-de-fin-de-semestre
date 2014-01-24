@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import java.util.Date;
 
+import materiel.Caracteristiques;
+import materiel.CleInexistanteException;
+
 import org.junit.Test;
 
 import utilisateurs.Eleve;

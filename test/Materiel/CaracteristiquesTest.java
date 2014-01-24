@@ -2,10 +2,11 @@ package Materiel;
 
 import static org.junit.Assert.*;
 
+import materiel.Caracteristiques;
+import materiel.CleInexistanteException;
+
 import org.junit.Test;
 
-import Materiel.Caracteristiques;
-import Materiel.CleInexistanteException;
 
 /**
  * Test de la classe Caracteristiques
