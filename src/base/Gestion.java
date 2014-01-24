@@ -2,7 +2,6 @@ package base;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import utilisateurs.Eleve;
@@ -32,7 +31,6 @@ import Outils.FichierData;
 public class Gestion {
     private static final String MOT_DE_PASSE_GESTIONNAIRE = "mdpAdmin";
     private static final long JOUR_EN_MS = (1000 * 60 * 60 * 24);
-    private Calendar c = Calendar.getInstance();
     private Date dateCourante;
     private DateFormat df = DateFormat.getInstance();
     private Stock stock;
