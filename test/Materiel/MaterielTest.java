@@ -2,96 +2,233 @@ package Materiel;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.junit.Test;
 
-import Materiel.Materiel;
+import utilisateurs.Eleve;
+import utilisateurs.Professeur;
 
 public class MaterielTest {
 
-    @Test
-    public void testMateriel() {
-        String expectedNomType = "Tablette Android";
-        int expectedNbrExemplaire = 20;
-        int expectedDureeMax = 15;
-        Materiel mat = new Materiel();
-        if (mat.getNom() != expectedNomType)
-            fail("mauvais nom");
-        if (mat.getNombre() != expectedNbrExemplaire)
-            fail("mauvais nombre d'exemplaire");
-        if (mat.getDureeMaxEmprunt() != expectedDureeMax)
-            fail("mauvais duree max d'emprunt");
-    }
+	@Test
+	public void testHashCode() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		
+		int result = 0;
+		result = 31 * result + m1.dureeMaxEmprunt;
+        result = 31 * result + (m1.getCaracteristiques() != null ? m1.getCaracteristiques().hashCode() : 0);
+        result = 31 * result + m1.getNombre();
+        
+        if(result != m1.hashCode())
+        	fail("mauvais hashCode");
+	}
 
-    @Test
-    public void testMaterielStringInt() {
-        String expectedNomType = "Chocolat";
-        int expectedNombreExemplaire = 30;
-        int expectedDureeMax = 15;
-        Materiel mat = new Materiel(expectedNomType, expectedNombreExemplaire);
-        if (mat.getNom() != expectedNomType)
-            fail("mauvais nom");
-        if (mat.getNombre() != expectedNombreExemplaire)
-            fail("mauvais nombre d'exemplaire");
-        if (mat.getDureeMaxEmprunt() != expectedDureeMax)
-            fail("mauvaise duree max d'emprunt");
-    }
+	@Test
+	public void testMaterielCaracteristiquesIntInt() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c,4,5);	
+		
+		if (!m1.getCaracteristiques().equals(c))
+			fail("caracteristiques");
+		if (m1.getDureeMaxEmprunt() != 4)
+			fail("duree");
+		if (m1.getNombre() != 5)
+			fail("nombre d'exemplaire");
+	}
+	
+	@Test
+	public void testMaterielCaracteristiquesInt() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c,5);	
+		
+		if (!m1.getCaracteristiques().equals(c))
+			fail("caracteristiques");
+		if (m1.getDureeMaxEmprunt() != 15)
+			fail("duree");
+		if (m1.getNombre() != 5)
+			fail("nombre d'exemplaire");
+	}
 
-    @Test
-    public void testToString() {
-        Materiel mat = new Materiel();
-        String expectedString = "\nType de matériel : Tablette Android\nNombre de matériel de ce type : 20";
-        if (!mat.toString().equals(expectedString))
-            fail("chaine de caractere different");
-    }
+	@Test
+	public void testMaterielCaracteristiques() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);	
+		
+		if (!m1.getCaracteristiques().equals(c))
+			fail("caracteristiques");
+		if (m1.getDureeMaxEmprunt() != 15)
+			fail("duree");
+		if (m1.getNombre() != 1)
+			fail("nombre d'exemplaire");	}
 
-    @Test
-    public void testGetNom() {
-        Materiel mat = new Materiel();
-        if (mat.getNom() != "Tablette Android")
-            fail("mauvais nom");
-        String nom = null;
-        Materiel mat2 = new Materiel(nom, 2);
-        if (mat2.getNom() != null)
-            fail("mauvais nom, different de null");
-    }
+	@Test
+	public void testToString() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		String expected ="\nCaractéristiques du matériel : " + m1.getCaracteristiques()
+                + "\nNombre de matériel de ce type : " + m1.getNombre()
+                + "\nDuree max d'emprunt : " + m1.getDureeMaxEmprunt();
+		if(!m1.toString().equals(expected))
+			fail("string");
+	}
 
-    @Test
-    public void testGetNombre() {
-        Materiel mat = new Materiel();
-        if (mat.getNombre() != 20)
-            fail("mauvais nombre d'exemplaire");
-        mat = new Materiel("machin", 30);
-        if (mat.getNombre() != 30)
-            fail("mauvais nombre d'exemplaire");
-    }
+	@Test
+	public void testGetCaracteristiques() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		
+		if(!m1.getCaracteristiques().equals(c))
+			fail("pas les meme caracteristique");
+	}
 
-    @Test
-    public void testSetNombre() {
-        int expectedNombreExemplaire = 10;
-        Materiel mat = new Materiel();
-        if (mat.getNombre() != 20)
-            fail("mauvais nombre d'exemplaire");
-        mat.setNombre(expectedNombreExemplaire);
-        if (mat.getNombre() != expectedNombreExemplaire)
-            fail("mauvais nombre d'exemplaire");
-    }
+	@Test
+	public void testGetDureeMaxEmprunt() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		
+		if(m1.getDureeMaxEmprunt()!=(15))
+			fail("pas les meme duree max");	
+	}
 
-    @Test
-    public void testIncrNombre() {
-        int expectedNombreExemplaire = 10;
-        Materiel mat = new Materiel("machine", 0);
-        mat.incrNombre(expectedNombreExemplaire);
-        if (mat.getNombre() != expectedNombreExemplaire)
-            fail("mauvais nombre d'exemplaire");
-    }
+	@Test
+	public void testGetNombre() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		
+		if(m1.getNombre()!=(1))
+			fail("pas lameme quantite");		}
 
-    @Test
-    public void testDecrNombre() {
-        int expectedNombreExemplaire = 10;
-        Materiel mat = new Materiel("machine", 10);
-        mat.decrNombre(expectedNombreExemplaire);
-        if (mat.getNombre() != 0)
-            fail("mauvais nombre d'exemplaire");
-    }
+	@Test
+	public void testSetNombre() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		m1.setNombre(5);
+		
+		if(m1.getNombre()!=(5))
+			fail("pas la meme quantite");
+	}
+
+	@Test
+	public void testIncrNombre() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		m1.incrNombre(4);
+		
+		if(m1.getNombre()!=(5))
+			fail("pas la meme quantite");	
+		
+	}
+
+	@Test
+	public void testDecrNombre() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c, 6);
+		m1.decrNombre(4);
+		
+		if(m1.getNombre()!=(2))
+			fail("pas la meme quantite");		
+	}
+
+
+	@Test
+	public void testClone() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		Materiel m2 = m1.clone();
+		
+		if(m1.getNombre()!= m2.getNombre())
+			fail("pas la meme quantite");
+		if (!m1.getCaracteristiques().equals(m2.getCaracteristiques()))
+			fail("caracteristique");
+		if (m1.getDureeMaxEmprunt() != m2.getDureeMaxEmprunt())
+			fail("duree");
+	}
+
+
+	@Test
+	public void testEmpruntable() {
+		Caracteristiques c = new Caracteristiques();
+		c.addCle("Type");
+		try{
+			c.addSpecification("Type", "Unicorn");
+		}catch (CleInexistanteException e){}		
+		Materiel m1 = new Materiel (c);
+		
+		Date debut = new Date();
+		Date fin = new Date("01/02/2014");
+		
+		Professeur p = new Professeur ("yassine", "bezad");
+		
+		//cas simple
+		if (!m1.empruntable(debut,fin,p))
+			fail( "devrai etre empruntable mais là non (cas simple)");
+		
+		//cas durée trop longue pour le materiel
+		fin = new Date ("07/05/2014");
+		if (m1.empruntable(debut, fin, p))
+			fail ("empruntable alors que durée materielle trop longue");
+		
+		//cas reservation à l'avance pour eleve
+		Eleve e = new Eleve();
+		debut = new Date("02/05/2014");
+		if (m1.empruntable(debut, fin, e))
+			fail ("reservation trop en avance pour un eleve");
+		
+		//cas duree trop longue pour l'emprunteur
+		Materiel m2 = new Materiel (c,30,10);
+		debut = new Date();
+		if(m2.empruntable(debut, fin, e))
+			fail ("duree trop longue pour l'eprunteur");
+	}
 
 }

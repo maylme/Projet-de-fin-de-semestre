@@ -2,8 +2,6 @@ package Materiel;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import Materiel.Caracteristiques;
@@ -16,18 +14,6 @@ import Materiel.CleInexistanteException;
  * 
  */
 public class CaracteristiquesTest {
-
-    @Test
-    public void testCaracteristiques() {
-        Caracteristiques c = new Caracteristiques();
-        ArrayList<String> expected = new ArrayList<String>();
-        expected.add("Type");
-        expected.add("Nom");
-        expected.add("Marque");
-        expected.add("Taille de l'écran");
-        if (!(expected.equals(c.getClePossible())))
-            fail(c.getClePossible().toString() + "\n" + expected.toString());
-    }
 
     @Test
     public void testAddSpecification() {

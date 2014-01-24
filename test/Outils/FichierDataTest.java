@@ -8,11 +8,8 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import sun.management.counter.perf.PerfInstrumentation;
 import utilisateurs.Emprunteur;
 import utilisateurs.Gestionnaire;
-import utilisateurs.Personne;
-
 import Materiel.Caracteristiques;
 import Materiel.CleInexistanteException;
 import Materiel.Materiel;
