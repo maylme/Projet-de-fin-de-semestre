@@ -9,12 +9,6 @@ import utilisateurs.Personne;
 
 public class EmprunteurTest {
 
-    @Test
-    public void testCastage() {
-        Personne p;
-        p = new Emprunteur("paul", "henri", 43);
-        fail(((Emprunteur) p).getDureeMaxDEmprunt() + "");
-    }
 
     @Test
     public void testEmprunteurStringStringInt() {
@@ -99,7 +93,7 @@ public class EmprunteurTest {
     @Test
     public void testGetNbrEmprunt() {
         Emprunteur e = new Emprunteur();
-        if (e.getNbrEmprunt() != 15)
+        if (e.getNbrEmprunt() != 0)
             fail("nb emprunt");
     }
 
@@ -111,4 +105,18 @@ public class EmprunteurTest {
             fail("nb emprunt");
     }
 
+    @Test
+    public void testIncrementNbrEmprunt(){
+    	Emprunteur e = new Emprunteur();
+    	e.incrementNbrEmprunt(5);
+    	if ( 5 != e.getNbrEmprunt())
+    		fail("incrementation fausse");
+    }
+    
+    @Test
+    public void testTypeEmprunteur(){
+    	Emprunteur e = new Emprunteur();
+    	if( e.typeEmprunteur()!="Emprunteur")
+    		fail(e.typeEmprunteur());
+    }
 }
