@@ -1,5 +1,6 @@
 package Materiel;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ public class MaterielEmprunte implements java.io.Serializable {
     private Date dateEmprunt;
     private Date dateFin;
     private String id = UUID.randomUUID().toString();
+    DateFormat df = DateFormat.getInstance();
 
     /**
      * Constructeur de la classe MaterielEmprunte Il recupere un Materiel, un
@@ -135,8 +137,8 @@ public class MaterielEmprunte implements java.io.Serializable {
     public String toString() {
         return emprunt + "\nEmprunteur : " + emprunteur.getNom().toUpperCase()
                 + " " + emprunteur.getPrenom() + "\nDate d'emprunt : "
-                + dateEmprunt.toString() + "\nDate de fin d'emprunt : "
-                + dateFin.toString() + " \n";
+                + df.format(dateEmprunt) + "\nDate de fin d'emprunt : "
+                + df.format(dateFin) + " \n";
     }
 
     @Override
